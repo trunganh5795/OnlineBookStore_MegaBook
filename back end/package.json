@@ -1,0 +1,36 @@
+{
+  "dependencies": {
+    "@elastic/elasticsearch": "7.13.0",
+    "aws-elasticsearch-connector": "^9.2.0",
+    "aws-sdk": "^2.1169.0",
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.23.0",
+    "cookie": "^0.5.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.3",
+    "nodemailer": "^6.4.17",
+    "nodemon": "^2.0.15",
+    "passport": "^0.4.1",
+    "passport-google-token": "^0.1.2",
+    "path": "^0.12.7",
+    "qrcode": "^1.5.0",
+    "recombee-api-client": "^4.0.0",
+    "sequelize": "^6.17.0",
+    "socket.io": "^4.5.1",
+    "stripe": "^9.9.0",
+    "swagger-ui-express": "^4.1.4"
+  },
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.4.1"
+  }
+}
