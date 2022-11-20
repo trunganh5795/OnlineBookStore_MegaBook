@@ -1,0 +1,63 @@
+.staff-order-management{
+    p{
+        font-size: 16px;
+        margin: 0;
+    }
+    .staff-search{
+        max-width: 700px;
+        margin: auto;
+    }
+    .oder-value{
+        color:#ee4d2d;
+        font-weight: bold;;
+    }
+    &-order-day{
+        width: 180px;
+    }
+    .order-id{
+        cursor: pointer;
+        color: #004bfa;
+    }
+
+    //ant reset
+    .ant-table{
+        font-size: 16px;
+    }
+    .ant-segmented-item {
+        width: 25%;
+    }
+    .anticon-wallet{
+        path{
+            color:#ee4d2d;
+        }
+    }
+    .anticon-code-sandbox{
+        path{
+            color:#004bfa;
+        }
+    }
+    .anticon-car{
+        path{
+            color:#ffa600;
+        }
+    }
+    .anticon-check{
+        path{
+            color: #006f23;
+        }
+    }
+    .anticon-close-circle{
+        path{
+            color: #fa0000;
+        }
+    }
+    .anticon-gift{
+        path{
+            color: #8c0077;
+        }
+    }
+    .admin-search-input{
+        max-width: 500px;
+        margin-bottom: 10px;
+      }
+}

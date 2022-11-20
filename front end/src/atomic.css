@@ -1,0 +1,302 @@
+.or-option {
+  position: relative;
+  margin: 5px auto;
+}
+
+.or-option::before {
+  position: absolute;
+  content: "";
+  width: 35%;
+  left: 0;
+  top: 50%;
+  height: 1px;
+  background-color: #bcbcbc;
+}
+
+.or-option::after {
+  position: absolute;
+  content: "";
+  width: 35%;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background-color: #bcbcbc;
+}
+
+.underline-title {
+  position: relative;
+}
+
+.underline-title::after {
+  content: "";
+  width: 12%;
+  height: 4px;
+  background-color: rgba(58, 93, 217, 0.8);
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.underline-title:hover::after {
+  width: 100%;
+  background: #22c1c3;
+  background: #3a5dd9;
+}
+
+.verify-btn {
+  border-radius: 0;
+  border: none;
+  background-color: #5ab45f !important;
+}
+
+.verify-btn:hover {
+  -webkit-filter: brightness(1.2);
+  filter: brightness(1.2);
+}
+
+.btn-secondary {
+  background-color: #3fc5ec !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+.btn-secondary:hover, .btn-secondary:active {
+  -webkit-filter: brightness(1.1);
+  filter: brightness(1.1);
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.bg-gray {
+  background-color: #f1f1f1;
+}
+
+.ease-trans {
+  -webkit-transition: all ease-in-out 0.35s;
+  transition: all ease-in-out 0.35s;
+}
+
+.bg-form {
+  background-color: #fff;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.06);
+}
+
+.box-sha-home {
+  -webkit-box-shadow: 0 0px 4px 4px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 0px 4px 4px rgba(0, 0, 0, 0.05);
+}
+
+.bor-rad-1 {
+  border-radius: 1px !important;
+}
+
+.bor-rad-2 {
+  border-radius: 2px !important;
+}
+
+.bor-rad-3 {
+  border-radius: 3px !important;
+}
+
+.bor-rad-4 {
+  border-radius: 4px !important;
+}
+
+.bor-rad-5 {
+  border-radius: 5px !important;
+}
+
+.bor-rad-6 {
+  border-radius: 6px !important;
+}
+
+.bor-rad-7 {
+  border-radius: 7px !important;
+}
+
+.bor-rad-8 {
+  border-radius: 8px !important;
+}
+
+.bor-rad-9 {
+  border-radius: 9px !important;
+}
+
+.bor-rad-10 {
+  border-radius: 10px !important;
+}
+
+.bor-rad-11 {
+  border-radius: 11px !important;
+}
+
+.bor-rad-12 {
+  border-radius: 12px !important;
+}
+
+.bor-rad-13 {
+  border-radius: 13px !important;
+}
+
+.bor-rad-14 {
+  border-radius: 14px !important;
+}
+
+.bor-rad-15 {
+  border-radius: 15px !important;
+}
+
+.bor-rad-16 {
+  border-radius: 16px !important;
+}
+
+.bor-rad-17 {
+  border-radius: 17px !important;
+}
+
+.bor-rad-18 {
+  border-radius: 18px !important;
+}
+
+.bor-rad-19 {
+  border-radius: 19px !important;
+}
+
+.bor-rad-20 {
+  border-radius: 20px !important;
+}
+
+.bor-rad-21 {
+  border-radius: 21px !important;
+}
+
+.bor-rad-22 {
+  border-radius: 22px !important;
+}
+
+.bor-rad-23 {
+  border-radius: 23px !important;
+}
+
+.bor-rad-24 {
+  border-radius: 24px !important;
+}
+
+.bor-rad-25 {
+  border-radius: 25px !important;
+}
+
+.bor-rad-26 {
+  border-radius: 26px !important;
+}
+
+.bor-rad-27 {
+  border-radius: 27px !important;
+}
+
+.bor-rad-28 {
+  border-radius: 28px !important;
+}
+
+.bor-rad-29 {
+  border-radius: 29px !important;
+}
+
+.bor-rad-30 {
+  border-radius: 30px !important;
+}
+
+.bor-rad-31 {
+  border-radius: 31px !important;
+}
+
+.bor-rad-32 {
+  border-radius: 32px !important;
+}
+
+.bor-rad-33 {
+  border-radius: 33px !important;
+}
+
+.bor-rad-34 {
+  border-radius: 34px !important;
+}
+
+.bor-rad-35 {
+  border-radius: 35px !important;
+}
+
+.bor-rad-36 {
+  border-radius: 36px !important;
+}
+
+.bor-rad-37 {
+  border-radius: 37px !important;
+}
+
+.bor-rad-38 {
+  border-radius: 38px !important;
+}
+
+.bor-rad-39 {
+  border-radius: 39px !important;
+}
+
+.bor-rad-40 {
+  border-radius: 40px !important;
+}
+
+.bor-rad-41 {
+  border-radius: 41px !important;
+}
+
+.bor-rad-42 {
+  border-radius: 42px !important;
+}
+
+.bor-rad-43 {
+  border-radius: 43px !important;
+}
+
+.bor-rad-44 {
+  border-radius: 44px !important;
+}
+
+.bor-rad-45 {
+  border-radius: 45px !important;
+}
+
+.bor-rad-46 {
+  border-radius: 46px !important;
+}
+
+.bor-rad-47 {
+  border-radius: 47px !important;
+}
+
+.bor-rad-48 {
+  border-radius: 48px !important;
+}
+
+.bor-rad-49 {
+  border-radius: 49px !important;
+}
+
+.item-active {
+  border: solid 1px #3a5dd9;
+  background-color: #e6eeff;
+}
+
+.discount-badge {
+  background-color: #3555c5;
+  color: #fff;
+  border-radius: 5px;
+  padding: 2px 8px;
+}
+/*# sourceMappingURL=atomic.css.map */

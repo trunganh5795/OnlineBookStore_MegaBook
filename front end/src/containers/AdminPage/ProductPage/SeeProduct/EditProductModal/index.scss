@@ -1,0 +1,8 @@
+.edit-product-modal{
+    .ant-form-item-label{
+        text-align: start;
+        &>label{
+            font-weight: 600;
+        }
+    }
+}

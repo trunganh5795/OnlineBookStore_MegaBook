@@ -1,0 +1,23 @@
+.SignUp {
+  min-height: 100vh;
+}
+
+.SignUp .gender-field .ant-select-selection-placeholder {
+  color: #888;
+}
+
+.SignUp .ant-select-selector {
+  border: none !important;
+}
+
+.SignUp .ant-input-password-icon {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+@media screen and (min-width: 767px) {
+  .SignUp .or-option, .SignUp-submit-btn,
+  .SignUp .login-gg {
+    width: 50% !important;
+  }
+}
+/*# sourceMappingURL=index.css.map */

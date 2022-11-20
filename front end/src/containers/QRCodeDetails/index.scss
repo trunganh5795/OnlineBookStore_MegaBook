@@ -1,0 +1,32 @@
+.qrcode {
+    font-size: 16px;
+    .ant-rate-star-zero {
+        svg {
+            fill: rgb(142, 143, 143);
+        }
+    }
+    &-title {
+        font-size: 16px;
+        // min-width: 150px;
+        display: inline-block;
+        position: relative;
+        // &::after {
+        //     content: ":";
+        //     position: absolute;
+        //     top: 0;
+        //     left: auto;
+        //     right: 0;
+        // }
+    }
+    li{
+        margin-bottom: 10px;
+
+    }
+    .datepicker{
+        position: absolute;
+        transition: all 0.5s;
+        top: 0;
+        left: 0;
+        display: none
+    }
+}

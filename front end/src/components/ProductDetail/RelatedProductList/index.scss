@@ -1,0 +1,33 @@
+@import "../../../commons/variables/color.scss";
+.Related-Products {
+  // margin-left: 0 !important;
+  // margin-right: 0 !important;
+  .category{
+
+  }
+  .arrow {
+    position: absolute;
+    font-size: 40px;
+    color: rgba($color: #fa6c00, $alpha: 0.6);
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all ease 0.2s;
+    &-left {
+      left: 2px;
+    }
+    &-right {
+      right: 2px;
+    }
+    &:hover {
+      font-size: 43px;      
+    }
+    &.disabled {
+      display: none;
+    }
+  }
+  @media only screen and (max-width:400px) {
+    .category{
+      font-size: 16px;
+    }
+  }
+}

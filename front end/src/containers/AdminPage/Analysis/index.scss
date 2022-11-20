@@ -1,0 +1,20 @@
+.analysis{
+    .icon{
+        color: rgb(202, 202, 202);
+        font-size: 20px;
+    }
+    p{
+        margin-bottom: 0;
+    }
+    //reset antd
+    .ant-divider-horizontal{
+        margin-top: 15px;
+    }
+    .datepicker{
+        position: absolute;
+        transition: all 0.5s;
+        top: 0;
+        left: 0;
+        display: none
+    }
+}

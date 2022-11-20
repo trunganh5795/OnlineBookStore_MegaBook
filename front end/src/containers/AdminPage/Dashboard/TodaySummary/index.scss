@@ -1,0 +1,23 @@
+//// infitinte symsbol
+.infinity {
+    position: relative;
+    width: 33px;
+    height: 15px;
+    &::before ,&::after{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 15px;
+        height: 15px;
+        border: 3px solid black;
+        border-radius: 50px 50px 0 50px;
+        transform: rotate(-45deg);
+    }
+    &::after{
+        left: auto;
+        right: 0;
+        border-radius: 50px 50px 50px 0;
+        transform: rotate(45deg);
+    }
+  }

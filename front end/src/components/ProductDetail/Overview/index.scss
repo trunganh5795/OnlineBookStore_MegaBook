@@ -1,0 +1,128 @@
+$text-color-special: #3555c5;
+
+.Product-Overview {
+  border-radius: 8px;
+  .details{
+    font-size: 1.17em;
+  }
+  .seprate{
+    border-right: 1px solid rgba(0,0,0,0.14);
+  }
+  .title{
+    font-size: 24px;
+  }
+  .ant-image {
+    cursor: pointer;
+  }
+
+  .ant-image-mask {
+    display: none;
+  }
+
+  .catalog-item {
+    &:hover,
+    &:active,
+    &.active {
+      border: solid 1px $text-color-special;
+      border-radius: 8px;
+    }
+  }
+  .price{
+    display: flex;
+    align-items: center;
+    span{
+      font-size: 16px;
+      color: #000;
+    }
+    .price-discount{
+      background-color: $text-color-special;
+      color: #fff;
+      border-radius: 5px;
+      padding:2px 8px;
+    }
+  }
+  .product {
+    // bỏ
+    // &-info {
+    //   border-top: dashed 1px $text-color-special;
+    //   border-bottom: dashed 1px $text-color-special;
+    // }
+    &-brand {
+      color: $text-color-special;
+      text-transform: uppercase;
+    }
+    &-price {
+      color: $text-color-special;
+    }
+  }
+
+  .discount {
+    position: relative;
+    border: solid 2px $text-color-special;
+    border-radius: 8px;
+    &-price,
+    &-decr {
+      color: red;
+    }
+    &-mark {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 0px;
+      height: 0px;
+      border-style: solid;
+      border-width: 0px 36px 36px 0px;
+      border-color: transparent $text-color-special transparent transparent;
+      &-icon {
+        position: absolute;
+        top: 4px;
+        right: 6px;
+        color: #fff;
+        z-index: 0;
+        font-size: 8px;
+      }
+    }
+  }
+  .option {
+    border-top: dashed 1px $text-color-special;
+  }
+  .btn-group {
+    &-item {
+      border-radius: 4px;
+      color: #fff !important;
+      font-weight: 500;
+      height: 48px;
+      border: none;
+      &:hover,
+      &:active {
+        -webkit-filter: brightness(1.1);
+        filter: brightness(1.1);
+      }
+    }
+  }
+
+  .ant-image-img {
+    max-height: 268px;
+    max-width: 268px;
+  }
+  @media only screen and(max-width:576px) {
+    .title{
+      font-size: 18px;
+    }
+    .product {
+      &-price{
+        font-size: 24px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 767px) {
+  .Product-Overview {
+    .product {
+      &-info {
+        border-bottom: none;
+      }
+    }
+  }
+}

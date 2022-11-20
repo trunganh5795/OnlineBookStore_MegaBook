@@ -1,0 +1,9 @@
+.error-input {
+  border: solid 1px red !important;
+}
+
+.show-error-input {
+  color: orangered;
+  font-size: 0.9rem;
+}
+/*# sourceMappingURL=error.css.map */
