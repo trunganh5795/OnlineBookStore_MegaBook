@@ -45,7 +45,7 @@ function RelatedProductList(props) {
       let min = Math.min(...spanValues);
       perPage.current = 24 / min;
     }
-    list.forEach((item, index) => item.index = index)
+    list.forEach((item, index) => item.index = index);
     return list.slice(perPage.current * (page - 1), perPage.current * page);
   };
 

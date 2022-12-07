@@ -31,7 +31,7 @@ function SearchResult() {
     
     if (type) {
       if (type === sortBtnActive && type !== 4) {
-        getSearchProducts(1, isSubscribe, 0)
+        getSearchProducts(1, isSubscribe, 0);
         setSortBtnActive(0);
         return;
       } else {
@@ -43,19 +43,19 @@ function SearchResult() {
       switch (type) {
         // theo giá giảm dần
         case 1:
-          getSearchProducts(1, isSubscribe, 1)
+          getSearchProducts(1, isSubscribe, 1);
           break;
         // theo giá tăng dần
         case 2:
-          getSearchProducts(1, isSubscribe, 2)
+          getSearchProducts(1, isSubscribe, 2);
           break;
         // Năm xuất bản gần nhất
         case 3:
-          getSearchProducts(1, isSubscribe, 3)
+          getSearchProducts(1, isSubscribe, 3);
           break;
         case 4:
           
-          getSearchProducts(1, isSubscribe, 4)
+          getSearchProducts(1, isSubscribe, 4);
           break;
         default:
           break;
@@ -79,7 +79,7 @@ function SearchResult() {
       if (result && isSubscribe) {
         setList(result.data.data);
         setIsLoading(false);
-        setTotal(result.data.count)
+        setTotal(result.data.count);
       }
     } catch (error) {
       setList([]);
@@ -95,7 +95,7 @@ function SearchResult() {
       prevQueryValue.current = search;
       prevPage.current = 1;
       getSearchProducts(1, isSubscribe, sortBtnActive);
-      setPage(1)
+      setPage(1);
     } else if (prevPage.current !== page) {
       prevPage.current = page;
       getSearchProducts(page, isSubscribe, sortBtnActive);
@@ -134,7 +134,7 @@ function SearchResult() {
               showSizeChanger={false}
               pageSize={16}
               onChange={(p) => {
-                setPage(p)
+                setPage(p);
               }}
             />
           )}

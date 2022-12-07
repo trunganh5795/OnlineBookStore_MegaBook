@@ -5,6 +5,7 @@ import './index.scss';
 import MenuFilter from './MenuFilter';
 
 function Filter() {
+  // eslint-disable-next-line no-unused-vars
   const [filterDetails, setFilterDetails] = useState({
     visible: false,
     list: [],

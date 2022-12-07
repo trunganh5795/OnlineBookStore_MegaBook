@@ -1,0 +1,15 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "extends": "react-app",
+  "rules": {
+    "semi": "error",
+    "react-hooks/exhaustive-deps": "off",
+    "import/no-anonymous-default-export": "off"
+  }
+}

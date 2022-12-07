@@ -18,6 +18,7 @@ function ProductCarousel() {
           className="Product-Carousel-img bor-rad-8"
           src={item}
           key={index}
+          alt="carousel"
         />
       ))}
     </Carousel>

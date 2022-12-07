@@ -15,7 +15,6 @@ import {
   Button,
   Drawer,
   Dropdown,
-  Form,
   Input,
   Menu,
   message,
@@ -75,54 +74,66 @@ function HeaderView() {
   };
   const itemNotAuth = [
     {
-      label: (<Button size="large" className="w-100" type="primary">
-        <Link to={constants.ROUTES.LOGIN}>Đăng nhập</Link>
-      </Button>),
-      key: 1
+      label: (
+        <Button size="large" className="w-100" type="primary">
+          <Link to={constants.ROUTES.LOGIN}>Đăng nhập</Link>
+        </Button>
+      ),
+      key: 1,
     },
     {
-      label: (<Link to={constants.ROUTES.SIGNUP}>
-        <Button size="large" className="w-100 btn-secondary" type="default">
-          Đăng ký
-        </Button>
-      </Link>),
-      key: 2
-    }
-  ]
+      label: (
+        <Link to={constants.ROUTES.SIGNUP}>
+          <Button size="large" className="w-100 btn-secondary" type="default">
+            Đăng ký
+          </Button>
+        </Link>
+      ),
+      key: 2,
+    },
+  ];
   const itemIsAuth = [
     {
-      label: (<Button size="large" className="w-100 btn-secondary" type="default">
-        <Link to={constants.ROUTES.ACCOUNT + '/'}>
-          <UserOutlined className='icon m-r-12' />
-          Tài khoản</Link>
-      </Button>),
-      key: 1
+      label: (
+        <Button size="large" className="w-100 btn-secondary" type="default">
+          <Link to={constants.ROUTES.ACCOUNT + '/'}>
+            <UserOutlined className="icon m-r-12" />
+            Tài khoản
+          </Link>
+        </Button>
+      ),
+      key: 1,
     },
     {
-      label: (<Button
-        size="large"
-        className="w-100 btn-tertiary"
-        type="default"
-        danger={isAuth}>
-        <Link to={constants.ROUTES.ACCOUNT + '/orders'}>
-          <ReconciliationOutlined className="icon m-r-12" />
-          Đơn hàng</Link>
-      </Button>),
-      key: 2
+      label: (
+        <Button
+          size="large"
+          className="w-100 btn-tertiary"
+          type="default"
+          danger={isAuth}>
+          <Link to={constants.ROUTES.ACCOUNT + '/orders'}>
+            <ReconciliationOutlined className="icon m-r-12" />
+            Đơn hàng
+          </Link>
+        </Button>
+      ),
+      key: 2,
     },
     {
-      label: (<Button
-        onClick={onLogout}
-        size="large"
-        className="w-100"
-        type="primary"
-        danger={isAuth}>
-        <PoweroffOutlined className="icon m-r-12" />
-        Thoát
-      </Button>),
-      key: 3
-    }
-  ]
+      label: (
+        <Button
+          onClick={onLogout}
+          size="large"
+          className="w-100"
+          type="primary"
+          danger={isAuth}>
+          <PoweroffOutlined className="icon m-r-12" />
+          Thoát
+        </Button>
+      ),
+      key: 3,
+    },
+  ];
   // event: get event change window width
   useEffect(() => {
     const w = window.innerWidth;
@@ -151,8 +162,10 @@ function HeaderView() {
 
   // Menu for user action
   const userActionMenu = (
-    <Menu className="m-t-24" style={{ width: 244 }} items={isAuth ? itemIsAuth : itemNotAuth}>
-    </Menu>
+    <Menu
+      className="m-t-24"
+      style={{ width: 244 }}
+      items={isAuth ? itemIsAuth : itemNotAuth}></Menu>
   );
 
   // rendering...
@@ -167,6 +180,7 @@ function HeaderView() {
             src={logoUrl}
             width={isSmDevice ? 78 : 112}
             height={isSmDevice ? 36 : 48}
+            alt="logo"
           />
         </Link>
         {/* thanh tìm kiếm */}
@@ -182,15 +196,16 @@ function HeaderView() {
                 option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
                 -1
               }
-              maxLength={200}
-            >
+              maxLength={200}>
               <Input
                 disabled
                 size={isSmDevice ? 'middle' : 'large'}
                 placeholder={!isSmDevice ? 'Bạn muốn tìm gì' : 'Tìm kiếm'}
-                onKeyDown={key => {
+                onKeyDown={(key) => {
                   if (key.code === 'Enter') {
-                    history.push(linkSearch === '' ? locations : initLink + linkSearch)
+                    history.push(
+                      linkSearch === '' ? locations : initLink + linkSearch
+                    );
                   }
                 }}
               />
@@ -232,7 +247,12 @@ function HeaderView() {
                         </div>
                       ) : (
                         <div className="d-flex navbar-tool-item p-l-0">
-                          <Avatar src={user.img ? user.img : constants.DEFAULT_USER_AVT} className="m-r-12 w-28px h-28px" />
+                          <Avatar
+                            src={
+                              user.img ? user.img : constants.DEFAULT_USER_AVT
+                            }
+                            className="m-r-12 w-28px h-28px"
+                          />
                           <span className="title">
                             {helpers.reduceProductName(user.name, 12)}
                           </span>
@@ -271,7 +291,9 @@ function HeaderView() {
                     </Link>
                   </Dropdown>
                 </li>
-                {isAuth ? "" : (
+                {isAuth ? (
+                  ''
+                ) : (
                   <li className="m-b-18">
                     <Link
                       className="d-flex navbar-tool-item p-l-0"
@@ -281,7 +303,6 @@ function HeaderView() {
                     </Link>
                   </li>
                 )}
-
               </ul>
             </Drawer>
             <MenuOutlined
@@ -300,14 +321,15 @@ function HeaderView() {
                 <NoticeIcon
                   count={notifications.length}
                   // loading
-                  bell={<BellOutlined className='icon m-auto' />}
+                  bell={<BellOutlined className="icon m-auto" />}
                   locale={{
                     emptyText: 'No notifications',
                     clear: 'Xóa tất cả',
-                    viewMore: 'Xem thêm'
+                    viewMore: 'Xem thêm',
                   }}
-                  onClear={(e) => dispatch(notifyActions.clearAllNotifications())}
-                >
+                  onClear={(e) =>
+                    dispatch(notifyActions.clearAllNotifications())
+                  }>
                   <NoticeIcon.Tab
                     list={notifications}
                     // title="notification"
@@ -334,7 +356,10 @@ function HeaderView() {
                     </div>
                   ) : (
                     <div className="d-flex flex-direction-column navbar-tool-item">
-                      <Avatar src={user.img ? user.img : constants.DEFAULT_USER_AVT} className="m-auto  w-28px h-28px" />
+                      <Avatar
+                        src={user.img ? user.img : constants.DEFAULT_USER_AVT}
+                        className="m-auto  w-28px h-28px"
+                      />
                       <span className="title">
                         {helpers.reduceProductName(user.name, 12)}
                       </span>

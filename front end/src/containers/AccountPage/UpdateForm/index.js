@@ -16,7 +16,7 @@ function UpdateAccountForm() {
   const user = useSelector((state) => state.user);
   const { id, name, email, dateOfBirth, gender, img } = user;
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [avatar, setAvatar] = useState(null)
+  const [avatar, setAvatar] = useState(null);
   const dispatch = useDispatch();
 
   const onCompressFile = async (file) => {
@@ -92,7 +92,7 @@ function UpdateAccountForm() {
       const response = await userApi.putUpdateUser(id, value);
       if (response) {
         message.success('Cập nhật thành công');
-        setIsSubmitting(false)
+        setIsSubmitting(false);
         dispatch(userReducers.getUserRequest());
       }
     } catch (error) {

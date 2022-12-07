@@ -27,9 +27,21 @@ const adminApi = {
     return axiosClient.put(url, product);
   },
   //
-  searchByName: (value, page, perPage, option, filterOps) => { //ElasticSearch
+  searchByName: (value, page, perPage, option, filterOps) => {
+    //ElasticSearch
     const url = ADMIN_API_ENDPOINT + '/product-search-by-name';
-    return axiosClient.get(url, { params: { value, page, perPage, option, filterField: filterOps[0].field, filterValue: filterOps[0].value, sorterField: filterOps[1].field, sorterValue: filterOps[1].value } });
+    return axiosClient.get(url, {
+      params: {
+        value,
+        page,
+        perPage,
+        option,
+        filterField: filterOps[0].field,
+        filterValue: filterOps[0].value,
+        sorterField: filterOps[1].field,
+        sorterValue: filterOps[1].value,
+      },
+    });
   },
   // fn: đăng nhập với quyền admin
   postLogin: (account) => {
@@ -49,9 +61,10 @@ const adminApi = {
     return axiosClient.get(url, { params: page });
   },
   getCustomerListBy: (page = 1, option, value, filterStatus, filterRole) => {
-
     const url = ADMIN_API_ENDPOINT + '/customer/by';
-    return axiosClient.get(url, { params: { page, option, value, filterStatus, filterRole } });
+    return axiosClient.get(url, {
+      params: { page, option, value, filterStatus, filterRole },
+    });
   },
   // fn: xoá 1 khách hàng
   delCustomer: (userId) => {
@@ -60,17 +73,53 @@ const adminApi = {
   },
   releaseCustomer: (userId) => {
     const url = ADMIN_API_ENDPOINT + '/customer/release';
-    return axiosClient.put(url, {userId});
+    return axiosClient.put(url, { userId });
   },
   // fn: Lấy danh sách đơn hàng
-  getOrderList: (page, perPage, filterStatusValue, filterPaymentValue, sorterField, sorterValue) => {
+  getOrderList: (
+    page,
+    perPage,
+    filterStatusValue,
+    filterPaymentValue,
+    sorterField,
+    sorterValue
+  ) => {
     const url = ADMIN_API_ENDPOINT + '/order';
-    return axiosClient.get(url, { params: { page, perPage, filterStatusValue, filterPaymentValue, sorterField, sorterValue } });
+    return axiosClient.get(url, {
+      params: {
+        page,
+        perPage,
+        filterStatusValue,
+        filterPaymentValue,
+        sorterField,
+        sorterValue,
+      },
+    });
   },
   // Tìm đơn hàng theo tên, mã đơn hàng, All
-  getOrderListBy: (value = '', option, page, perPage, filterStatusValue, filterPaymentValue, sorterField, sorterValue) => {
+  getOrderListBy: (
+    value = '',
+    option,
+    page,
+    perPage,
+    filterStatusValue,
+    filterPaymentValue,
+    sorterField,
+    sorterValue
+  ) => {
     const url = ADMIN_API_ENDPOINT + '/order/by';
-    return axiosClient.get(url, { params: { value, option, page, perPage, filterStatusValue, filterPaymentValue, sorterField, sorterValue } });
+    return axiosClient.get(url, {
+      params: {
+        value,
+        option,
+        page,
+        perPage,
+        filterStatusValue,
+        filterPaymentValue,
+        sorterField,
+        sorterValue,
+      },
+    });
   },
   // fn: cập nhật trạng thái đơn hàng
   postUpdateOrderStatus: (id, orderStatus) => {
@@ -79,17 +128,20 @@ const adminApi = {
   },
 
   addNewVoucher: (data) => {
-
     const url = ADMIN_API_ENDPOINT + '/voucher';
     return axiosClient.post(url, { data });
   },
   getAllVoucher: (page, perPage, stateFilterValue) => {
     const url = ADMIN_API_ENDPOINT + '/voucher';
-    return axiosClient.get(url, { params: { page, perPage, stateFilterValue } });
+    return axiosClient.get(url, {
+      params: { page, perPage, stateFilterValue },
+    });
   },
   getVoucherListBy: (value, option, page, perPage, stateFilterValue) => {
     const url = ADMIN_API_ENDPOINT + '/voucher/by';
-    return axiosClient.get(url, { params: { value, option, page, perPage, stateFilterValue } });
+    return axiosClient.get(url, {
+      params: { value, option, page, perPage, stateFilterValue },
+    });
   },
   updateVoucher: (data) => {
     const url = ADMIN_API_ENDPOINT + '/voucher';
@@ -113,13 +165,12 @@ const adminApi = {
       url: 'https://gui-api.recombee.net/graphql',
       data: helpers.graphqlQuery(since, until, frequency),
       headers: {
-        'Authorization': token,
+        Authorization: token,
         'Content-Type': 'application/json',
-        'Accept': '*/*',
-      }
-    })
-
-  }
+        Accept: '*/*',
+      },
+    });
+  },
 };
 
 export default adminApi;

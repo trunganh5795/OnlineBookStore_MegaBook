@@ -21,21 +21,18 @@ function ProductView(props) {
     enable_discount,
     maxWidth,
     stars,
-    total_rate
+    total_rate,
   } = props;
-  const windowWidth = window.innerWidth
+  const windowWidth = window.innerWidth;
   // set height cho các avt của sản phẩm
   useEffect(() => {
-    document
-      .querySelectorAll('.ant-card-cover')
-      .forEach((item) => {
-        if (height <= 390) {
-          item.style.height = `145px`
-        } else {
-          item.style.height = `${height * 1.9 / 3}px`
-        }
-
-      });
+    document.querySelectorAll('.ant-card-cover').forEach((item) => {
+      if (height <= 390) {
+        item.style.height = `145px`;
+      } else {
+        item.style.height = `${(height * 1.9) / 3}px`;
+      }
+    });
   }, []);
 
   // rendering ...
@@ -45,29 +42,40 @@ function ProductView(props) {
       id="card-item"
       style={{ height, maxWidth }}
       loading={false}
-      align={"center"}
+      align={'center'}
       cover={
-        <img loading='lazy' className="w-90 max-h-100" src={avtUrl} alt="Product Photo" />
+        <img
+          loading="lazy"
+          className="w-90 max-h-100"
+          src={avtUrl}
+          alt="product"
+        />
       }
       hoverable>
-      <div align={"left"}>
+      <div align={'left'}>
         {/* Tên sản phẩm */}
         <div className="m-b-10 Product-View-name">
-          {helpers.reduceProductName(name, windowWidth <= 992 ? (windowWidth < 576 ? 25 : 37) : 56)}
+          {helpers.reduceProductName(
+            name,
+            windowWidth <= 992 ? (windowWidth < 576 ? 25 : 37) : 56
+          )}
         </div>
         {/* Giá sản phẩm */}
-        <div className="Product-View-price" >
+        <div className="Product-View-price">
           {/* {!price && <span className="Product-View-price--contact">Liên hệ</span>} */}
           {price > 0 && (
             <>
               <span className="Product-View-price--main font-size-20px font-weight-b p-r-5">
-                {helpers.formatProductPrice(price * (100 - (discount ? discount : 0)) / 100)}
+                {helpers.formatProductPrice(
+                  (price * (100 - (discount ? discount : 0))) / 100
+                )}
               </span>
-              {(discount > 0 &&
+              {discount > 0 &&
                 enable_discount &&
-                moment(start_time).isSameOrAfter(moment().format('YYYY-MM-DD')) &&
-                moment(end_time).isBefore(moment().format('YYYY-MM-DD'))
-              ) && (
+                moment(start_time).isSameOrAfter(
+                  moment().format('YYYY-MM-DD')
+                ) &&
+                moment(end_time).isBefore(moment().format('YYYY-MM-DD')) && (
                   <>
                     <span className="Product-View-price--cancel font-weight-500">
                       {helpers.formatProductPrice(price)}
@@ -97,7 +105,11 @@ function ProductView(props) {
           <b className="Product-View-stock font-size-16px">Hết hàng</b>
         )}
 
-        <Rate disabled allowHalf defaultValue={total_rate ? stars / total_rate : 0} />
+        <Rate
+          disabled
+          allowHalf
+          defaultValue={total_rate ? stars / total_rate : 0}
+        />
         {/* Các nút bấm thêm nếu có */}
         <div className="d-flex m-t-10 justify-content-end">
           {action.length > 0 && action.map((Item) => Item)}

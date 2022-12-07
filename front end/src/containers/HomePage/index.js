@@ -30,10 +30,11 @@ function HomePage() {
       <Row className="container">
         {/* banner  */}
         <Col span={24} className="adv box-sha-home bor-rad-8 m-b-32 m-t-32">
-            <img
-              className="adv-img w-100 bor-rad-8"
-              src='https://res.cloudinary.com/dsa-company/image/upload/v1663583327/18731152_ikabvx.jpg'
-            />
+          <img
+            className="adv-img w-100 bor-rad-8"
+            alt="banner"
+            src="https://res.cloudinary.com/dsa-company/image/upload/v1663583327/18731152_ikabvx.jpg"
+          />
         </Col>
         {/* Đề xuất*/}
         <Col span={24} className="m-b-32 hot-products box-sha-home bor-rad-8">
@@ -41,18 +42,26 @@ function HomePage() {
         </Col>
         {/* <Trending/> */}
         {/* -------------- */}
-        {bookCategories && bookCategories.map((item, index) => {
-          if (isNaN(item.id)) {
-            return item.component
-          } else {
-            return (
-              <Col span={24} key={index} className="m-b-32 bg-white box-sha-home bor-rad-8">
-                <AllProduct title={item.title} category={item.id} key={item.id} />
-                {/* category 1 : business, 2:cook ,3:crafts, 4:comics, 5 novel, 6 science, 7 heath, 8 education */}
-              </Col>
-            )
-          }
-        })}
+        {bookCategories &&
+          bookCategories.map((item, index) => {
+            if (isNaN(item.id)) {
+              return item.component;
+            } else {
+              return (
+                <Col
+                  span={24}
+                  key={index}
+                  className="m-b-32 bg-white box-sha-home bor-rad-8">
+                  <AllProduct
+                    title={item.title}
+                    category={item.id}
+                    key={item.id}
+                  />
+                  {/* category 1 : business, 2:cook ,3:crafts, 4:comics, 5 novel, 6 science, 7 heath, 8 education */}
+                </Col>
+              );
+            }
+          })}
         {/* -------------- */}
       </Row>
     </div>
@@ -60,42 +69,41 @@ function HomePage() {
 }
 const bookCategories = [
   {
-    title: "Sách kinh tế",
-    id: 1
+    title: 'Sách kinh tế',
+    id: 1,
   },
   {
-    title: "Xu hướng",
-    component: <Trending key={1} />
+    title: 'Xu hướng',
+    component: <Trending key={1} />,
   },
   {
-    title: "Sách văn học",
-    id: 2
+    title: 'Sách văn học',
+    id: 2,
   },
 
   {
-    title: "Sách hay hôm nay",
-    component: <BestBook key={3} />
+    title: 'Sách hay hôm nay',
+    component: <BestBook key={3} />,
   },
   {
-    title: "Sách Địa Danh - Du Lịch",
-    id: 3
+    title: 'Sách Địa Danh - Du Lịch',
+    id: 3,
   },
   {
-    title: "Sách Giáo Dục",
-    id: 4
+    title: 'Sách Giáo Dục',
+    id: 4,
   },
   {
-    title: "Sách Thể Thao - Sức Khỏe",
-    id: 5
+    title: 'Sách Thể Thao - Sức Khỏe',
+    id: 5,
   },
   {
-    title: "Truyện",
-    id: 6
+    title: 'Truyện',
+    id: 6,
   },
   {
-    title: "Sách Tâm Lý - Giới Tính",
-    id: 7
+    title: 'Sách Tâm Lý - Giới Tính',
+    id: 7,
   },
-
-]
+];
 export default HomePage;

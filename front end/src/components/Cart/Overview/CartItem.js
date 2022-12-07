@@ -15,15 +15,15 @@ function CartItem(props) {
     discount,
     price,
     amount,
-    index,
+    // index,
     indexInCart,
     onDelCartItem,
     onUpdateNumOfProd,
   } = props;
   return (
-    <Row  className='bg-white p-12' gutter={[0,8]}>
+    <Row className="bg-white p-12" gutter={[0, 8]}>
       {/* sản phẩm */}
-      <Col span={24} sm={24} md={16} lg={16} className='d-flex'>
+      <Col span={24} sm={24} md={16} lg={16} className="d-flex">
         <Avatar src={img} alt="Photo" shape="square" size={64} />
         <div className="d-flex flex-direction-column p-10 ">
           <Link to={`/product/${bookId}`} className="font-size-16px">
@@ -32,11 +32,13 @@ function CartItem(props) {
               {helpers.reduceProductName(title, 40)}
             </Tooltip>
           </Link>
-          <span style={{ color: '#aaa' }}>Tác giả: {helpers.reduceProductName(author, 20)}</span>
+          <span style={{ color: '#aaa' }}>
+            Tác giả: {helpers.reduceProductName(author, 20)}
+          </span>
         </div>
       </Col>
       {/* số lượng */}
-      <Col className='d-flex align-i-center' lg={4} md={4}>
+      <Col className="d-flex align-i-center" lg={4} md={4}>
         <div>
           <InputNumber
             height={20}
@@ -55,15 +57,22 @@ function CartItem(props) {
         />
       </Col>
       {/* Giá */}
-      <Col className='d-flex flex-direction-column align-i-end justify-content-center' lg={4} md={21}>
+      <Col
+        className="d-flex flex-direction-column align-i-end justify-content-center"
+        lg={4}
+        md={21}>
         <b className="font-size-18px" style={{ color: '#3555C5' }}>
-          {helpers.formatProductPrice(price - (price * discount ? discount : 0) / 100)}
+          {helpers.formatProductPrice(
+            price - (price * discount ? discount : 0) / 100
+          )}
         </b>
         {discount ? (
           <span style={{ textDecoration: 'line-through', color: '#aaa' }}>
             {helpers.formatProductPrice(price)}
           </span>
-        ) : ""}
+        ) : (
+          ''
+        )}
       </Col>
     </Row>
   );

@@ -1,14 +1,5 @@
 import { DollarCircleOutlined, HomeOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Card,
-  Col,
-  Image,
-  Input,
-  message,
-  Result,
-  Row,
-} from 'antd';
+import { Button, Card, Col, Image, Input, message, Result, Row } from 'antd';
 // import addressApi from '../../apis/addressApi';
 import orderApi from '../../apis/orderApi';
 import CartPayment from '../../components/Cart/Payment';
@@ -23,21 +14,20 @@ import { QRCodeSVG } from 'qrcode.react';
 import { useEffect } from 'react';
 import addressApi from '../../apis/addressApi';
 
-
 function PaymentPage() {
   const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.authenticate.isAuth);
   // ghi chú đơn hàng
   const note = useRef('');
   const [paymentMethod, setPaymentMethod] = useState(1);
-  const selectedVoucher = useRef(null)
+  const selectedVoucher = useRef(null);
   const carts = useSelector((state) => state.carts);
   const [isLoading, setIsLoading] = useState(false);
   const [isOrderSuccess, setIsOrderSuccess] = useState(false);
   const [qrcodeModalOpen, setQrcodeModalOpen] = useState(false);
   const [qrCodeLinkPayment, setQrCodeLinkPayment] = useState('');
-  const [addressIndex, setAddressIndex] = useState(-1)
-  const [transportFee, setTransportFee] = useState(null)
+  const [addressIndex, setAddressIndex] = useState(-1);
+  const [transportFee, setTransportFee] = useState(null);
   // giá tạm tính
   // fn: hiển thị danh sách đơn hàng
   // Note: Chưa kiểm tra tình trạng thật của sản phẩm trong db !
@@ -82,7 +72,7 @@ function PaymentPage() {
           bookId,
           rcm,
           rcmtype,
-          index
+          index,
         };
       });
       const response = await orderApi.postCreateOrder({
@@ -94,10 +84,11 @@ function PaymentPage() {
         orderDate,
         productList,
         note: note.current,
-        voucherId: selectedVoucher.current
+        voucherId: selectedVoucher.current,
       });
       if (response && response.status === 200) {
-        if (paymentMethod === 1) { //COD
+        if (paymentMethod === 1) {
+          //COD
           setTimeout(() => {
             message.success('Đặt hàng thành công', 2);
             setIsLoading(false);
@@ -108,15 +99,14 @@ function PaymentPage() {
           setTimeout(() => {
             // message.success('Đặt hàng thành công', 2);
             setIsLoading(false);
-            setQrCodeLinkPayment(response.data.direct)
-            setQrcodeModalOpen(true)
+            setQrCodeLinkPayment(response.data.direct);
+            setQrcodeModalOpen(true);
             dispatch(cartReducers.resetCart());
           }, 1000);
         } else if (paymentMethod === 3) {
-          window.location.replace(response.data.direct)
+          window.location.replace(response.data.direct);
           dispatch(cartReducers.resetCart());
         }
-
       }
     } catch (error) {
       message.error('Đặt hàng thất bại, thử lại', 3);
@@ -127,15 +117,18 @@ function PaymentPage() {
     let isSubscribe = true;
     const getShippingCost = async () => {
       if (addressIndex !== -1) {
-        let shippingCost = await addressApi.getShippingCost(addressIndex.province, carts.length)
-        setTransportFee(shippingCost.data.cost);
+        let shippingCost = await addressApi.getShippingCost(
+          addressIndex.province,
+          carts.length
+        );
+        if (isSubscribe) setTransportFee(shippingCost.data.cost);
       }
-    }
+    };
     getShippingCost();
     return () => {
       isSubscribe = false;
-    }
-  }, [addressIndex])
+    };
+  }, [addressIndex]);
   // rendering ...
   return (
     <>
@@ -160,16 +153,22 @@ function PaymentPage() {
                 </Button>,
               ]}
             />
-          ) : qrcodeModalOpen ? <div className='t-center'>
-            <h2>Quét mã QR để thanh toán</h2>
-            <QRCodeSVG value={qrCodeLinkPayment} level="L" includeMargin size={200} />
-            <div>
-              <Button key="1" type="primary">
-                <Link to="/account/orders">Đi tới giỏ hàng</Link>
-              </Button>
+          ) : qrcodeModalOpen ? (
+            <div className="t-center">
+              <h2>Quét mã QR để thanh toán</h2>
+              <QRCodeSVG
+                value={qrCodeLinkPayment}
+                level="L"
+                includeMargin
+                size={200}
+              />
+              <div>
+                <Button key="1" type="primary">
+                  <Link to="/account/orders">Đi tới giỏ hàng</Link>
+                </Button>
+              </div>
             </div>
-
-          </div> : (
+          ) : (
             <Row gutter={[16, 16]}>
               {/* Đường dẫn */}
               <Col span={24} className="d-flex page-position">
@@ -193,10 +192,10 @@ function PaymentPage() {
               <Col span={24} md={16}>
                 {/* địa chỉ giao nhận, cách thức giao */}
                 <div className="p-12 bg-white bor-rad-8 m-tb-16">
-                  <h2 className='m-b-5'>Địa chỉ giao hàng</h2>
+                  <h2 className="m-b-5">Địa chỉ giao hàng</h2>
                   <AddressUserList
                     isCheckout={true}
-                    onChecked={(value) => (setAddressIndex(value))}
+                    onChecked={(value) => setAddressIndex(value)}
                   />
                 </div>
 
@@ -217,15 +216,17 @@ function PaymentPage() {
                   <h2 className="m-b-8">Phương thức thanh toán</h2>
                   <p>Xin vui lòng kiểm tra kỹ trước khi đặt hàng</p>
                   <Row gutter={[16, 16]}>
-                    <Col span={24} md={8}
-                      onClick={() => setPaymentMethod(1)}
-                    >
-                      <div className={paymentMethod === 1 ? "p-tb-8 p-lr-16 bg-gray item-active h-100px" : "p-tb-8 p-lr-16 bg-gray h-100px"}>
-                        <b className="font-size-16px">
-                          COD
-                        </b>
+                    <Col span={24} md={8} onClick={() => setPaymentMethod(1)}>
+                      <div
+                        className={
+                          paymentMethod === 1
+                            ? 'p-tb-8 p-lr-16 bg-gray item-active h-100px'
+                            : 'p-tb-8 p-lr-16 bg-gray h-100px'
+                        }>
+                        <b className="font-size-16px">COD</b>
                         <p>
-                          Thanh toán khi nhận hàng <DollarCircleOutlined className="t-color-second" />
+                          Thanh toán khi nhận hàng{' '}
+                          <DollarCircleOutlined className="t-color-second" />
                         </p>
                       </div>
                     </Col>
@@ -234,15 +235,15 @@ function PaymentPage() {
                       md={8}
                       onClick={() => {
                         setPaymentMethod(3); // 3 trên database là card direction
-                      }
-                      }>
-                      <div className={paymentMethod === 3 ? "p-tb-8 p-lr-16 bg-gray item-active h-100px" : "p-tb-8 p-lr-16 bg-gray h-100px"}>
-                        <b className="font-size-16px">
-                          Card
-                        </b>
-                        <p>
-                          Thanh toán với thẻ ngân hàng
-                        </p>
+                      }}>
+                      <div
+                        className={
+                          paymentMethod === 3
+                            ? 'p-tb-8 p-lr-16 bg-gray item-active h-100px'
+                            : 'p-tb-8 p-lr-16 bg-gray h-100px'
+                        }>
+                        <b className="font-size-16px">Card</b>
+                        <p>Thanh toán với thẻ ngân hàng</p>
                       </div>
                     </Col>
                     <Col
@@ -250,15 +251,15 @@ function PaymentPage() {
                       md={8}
                       onClick={() => {
                         setPaymentMethod(2); //2 tương ứng qr code trên database
-                      }
-                      }>
-                      <div className={paymentMethod === 2 ? "p-tb-8 p-lr-16 bg-gray item-active h-100px" : "p-tb-8 p-lr-16 bg-gray h-100px"}>
-                        <b className="font-size-16px">
-                          Quét mã QR
-                        </b>
-                        <p>
-                          Thanh toán hộ với QRcode
-                        </p>
+                      }}>
+                      <div
+                        className={
+                          paymentMethod === 2
+                            ? 'p-tb-8 p-lr-16 bg-gray item-active h-100px'
+                            : 'p-tb-8 p-lr-16 bg-gray h-100px'
+                        }>
+                        <b className="font-size-16px">Quét mã QR</b>
+                        <p>Thanh toán hộ với QRcode</p>
                       </div>
                     </Col>
                   </Row>
@@ -299,11 +300,11 @@ function PaymentPage() {
             </Row>
           )}
         </div>
-      ) : (isAuth === false ?
+      ) : isAuth === false ? (
         <Redirect to={constants.ROUTES.LOGIN} />
-        : ""
-      )
-      }
+      ) : (
+        ''
+      )}
     </>
   );
 }

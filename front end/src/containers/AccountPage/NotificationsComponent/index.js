@@ -1,9 +1,9 @@
-import { Col, Divider, message, Pagination, Result, Row } from 'antd'
-import { Fragment, useEffect, useState } from 'react'
-import GlobalLoading from '../../../components/Loading/Global'
-import notificationApi from '../../../apis/notificationApi'
-import { NotificationOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
+import { Col, Divider, message, Pagination, Result, Row } from 'antd';
+import { Fragment, useEffect, useState } from 'react';
+import GlobalLoading from '../../../components/Loading/Global';
+import notificationApi from '../../../apis/notificationApi';
+import { NotificationOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 const renderNotify = (notificationList) => {
     return notificationList.map(item => (
         <Fragment key={item.id}>
@@ -17,34 +17,34 @@ const renderNotify = (notificationList) => {
             </Row>
             <Divider />
         </Fragment>
-    ))
-}
+    ));
+};
 let isSubscribe = true;
 export default function Notifications() {
-    const [notifications, setNotifications] = useState([])
+    const [notifications, setNotifications] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(1);
     const getAllNotify = async (page = 1) => {
         try {
-            setIsLoading(true)
-            let result = await notificationApi.getAllNotify(page)
+            setIsLoading(true);
+            let result = await notificationApi.getAllNotify(page);
             if (isSubscribe) {
-                setNotifications(result.data)
+                setNotifications(result.data);
                 setTimeout(() => {
-                    if (isSubscribe) setIsLoading(false)
-                }, 200)
+                    if (isSubscribe) setIsLoading(false);
+                }, 200);
             }
         } catch (error) {
-            message.error("Đã xảy ra lỗi")
+            message.error("Đã xảy ra lỗi");
         }
-    }
+    };
     useEffect(() => {
 
         getAllNotify();
         return () => {
-            isSubscribe = false
-        }
-    }, [])
+            isSubscribe = false;
+        };
+    }, []);
 
     return (
         <div>
@@ -57,8 +57,8 @@ export default function Notifications() {
                                     current={page}
                                     total={notifications.count}
                                     onChange={(page) => {
-                                        getAllNotify(page)
-                                        setPage(page)
+                                        getAllNotify(page);
+                                        setPage(page);
                                     }}
                                     className="t-center"
                                     defaultPageSize={8}
@@ -73,5 +73,5 @@ export default function Notifications() {
                 )
             }
         </div>
-    )
+    );
 }

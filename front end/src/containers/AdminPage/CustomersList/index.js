@@ -5,18 +5,18 @@ import AdminSearch from '../../../components/AdminSearch';
 import moment from 'moment';
 let query = '';
 let isSubscribe = true;
-let selectedOption = 0
+let selectedOption = 0;
 let filterOps = [
   { field: 'role', value: [] },
   { field: 'active', value: [] }
-]
+];
 function CustomerList() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
   // const [searchOption, setSearchOption] = useState(null)
-  const [forceRunUseEffect, setForceRunUseEffect] = useState(false)
-  const [totalPage, setTotalPage] = useState(0)
+  const [forceRunUseEffect, setForceRunUseEffect] = useState(false);
+  const [totalPage, setTotalPage] = useState(0);
   // event: xoá tài khoản
   const onDelCustomer = async (id) => {
     try {
@@ -40,7 +40,7 @@ function CustomerList() {
     } catch (error) {
       message.error('Mở khóa thất bại');
     }
-  }
+  };
   const getCustomerBy = async (value, page, perPage, option, filterOps) => {
     try {
       let result = await adminApi.getCustomerListBy(page, option, value, filterOps[1].value, filterOps[0].value);
@@ -56,31 +56,31 @@ function CustomerList() {
             gender: item.gender,
             role: item.role,
             active: item.active
-          }
-        })
-        setTotalPage(result.data.count)
+          };
+        });
+        setTotalPage(result.data.count);
         setData(newList);
         setIsLoading(false);
       }
     } catch (error) {
-      message.error(error.response?.data.message)
+      message.error(error.response?.data.message);
     }
-  }
+  };
   const onSearch = useCallback((value = '', option) => {
     selectedOption = option;
     query = value;
     filterOps = [
       { field: 'role', value: [] },
       { field: 'active', value: [] }
-    ]
+    ];
     if (page === 1) {
-      setForceRunUseEffect(prev => !prev)
+      setForceRunUseEffect(prev => !prev);
     } else {
-      setPage(1)
+      setPage(1);
     }
   },
     [page],
-  )
+  );
   const columns = [
     {
       title: 'ID',
@@ -148,7 +148,7 @@ function CustomerList() {
 
   useEffect(() => {
     isSubscribe = true;
-    setIsLoading(true)
+    setIsLoading(true);
     getCustomerBy(query, page, 10, selectedOption, filterOps);
     return () => {
       isSubscribe = false;
@@ -179,21 +179,21 @@ function CustomerList() {
           let flag = false;
           filters.role?.forEach(item => {
             let index = filterOps[0].value?.findIndex(i => item === i);
-            if (index === -1) flag = true
-          })
+            if (index === -1) flag = true;
+          });
           filters.active?.forEach(item => {
             let index = filterOps[1].value?.findIndex(i => item === i);
-            if (index === -1) flag = true
-          })
-          if ((!filters.role && filterOps[0].value.length != 0) || (!filters.active && filterOps[1].value.length != 0) || (filters.role?.length !== filterOps[0].value.length) || (filters.active?.length !== filterOps[1].value.length)) flag = true
+            if (index === -1) flag = true;
+          });
+          if ((!filters.role && filterOps[0].value.length != 0) || (!filters.active && filterOps[1].value.length != 0) || (filters.role?.length !== filterOps[0].value.length) || (filters.active?.length !== filterOps[1].value.length)) flag = true;
 
           if (flag) {
             filterOps[0].value = filters.role ? filters.role : [];
             filterOps[1].value = filters.active ? filters.active : [];
             if (page === 1) {
-              return setForceRunUseEffect(prev => !prev)
+              return setForceRunUseEffect(prev => !prev);
             } else {
-              setPage(1)
+              setPage(1);
             }
           }
         }}

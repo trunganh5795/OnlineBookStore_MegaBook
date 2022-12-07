@@ -28,18 +28,19 @@ function OrderList() {
     isOpen: false,
     orderId: '',
   });
-  const [page, setPage] = useState(1)
-  const [totalPage, setTotalPage] = useState(0)
-  const [forceRunUseEffect, setForceRunUseEffect] = useState(false)
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const [forceRunUseEffect, setForceRunUseEffect] = useState(false);
   // event: Cập nhật trạng thái đơn hàng
   const updateOrderStatus = async (id, orderStatus) => {
     try {
       const response = await adminApi.postUpdateOrderStatus(id, orderStatus);
       if (response) {
         message.success('Cập nhật thành công');
-        setData(data => data.map((item) =>
-          item.id === id ? { ...item, status: orderStatus } : { ...item },
-        ),
+        setData((data) =>
+          data.map((item) =>
+            item.id === id ? { ...item, status: orderStatus } : { ...item }
+          )
         );
       }
     } catch (error) {
@@ -51,19 +52,28 @@ function OrderList() {
       if (orderId) {
         let result = await adminApi.updateNumOfContact(orderId);
         if (result.data) {
-          message.success("Cập nhật thành công");
-          setData(data => data.map((item) =>
-            item.id === orderId ? { ...item, ratio: { ...item.ratio, contact_time: item.ratio.contact_time + 1 } } : { ...item },
-          ))
+          message.success('Cập nhật thành công');
+          setData((data) =>
+            data.map((item) =>
+              item.id === orderId
+                ? {
+                    ...item,
+                    ratio: {
+                      ...item.ratio,
+                      contact_time: item.ratio.contact_time + 1,
+                    },
+                  }
+                : { ...item }
+            )
+          );
         }
       } else {
-        message.error("Không thể cập nhật, vui lòng kiểm tra lại")
+        message.error('Không thể cập nhật, vui lòng kiểm tra lại');
       }
     } catch (error) {
-      message.error("Xảy ra lỗi")
+      message.error('Xảy ra lỗi');
     }
-
-  }
+  };
   // modal cập nhật trạng thái đơn hàng
   function UpdateOrderStatusModal(defaultVal = 0, orderId) {
     let valueCurr = defaultVal;
@@ -76,7 +86,11 @@ function OrderList() {
           onChange={(v) => (valueCurr = v.target.value)}
           className="m-t-12">
           {generateFilterOrder().map((item, index) => (
-            <Radio className="m-b-8" key={index} value={item.value} disabled={defaultVal === item.value ? true : false}>
+            <Radio
+              className="m-b-8"
+              key={index}
+              value={item.value}
+              disabled={defaultVal === item.value ? true : false}>
               {item.text}
             </Radio>
           ))}
@@ -97,7 +111,7 @@ function OrderList() {
       title: 'Mã đơn hàng',
       key: 'id',
       dataIndex: 'id',
-      render: (v) => <a>{v}</a>,
+      render: (id) => <p>{id}</p>,
     },
     {
       title: 'Mã KH',
@@ -108,13 +122,13 @@ function OrderList() {
       title: 'Tên',
       key: 'user',
       dataIndex: 'user',
-      render: (value) => value.name
+      render: (value) => value.name,
     },
     {
       title: 'Ngày đặt',
       key: 'createdAt',
       dataIndex: 'createdAt',
-      render: (value) => moment(value).format('DD-MM-YYYY')
+      render: (value) => moment(value).format('DD-MM-YYYY'),
     },
     {
       title: 'Tổng tiền',
@@ -130,7 +144,11 @@ function OrderList() {
       title: 'HT thanh toán',
       key: 'payment',
       dataIndex: 'payment',
-      filters: [{ text: 'COD', value: 1 }, { text: 'Card', value: 3 }, { text: 'QRcode', value: 2 }],
+      filters: [
+        { text: 'COD', value: 1 },
+        { text: 'Card', value: 3 },
+        { text: 'QRcode', value: 2 },
+      ],
       filteredValue: filterOps[2].value,
       render: (value) => helpers.convertPaymentMethod(value),
     },
@@ -140,7 +158,7 @@ function OrderList() {
       dataIndex: 'status',
       filteredValue: filterOps[0].value,
       filters: generateFilterOrder(),
-      render: (value) => helpers.convertOrderStatus(+value)
+      render: (value) => helpers.convertOrderStatus(+value),
     },
     {
       title: 'Hành động',
@@ -149,94 +167,120 @@ function OrderList() {
           <div>
             <Button
               type="primary"
-              className=' w-86px'
+              className=" w-86px"
               onClick={() =>
                 UpdateOrderStatusModal(
                   +records.status,
                   // truyền order status vào dạng text luôn lưu ý format chữ in hoa in thường
-                  records.id,
+                  records.id
                 )
               }>
               Cập nhật
             </Button>
           </div>
-          <div className='m-t-10'>
+          <div className="m-t-10">
             <Button
-              className=' w-86px'
+              className=" w-86px"
               type="danger"
-              onClick={() => setOrderDetails({ isOpen: true, orderId: records.id })}             
-            >
+              onClick={() =>
+                setOrderDetails({ isOpen: true, orderId: records.id })
+              }>
               Chi tiết
             </Button>
           </div>
         </>
       ),
     },
-  ]
-  const onSearch = useCallback((value = '', option) => {
-    selectedOption = option;
-    query = value;
-    filterOps = [
-      { field: 'status', value: [] },
-      { field: undefined, value: undefined },
-      { field: 'payment', value: [] },
-    ]
-    if (page === 1) {
-      setForceRunUseEffect(prev => !prev)
-    } else {
-      setPage(1)
-    }
-  }, [page])
-  const getOrderList = useCallback(async (value = '', page, perPage, option, filterOps) => {
-    // addColumn();
-    if (option === 0) {
-      const response = await adminApi.getOrderList(page, perPage, filterOps[0].value, filterOps[2].value, filterOps[1].field, filterOps[1].value);
-      if (response.data && isSubscribe) {
-        
-        const { count, rows } = response.data;
-        setTotalPage(count)
-        setData(rows);
-        setIsLoading(false);
+  ];
+  const onSearch = useCallback(
+    (value = '', option) => {
+      selectedOption = option;
+      query = value;
+      filterOps = [
+        { field: 'status', value: [] },
+        { field: undefined, value: undefined },
+        { field: 'payment', value: [] },
+      ];
+      if (page === 1) {
+        setForceRunUseEffect((prev) => !prev);
+      } else {
+        setPage(1);
       }
-    } else {
-      const response = await adminApi.getOrderListBy(value, option, page, perPage, filterOps[0].value, filterOps[2].value, filterOps[1].field, filterOps[1].value);
-      if (response.data && isSubscribe) {
-        
-        const { count, rows } = response.data;
-        setTotalPage(count)
-        setData(rows);
-        setIsLoading(false);
+    },
+    [page]
+  );
+  const getOrderList = useCallback(
+    async (value = '', page, perPage, option, filterOps) => {
+      // addColumn();
+      if (option === 0) {
+        const response = await adminApi.getOrderList(
+          page,
+          perPage,
+          filterOps[0].value,
+          filterOps[2].value,
+          filterOps[1].field,
+          filterOps[1].value
+        );
+        if (response.data && isSubscribe) {
+          const { count, rows } = response.data;
+          setTotalPage(count);
+          setData(rows);
+          setIsLoading(false);
+        }
+      } else {
+        const response = await adminApi.getOrderListBy(
+          value,
+          option,
+          page,
+          perPage,
+          filterOps[0].value,
+          filterOps[2].value,
+          filterOps[1].field,
+          filterOps[1].value
+        );
+        if (response.data && isSubscribe) {
+          const { count, rows } = response.data;
+          setTotalPage(count);
+          setData(rows);
+          setIsLoading(false);
+        }
       }
     }
-  })
+  );
   let addColumn = (filterOps) => {
-    if (filterOps[0].value.findIndex(item => item === 3) !== -1 &&
-      filterOps[2].value.findIndex(item => item === 1) !== -1 &&
+    if (
+      filterOps[0].value.findIndex((item) => item === 3) !== -1 &&
+      filterOps[2].value.findIndex((item) => item === 1) !== -1 &&
       columns[columns.length - 1].dataIndex !== 'cancelation' &&
       filterOps[0].value.length === 1 &&
       filterOps[2].value.length === 1
     ) {
-      
       columns.push({
         title: 'Khả năng hủy',
         key: 'cancelation',
         dataIndex: 'ratio',
         render: (value) => (
-          <div className='t-center'>
-            <b>{value?.ratio ? `${Math.floor((1 - value.ratio) * 100)} %` : '-'}</b>
+          <div className="t-center">
+            <b>
+              {value?.ratio ? `${Math.floor((1 - value.ratio) * 100)} %` : '-'}
+            </b>
             <br />
             <Button
               type="primary"
               onClick={() => updateNumOfContact(value?.order_id)}
-              disabled={value?.contact_time >= 3 ? true : false}
-            >Liên hệ ({value?.contact_time})</Button>
+              disabled={value?.contact_time >= 3 ? true : false}>
+              Liên hệ ({value?.contact_time})
+            </Button>
           </div>
-        )
-      })
-    } else if ((filterOps[2].value.findIndex(item => item === 1) === -1 && columns[columns.length - 1].dataIndex === 'cancelation')) {
+        ),
+      });
+    } else if (
+      filterOps[2].value.findIndex((item) => item === 1) === -1 &&
+      columns[columns.length - 1].dataIndex === 'cancelation'
+    ) {
       columns.splice(columns.length - 1, 1);
     }
-  }
+  };
   useEffect(() => {
     isSubscribe = true;
     getOrderList(query, page, 10, selectedOption, filterOps);
@@ -247,9 +291,13 @@ function OrderList() {
 
   return (
     <>
-      <div className='m-lr-10 m-t-10'>
+      <div className="m-lr-10 m-t-10">
         <AdminSearch
-          options={[{ text: "Tất Cả", id: 0 }, { text: "Tên khách hàng", id: 1 }, { text: "Mã đơn hàng", id: 2 }]}
+          options={[
+            { text: 'Tất Cả', id: 0 },
+            { text: 'Tên khách hàng', id: 1 },
+            { text: 'Mã đơn hàng', id: 2 },
+          ]}
           onSearch={onSearch}
           selectedOption={selectedOption}
         />
@@ -262,47 +310,50 @@ function OrderList() {
             showLessItems: true,
             position: ['bottomCenter'],
             total: totalPage,
-            onChange: (p) => setPage(p)
+            onChange: (p) => setPage(p),
           }}
           loading={isLoading}
           onChange={(pagination, filters, sorter, extra) => {
             let flag = false;
 
-            filters.status?.forEach(item => {
-              let index = filterOps[0].value?.findIndex(i => item === i);
+            filters.status?.forEach((item) => {
+              let index = filterOps[0].value?.findIndex((i) => item === i);
               if (index === -1) flag = true;
-            })
+            });
 
-            filters.payment?.forEach(item => {
-              let index = filterOps[2].value?.findIndex(i => item === i);
+            filters.payment?.forEach((item) => {
+              let index = filterOps[2].value?.findIndex((i) => item === i);
               if (index === -1) flag = true;
-            })
+            });
 
             if (
-              (!filters.status && filterOps[0].value.length != 0) ||
-              (filters.status?.length !== filterOps[0].value.length) ||
-              (!filters.payment && filterOps[2].value.length != 0) ||
-              (filters.payment?.length !== filterOps[2].value.length) ||
-              (sorter.field !== filterOps[1].field) ||
-              (sorter.order !== filterOps[1].value)) flag = true
+              (!filters.status && filterOps[0].value.length !== 0) ||
+              filters.status?.length !== filterOps[0].value.length ||
+              (!filters.payment && filterOps[2].value.length !== 0) ||
+              filters.payment?.length !== filterOps[2].value.length ||
+              sorter.field !== filterOps[1].field ||
+              sorter.order !== filterOps[1].value
+            )
+              flag = true;
             if (flag) {
               filterOps[0].value = filters.status ? filters.status : [];
               filterOps[2].value = filters.payment ? filters.payment : [];
               filterOps[1].field = sorter.field;
               filterOps[1].value = sorter.order;
               if (page === 1) {
-                return setForceRunUseEffect(prev => !prev)
+                return setForceRunUseEffect((prev) => !prev);
               } else {
-                setPage(1)
+                setPage(1);
               }
             }
           }}
         />
-        {orderDetails.isOpen &&
+        {orderDetails.isOpen && (
           <OrderDetail
             orderId={orderDetails.orderId}
             onClose={() => setOrderDetails({ isOpen: false })}
-          />}
+          />
+        )}
       </div>
     </>
   );

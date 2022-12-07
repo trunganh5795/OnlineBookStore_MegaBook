@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react';
 import helpers from '../../../../helpers';
 import { Line } from 'react-chartjs-2';
 import statisticApi from '../../../../apis/statisticApi';
@@ -37,13 +37,13 @@ const lineChartOptions = {
                 label: (tooltipItems) => {
 
                     if (tooltipItems.datasetIndex === 0) {
-                        return 'Số đơn : ' + tooltipItems.raw
+                        return 'Số đơn : ' + tooltipItems.raw;
                     } else if (tooltipItems.datasetIndex === 1) {
-                        return 'Doanh thu :' + helpers.formatProductPrice(tooltipItems.raw)
+                        return 'Doanh thu :' + helpers.formatProductPrice(tooltipItems.raw);
                     } else if (tooltipItems.datasetIndex === 2) {
-                        return 'Doanh thu / đơn :' + helpers.formatProductPrice(tooltipItems.raw)
+                        return 'Doanh thu / đơn :' + helpers.formatProductPrice(tooltipItems.raw);
                     } else {
-                        return "OK"
+                        return "OK";
                     }
                     // var text = tooltipItems.datasetIndex === 1 ? 'Doanh thu : ' + helpers.formatProductPrice(tooltipItems.raw * 1000) : 'Số đơn : ' + tooltipItems.raw
                     // return text;
@@ -170,8 +170,8 @@ const lineChartOptions = {
 };
 
 export default function Statictis({ time }) {
-    let [responeData, setResponeData] = useState({ order: [], total: [], totalPerOrder: [] })
-    let [labels, setLabels] = useState([])
+    let [responeData, setResponeData] = useState({ order: [], total: [], totalPerOrder: [] });
+    let [labels, setLabels] = useState([]);
     let data = useMemo(() => ({
         labels,
         datasets: [
@@ -210,34 +210,34 @@ export default function Statictis({ time }) {
 
             },
         ],
-    }), [responeData, labels])
+    }), [responeData, labels]);
     useEffect(() => {
         let subscribe = true;
         let getOrderTotal = async () => {
-            let rangeTime = time.split(',')
-            let result = await statisticApi.countOrderTotal(rangeTime[0], rangeTime[1])
+            let rangeTime = time.split(',');
+            let result = await statisticApi.countOrderTotal(rangeTime[0], rangeTime[1]);
             let order = [];
             let total = [];
             let labels = [];
             let totalPerOrder = [];
             result.data.buckets.forEach(item => {
-                order.push(item.total_count.value)
-                total.push(item.total_income.value)
-                totalPerOrder.push(item.total_income.value / (item.total_count.value === 0 ? 1 : item.total_count.value))
+                order.push(item.total_count.value);
+                total.push(item.total_income.value);
+                totalPerOrder.push(item.total_income.value / (item.total_count.value === 0 ? 1 : item.total_count.value));
                 labels.push(item.key_as_string); // ngày tháng hiện thị ở trục x
-            })
+            });
             if (subscribe) {
-                setLabels(labels)
-                setResponeData({ order, total, totalPerOrder })
+                setLabels(labels);
+                setResponeData({ order, total, totalPerOrder });
             }
 
-        }
+        };
         getOrderTotal();
 
         return () => {
             subscribe = false;
-        }
-    }, [time])
+        };
+    }, [time]);
 
     return (
         <div className="bg-white p-lr-12 bor-rad-8 p-tb-30">
@@ -247,5 +247,5 @@ export default function Statictis({ time }) {
                 <Line options={lineChartOptions} data={data} size="large" />
             </div>
         </div>
-    )
+    );
 }

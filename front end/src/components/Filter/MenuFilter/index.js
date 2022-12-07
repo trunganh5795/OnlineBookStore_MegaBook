@@ -6,7 +6,6 @@ import heathIcon from '../../../assets/icon/products/heath.png';
 import educationIcon from '../../../assets/icon/products/education.png';
 import sexIcon from '../../../assets/icon/products/sex.png';
 
-
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -69,7 +68,7 @@ function MenuFilter(props) {
             key={index}
             className="w-100 p-lr-8 p-tb-4  Filter-menu-item">
             <Link to={item.to} className="d-flex align-i-center">
-              <img src={item.icon} className="icon m-lr-8" />
+              <img src={item.icon} className="icon m-lr-8" alt="icon" />
               <span className="title">{item.title}</span>
             </Link>
           </div>

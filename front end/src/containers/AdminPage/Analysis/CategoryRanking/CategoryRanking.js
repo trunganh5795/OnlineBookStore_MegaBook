@@ -1,7 +1,7 @@
-import { Divider, Segmented, Table } from 'antd'
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-import statisticApi from '../../../../apis/statisticApi'
+import { Divider, Segmented, Table } from 'antd';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import statisticApi from '../../../../apis/statisticApi';
 const columns = [
     {
         title: 'Thứ hạng',
@@ -20,29 +20,29 @@ const columns = [
         key: 'quantity',
         width: 200
     }
-]
+];
 export default function CategoryRanking({ time }) {
-    let [data, setData] = useState([])
+    let [data, setData] = useState([]);
     useEffect(() => {
         let isSubscribe = true;
         async function getTopSellByCategory() {
-            let rangeTime = time.split(',')
+            let rangeTime = time.split(',');
             let result = await statisticApi.getTop5SellCategory(rangeTime[0], rangeTime[1]);
             if (result.data && isSubscribe) {
                 let data = result.data.map((item, index) => ({
                     rank: index + 1,
                     category: item.name,
                     quantity: item.quantity
-                }))
-                setData(data)
+                }));
+                setData(data);
             }
         }
         
         getTopSellByCategory();
         return () => {
             isSubscribe = false;
-        }
-    }, [time])
+        };
+    }, [time]);
 
     return (
         <>
@@ -58,5 +58,5 @@ export default function CategoryRanking({ time }) {
                 pagination={false}
             />
         </>
-    )
+    );
 }

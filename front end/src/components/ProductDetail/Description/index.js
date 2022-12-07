@@ -7,6 +7,7 @@ import Posts from './Posts';
 // import Specification from './Specification';
 
 function Description(props) {
+  // eslint-disable-next-line no-unused-vars
   const { specification, desc } = props;
   const [isHideDesc, setIsHideDesc] = useState(false);
   const [isShowSeeMore, setIsShowSeeMore] = useState(false);
@@ -19,7 +20,6 @@ function Description(props) {
   // ev: lấy kích thước bài viết mô tả sau khi render
   useEffect(() => {
     const height = document.getElementById('descId').clientHeight;
-    const width = window.innerWidth
     // Nếu chiều cao bài viết > 200px thì ẩn bớt
     if (height >= 400) {
       setIsShowSeeMore(true);
@@ -43,7 +43,7 @@ function Description(props) {
           style={{ cursor: 'pointer' }}
           onClick={onSeeMore}>
           {isHideDesc ? 'Ẩn bớt' : 'Xem thêm'}
-           &nbsp;
+          &nbsp;
           {isHideDesc ? <CaretUpOutlined /> : <CaretDownOutlined />}
         </h3>
       )}

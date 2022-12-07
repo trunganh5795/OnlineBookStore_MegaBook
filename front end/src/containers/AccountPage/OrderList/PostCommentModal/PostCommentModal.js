@@ -1,13 +1,13 @@
 import { Button, Divider, Form, Modal, Rate } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import helpers from '../../../../helpers';
 
 const renderProductList = (orderList) => {
     return (fields, { add, remove }) => {
         // return orderList.order_detail?.map((item, index) => (
-        if (fields.length === 0) return
+        if (fields.length === 0) return;
         return orderList.order_detail?.map((item, index) => (
             <div key={fields[index].key}>
                 <Link to={`/product/${item.product.BookId}`}>{helpers.reduceProductName(item.product.title, 100)}</Link>
@@ -25,20 +25,20 @@ const renderProductList = (orderList) => {
                 </div>
                 <Divider dashed />
             </div>
-        ))
-    }
+        ));
+    };
 
 
-}
+};
 
 export default function PostCommentModal({ visible, ratingOrder, setRatingOrder, postComment }) {
     const [form] = Form.useForm();
     const [isLoading, setLoading] = useState(false);
     const onClose = () => {
-        form.resetFields()
-        setRatingOrder({ isOpen: false, products: [] })
+        form.resetFields();
+        setRatingOrder({ isOpen: false, products: [] });
         
-    }
+    };
     return (
         <Modal
             width={1000}
@@ -58,7 +58,7 @@ export default function PostCommentModal({ visible, ratingOrder, setRatingOrder,
                 form={form}
                 onFinish={(data) => {
                     
-                    postComment(ratingOrder.id, data.fields, setLoading, onClose)
+                    postComment(ratingOrder.id, data.fields, setLoading, onClose);
                     // commentApi.postComment({ orderId: ratingOrder.id, data: data.fields })
                 }}
                 initialValues={{ fields: ratingOrder.order_detail?.map((item, index) => index) }}
@@ -74,5 +74,5 @@ export default function PostCommentModal({ visible, ratingOrder, setRatingOrder,
             </Form>
 
         </Modal >
-    )
+    );
 }

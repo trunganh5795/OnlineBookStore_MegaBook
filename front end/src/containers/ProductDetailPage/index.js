@@ -11,7 +11,7 @@ function ProductDetailPage() {
   // const { search } = useLocation();
   const [product, setProduct] = useState(false);
   const [isNotFoundProduct, setIsNotFoundProduct] = useState(false);
-  const userId = useSelector(state => state.user.id)
+  const userId = useSelector(state => state.user.id);
   // lấy sản phẩm
   useEffect(() => {
     let isSubscribe = true;
@@ -23,7 +23,7 @@ function ProductDetailPage() {
           if (data) {
             setProduct(data);
           } else {
-            setIsNotFoundProduct(true)
+            setIsNotFoundProduct(true);
           }
 
         }
@@ -39,12 +39,12 @@ function ProductDetailPage() {
   useEffect(() => {
     let clear = setTimeout(() => {
       productApi.sendProductView(productId, userId);
-      if (rcm !== 'undefined' && index !== 'undefined' && type !== 'undefined') trackingApi.sendViewToElastic(rcm, index, type, productId)
-    }, 3000)
+      if (rcm !== 'undefined' && index !== 'undefined' && type !== 'undefined') trackingApi.sendViewToElastic(rcm, index, type, productId);
+    }, 3000);
     return () => {
       clearTimeout(clear);
-    }
-  })
+    };
+  });
 
   return (
     <>

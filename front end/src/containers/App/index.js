@@ -25,14 +25,14 @@ import ChatBox from '../../components/ChatBot';
 
 const NotFound = React.lazy(() => import('../../components/NotFound'));
 if (!localStorage.getItem('tkre_id')) {
-  localStorage.setItem('tkre_id', `${uniqid()}${new Date().getTime()}`)
+  localStorage.setItem('tkre_id', `${uniqid()}${new Date().getTime()}`);
 }
 if (!sessionStorage.getItem('session_id')) {
-  sessionStorage.setItem('session_id', `${uniqid()}${new Date().getTime()}`)
+  sessionStorage.setItem('session_id', `${uniqid()}${new Date().getTime()}`);
 }
 window.addEventListener('offline', () => {
-  message.error("Kết nối internet bị ngắt")
-})
+  message.error("Kết nối internet bị ngắt");
+});
 function App() {
   const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.authenticate.isAuth);
@@ -40,7 +40,7 @@ function App() {
 
   useEffect(() => {
     //authentication
-    console.log("herererere")
+    console.log("herererere");
     dispatch(authActions.getIsAuth());
     return () => { };
   }, []);
@@ -61,7 +61,7 @@ function App() {
         });
       });
     }
-    return () => { if (socket) socket.disconnect() };
+    return () => { if (socket) socket.disconnect(); };
   }, [isAuth]);
 
   //rendering...

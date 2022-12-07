@@ -24,7 +24,7 @@ function LoginGoogle(props) {
       //   localStorage.setItem(constants.ACCESS_TOKEN_KEY, data.token);
       dispatch(authReducers.setIsAuth(true));
       setTimeout(() => {
-        history.action !== 'POP' ? history.goBack(): history.push('/')
+        history.action !== 'POP' ? history.goBack() : history.push('/');
       }, constants.DELAY_TIME);
     } catch (error) {
       message.error('Lỗi đăng nhập.');
@@ -34,7 +34,6 @@ function LoginGoogle(props) {
   // login with Google
   const onLoginWithGoogle = async (res) => {
     try {
-      
       const { accessToken } = res;
       const response = await loginApi.postLoginWithGoogle({
         access_token: accessToken,
@@ -63,7 +62,7 @@ function LoginGoogle(props) {
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
             className={`login-gg m-0-auto login-with gg login-input`}>
-            <img src={ggIcon} className="login-with__icon " />
+            <img src={ggIcon} className="login-with__icon " alt="google-icon" />
             <span className="login-with__title">{props.title}</span>
           </div>
         )}

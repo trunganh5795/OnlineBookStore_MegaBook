@@ -69,10 +69,10 @@ const cartReducer = (state = initialState, action) => {
     }
     case DEL_CART_ITEM: {
       const bookId = action.payload;
-      let productIndex = state.findIndex(item => item.bookId === bookId)
+      let productIndex = state.findIndex(item => item.bookId === bookId);
       if(productIndex === -1) return state ;
       // cập nhật lại local storage
-      state.splice(productIndex,1)
+      state.splice(productIndex,1);
       localStorage.setItem(constants.CARTS, JSON.stringify(state));
       return [...state];
     }

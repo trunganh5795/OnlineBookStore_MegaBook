@@ -1,4 +1,4 @@
-import { HomeOutlined, MessageOutlined } from '@ant-design/icons';
+import { HomeOutlined } from '@ant-design/icons';
 import { Button, Result } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';

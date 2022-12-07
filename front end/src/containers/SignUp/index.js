@@ -22,12 +22,12 @@ import { useSelector } from 'react-redux';
 const suffixColor = 'rgba(0, 0, 0, 0.25)';
 function SignUp() {
   const windowWidth = window.screen.width;
-  const history = useHistory()
+  const history = useHistory();
   const isAuth = useSelector((state) => state.authenticate.isAuth);
   // const [isSending, setIsSending] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isRedirectLogin, setIsRedirectLogin] = useState(false);
-  const [sendCodeState, setSendCodeState] = useState(false)
+  const [sendCodeState, setSendCodeState] = useState(false);
   // ref kiểm tra đã nhập email hay chưa, hỗ trợ việc gửi mã xác nhận
   const emailRef = useRef('');
 
@@ -63,7 +63,7 @@ function SignUp() {
 
   // fn: xử lý đăng ký
   const onSignUp = async (account) => {
-    setSendCodeState(true)
+    setSendCodeState(true);
     try {
       setIsSubmitting(true);
       const result = await accountApi.postSignUp({ account });
@@ -89,16 +89,16 @@ function SignUp() {
     confirmPassword: '',
     name: '',
     gender: undefined,
-    dateOfBirth:''
+    dateOfBirth: '',
   };
 
   // validate form trước submit với yup
-  const validationCode = Yup.object().shape({
-    code: Yup.string().required('Vui lòng nhập mã xác thực').max(6, 'Mã xác thực không hợp lệ').min(6, 'Mã xác thực không hợp lệ').matches(
-      /^\d+$/,
-      'Mã code phải là số',
-    )
-  })
+  // const validationCode = Yup.object().shape({
+  //   code: Yup.string().required('Vui lòng nhập mã xác thực').max(6, 'Mã xác thực không hợp lệ').min(6, 'Mã xác thực không hợp lệ').matches(
+  //     /^\d+$/,
+  //     'Mã code phải là số',
+  //   )
+  // });
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .trim()
@@ -108,8 +108,9 @@ function SignUp() {
       .trim()
       .required('* Tên bạn là gì ?')
       .matches(
+        // eslint-disable-next-line no-useless-escape
         /[^~!@#%\^&\*()_\+-=\|\\,\.\/\[\]{}'"`]/,
-        '* Không được chứa ký tự đặc biệt',
+        '* Không được chứa ký tự đặc biệt'
       )
       .max(70, '* Tối đa 70 ký tự'),
     password: Yup.string()
@@ -118,22 +119,23 @@ function SignUp() {
       .min(6, '* Mật khẩu phải từ 6-20 ký tự')
       .max(20, '* Mật khẩu phải từ 6-20 ký tự')
       .matches(
+        // eslint-disable-next-line no-useless-escape
         /^(?=.*[A-Z])(?=.*[~!@#%\^&\*()_\+-=\|\\,\.\/\[\]{}'"`])(?=.*[0-9])(?=.*[a-z]).{6,}$/,
-        'Mật khẩu phải bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt',
-
+        'Mật khẩu phải bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt'
       ),
-    confirmPassword: Yup.string().required('Vui lòng nhập lại mật khẩu').oneOf(
-      [Yup.ref('password'), null],
-      '* Mật khẩu không trùng khớp',
-    ),
+    confirmPassword: Yup.string()
+      .required('Vui lòng nhập lại mật khẩu')
+      .oneOf([Yup.ref('password'), null], '* Mật khẩu không trùng khớp'),
     dateOfBirth: Yup.date()
       .required('Nhập ngày sinh')
       .min(new Date(1900, 1, 1), '* Năm sinh từ 1900')
       .max(
         new Date(new Date().getFullYear() - parseInt(constants.MIN_AGE), 1, 1),
-        `* Tuổi tối thiểu là ${constants.MIN_AGE}`,
+        `* Tuổi tối thiểu là ${constants.MIN_AGE}`
       ),
-    gender: Yup.string().required("Giới tính của bạn* ").equals(['male',"female"],'Không hợp lệ'),
+    gender: Yup.string()
+      .required('Giới tính của bạn* ')
+      .equals(['male', 'female'], 'Không hợp lệ'),
   });
   // return...
   return (
@@ -144,155 +146,148 @@ function SignUp() {
           <Redirect to={constants.ROUTES.LOGIN} />
         </Delay>
       )}
-      {isAuth && (<>
-        {history.goBack()}
-      </>
-      )}
+      {isAuth && <>{history.goBack()}</>}
       <h1 className="SignUp-title underline-title m-b-20 m-t-20">
         <b>Đăng ký</b>
       </h1>
-        <Formik
-          initialValues={initialValue}
-          validationSchema={validationSchema}
-          onSubmit={onSignUp}>
-          {(formikProps) => {
-            emailRef.current = formikProps.values.email;
-            return (
-              <Form className="bg-form">
-                <Row
-                  className="input-border m-0 p-tb-20"
-                  gutter={[16, 32]}
-                  >
-                  {/* Form thông tin đăng ký */}
-                  <Col className="p-b-0" span={24} md={12}>
-                    <Row gutter={[8, 16]} className="justify-content-center">
-                      <h2>Thông tin tài khoản</h2>
-                      <Col span={24}>
-                        {/* email field */}
-                        <FastField
-                          name="email"
-                          component={InputField}
-                          className="input-form-common"
-                          placeholder="Email *"
-                          size="large"
-                          suffix={
-                            <Tooltip title="Email của bạn">
-                              <InfoCircleOutlined
-                                style={{
-                                  color: suffixColor,
-                                }}
-                              />
-                            </Tooltip>
-                          }
-                        />
-                      </Col>
-                      <Col span={24}>
-                        {/* password field */}
-                        <FastField
-                          name="password"
-                          component={InputField}
-                          className="input-form-common"
-                          type="password"
-                          placeholder="Mật khẩu *"
-                          size="large"
-                          autocomplete="on"
-                          iconRender={(visible) =>
-                            visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                          }
-                        />
-                      </Col>
-                      <Col span={24}>
-                        {/* confirm password field */}
-                        <FastField
-                          name="confirmPassword"
-                          component={InputField}
-                          className="input-form-common"
-                          type="password"
-                          placeholder="Nhập lại mật khẩu *"
-                          size="large"
-                          iconRender={(visible) =>
-                            visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                          }
-                        />
-                      </Col>
-                    </Row>
-                  </Col>
+      <Formik
+        initialValues={initialValue}
+        validationSchema={validationSchema}
+        onSubmit={onSignUp}>
+        {(formikProps) => {
+          emailRef.current = formikProps.values.email;
+          return (
+            <Form className="bg-form">
+              <Row className="input-border m-0 p-tb-20" gutter={[16, 32]}>
+                {/* Form thông tin đăng ký */}
+                <Col className="p-b-0" span={24} md={12}>
+                  <Row gutter={[8, 16]} className="justify-content-center">
+                    <h2>Thông tin tài khoản</h2>
+                    <Col span={24}>
+                      {/* email field */}
+                      <FastField
+                        name="email"
+                        component={InputField}
+                        className="input-form-common"
+                        placeholder="Email *"
+                        size="large"
+                        suffix={
+                          <Tooltip title="Email của bạn">
+                            <InfoCircleOutlined
+                              style={{
+                                color: suffixColor,
+                              }}
+                            />
+                          </Tooltip>
+                        }
+                      />
+                    </Col>
+                    <Col span={24}>
+                      {/* password field */}
+                      <FastField
+                        name="password"
+                        component={InputField}
+                        className="input-form-common"
+                        type="password"
+                        placeholder="Mật khẩu *"
+                        size="large"
+                        autocomplete="on"
+                        iconRender={(visible) =>
+                          visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                        }
+                      />
+                    </Col>
+                    <Col span={24}>
+                      {/* confirm password field */}
+                      <FastField
+                        name="confirmPassword"
+                        component={InputField}
+                        className="input-form-common"
+                        type="password"
+                        placeholder="Nhập lại mật khẩu *"
+                        size="large"
+                        iconRender={(visible) =>
+                          visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                        }
+                      />
+                    </Col>
+                  </Row>
+                </Col>
 
-                  {/* Form thông tin chi tiết */}
-                  <Col className="p-b-0" span={24} md={12}>
-                    <Row gutter={[0, 16]}>
-                      <h2>Thông tin cá nhân</h2>
-                      <Col span={24}>
-                        {/* full name filed */}
-                        <FastField
-                          name="name"
-                          component={InputField}
-                          className="input-form-common"
-                          placeholder="Họ tên *"
-                          size="large"
-                          suffix={
-                            <Tooltip title="Họ & tên">
-                              <InfoCircleOutlined
-                                style={{ color: suffixColor }}
-                              />
-                            </Tooltip>
-                          }
-                        />
-                      </Col>
-                      <Col span={24}>
-                        {/* dateOfBirth field */}
-                        <FastField
-                          className="input-form-common"
-                          name="dateOfBirth"
-                          component={DatePickerField}
-                          placeholder="Ngày sinh"
-                          size="large"
-                        />
-                      </Col>
-                      <Col span={24}>
-                        {/* gender field */}
-                        <FastField
-                          className="input-form-common gender-field"
-                          size="large"
-                          name="gender"
-                          component={SelectField}
-                          placeholder="Giới tính *"
-                          options={constants.GENDER_OPTIONS}
-                        />
-                      </Col>
-                    </Row>
-                  </Col>
-                  {/* Button submit */}
-                  <Col className="p-t-8 p-b-0 t-center" span={24}>
-                    <Button
-                      className="SignUp-submit-btn w-100"
-                      size="large"
-                      type="primary"
-                      htmlType="submit"
-                      loading={isSubmitting}>
-                      Đăng ký
-                    </Button>
-                  </Col>
-                  <Col span={24} className="p-t-0 t-center">
-                    <div className="or-option" style={{ color: '#acacac' }}>
-                      Đăng nhập với
-                    </div>
-                    <LoginGoogle
-                      className="login-gg m-0-auto login-gg"
-                      title={windowWidth > 375 ? 'Đăng nhập với Gmail' : 'Gmail'}
-                    />
-                    <div className="m-t-10 font-weight-500">
-                      Đã có tài khoản
-                      <Link to={constants.ROUTES.LOGIN}>&nbsp;Đăng nhập</Link>
-                    </div>
-                  </Col>
-                </Row>
-              </Form>
-            );
-          }}
-        </Formik>
+                {/* Form thông tin chi tiết */}
+                <Col className="p-b-0" span={24} md={12}>
+                  <Row gutter={[0, 16]}>
+                    <h2>Thông tin cá nhân</h2>
+                    <Col span={24}>
+                      {/* full name filed */}
+                      <FastField
+                        name="name"
+                        component={InputField}
+                        className="input-form-common"
+                        placeholder="Họ tên *"
+                        size="large"
+                        suffix={
+                          <Tooltip title="Họ & tên">
+                            <InfoCircleOutlined
+                              style={{ color: suffixColor }}
+                            />
+                          </Tooltip>
+                        }
+                      />
+                    </Col>
+                    <Col span={24}>
+                      {/* dateOfBirth field */}
+                      <FastField
+                        className="input-form-common"
+                        name="dateOfBirth"
+                        component={DatePickerField}
+                        placeholder="Ngày sinh"
+                        size="large"
+                      />
+                    </Col>
+                    <Col span={24}>
+                      {/* gender field */}
+                      <FastField
+                        className="input-form-common gender-field"
+                        size="large"
+                        name="gender"
+                        component={SelectField}
+                        placeholder="Giới tính *"
+                        options={constants.GENDER_OPTIONS}
+                      />
+                    </Col>
+                  </Row>
+                </Col>
+                {/* Button submit */}
+                <Col className="p-t-8 p-b-0 t-center" span={24}>
+                  <Button
+                    className="SignUp-submit-btn w-100"
+                    size="large"
+                    type="primary"
+                    htmlType="submit"
+                    loading={isSubmitting}>
+                    Đăng ký
+                  </Button>
+                </Col>
+                <Col span={24} className="p-t-0 t-center">
+                  <div className="or-option" style={{ color: '#acacac' }}>
+                    Đăng nhập với
+                  </div>
+                  <LoginGoogle
+                    className="login-gg m-0-auto login-gg"
+                    title={windowWidth > 375 ? 'Đăng nhập với Gmail' : 'Gmail'}
+                  />
+                  <div className="m-t-10 font-weight-500">
+                    Đã có tài khoản
+                    <Link to={constants.ROUTES.LOGIN}>&nbsp;Đăng nhập</Link>
+                  </div>
+                </Col>
+              </Row>
+            </Form>
+          );
+        }}
+      </Formik>
       {/* )} */}
-
     </div>
   );
 }

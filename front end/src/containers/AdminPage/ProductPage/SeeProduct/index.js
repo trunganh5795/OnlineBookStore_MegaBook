@@ -26,16 +26,16 @@ let query = '';
 let filterOps = [
   { field: 'category', value: [] },
   { field: undefined, value: undefined },
-  { field: 'discount', value: [] }
+  { field: 'discount', value: [] },
 ];
 function SeeProduct() {
   const [editModal, setEditModal] = useState({ visible: false, product: null });
   const [modalDel, setModalDel] = useState({ visible: false, _id: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [list, setList] = useState([]);
-  const [totalProduct, setTotalProduct] = useState(0)
-  const [page, setPage] = useState(1)
-  const [forceRunUseEffect, setForceRunUseEffect] = useState(false)
+  const [totalProduct, setTotalProduct] = useState(0);
+  const [page, setPage] = useState(1);
+  const [forceRunUseEffect, setForceRunUseEffect] = useState(false);
   // event: xoá sản phẩm
   const onDelete = async (_id) => {
     try {
@@ -57,57 +57,70 @@ function SeeProduct() {
     if (newProduct) {
       // Khi chỉnh có cập nhật
       const newList = list.map((item) =>
-        item.bookId !== newProduct.bookId ? item : { ...item, ...newProduct },
+        item.bookId !== newProduct.bookId ? item : { ...item, ...newProduct }
       );
       setList(newList);
     }
     setEditModal({ visible: false });
   };
 
-  let getProductsBy = useCallback(async (value = '', page, perPage, option, filterOps) => {
-    try {
-      if (option === 0) {
-        const response = await productApi.getAllProducts(page, perPage, filterOps);
-        if (response.data && isSubscribe) {
-          const { count, rows } = response.data;
-          setTotalProduct(count)
-          setList(rows);
-          setIsLoading(false);
+  let getProductsBy = useCallback(
+    async (value = '', page, perPage, option, filterOps) => {
+      try {
+        if (option === 0) {
+          const response = await productApi.getAllProducts(
+            page,
+            perPage,
+            filterOps
+          );
+          if (response.data && isSubscribe) {
+            const { count, rows } = response.data;
+            setTotalProduct(count);
+            setList(rows);
+            setIsLoading(false);
+          }
+        } else {
+          let response = await adminApi.searchByName(
+            value,
+            page,
+            perPage,
+            option,
+            filterOps
+          );
+          if (response.data && isSubscribe) {
+            let { count, rows } = response.data;
+            let productList = rows.map((item) => item._source);
+            setTotalProduct(count);
+            setList(productList);
+            setIsLoading(false);
+          }
         }
+      } catch (error) {}
+    },
+    []
+  );
+  let onSearch = useCallback(
+    (value = '', option) => {
+      selectedOption = option;
+      query = value;
+      filterOps = [
+        { field: 'category', value: [] },
+        { field: undefined, value: undefined },
+        { field: 'discount', value: [] },
+      ];
+      if (page === 1) {
+        setForceRunUseEffect((prev) => !prev);
       } else {
-        let response = await adminApi.searchByName(value, page, perPage, option, filterOps);
-        if (response.data && isSubscribe) {
-          let { count, rows } = response.data;
-          let productList = rows.map(item => item._source)
-          setTotalProduct(count)
-          setList(productList);
-          setIsLoading(false);
-        }
+        setPage(1);
       }
-    } catch (error) {
+    },
+    [page]
+  );
 
-    }
-  }, [])
-  let onSearch = useCallback((value = '', option) => {
-    selectedOption = option;
-    query = value;
-    filterOps =[
-      { field: 'category', value: [] },
-      { field: undefined, value: undefined },
-      { field: 'discount', value: [] }
-    ];
-    if (page === 1) {
-      setForceRunUseEffect(prev => !prev)
-    } else {
-      setPage(1)
-    }
-
-  }, [page])
-  
   useEffect(() => {
     isSubscribe = true;
     setIsLoading(true);
-    getProductsBy(query, page, 10, selectedOption, filterOps)
+    getProductsBy(query, page, 10, selectedOption, filterOps);
 
     return () => {
       isSubscribe = false;
@@ -124,7 +137,7 @@ function SeeProduct() {
           <a target="blank" href={`/product/${data.bookId}`}>
             {code}
           </a>
-        )
+        );
       },
     },
     {
@@ -144,11 +157,17 @@ function SeeProduct() {
       sortOrder: filterOps[1].field === 'price' ? filterOps[1].value : null,
       render: (price, row) => (
         <>
-          <h3 style={{ color: `${row.discount ? "red" : "#4F55C5"}`, textDecoration: `${row.discount ? "line-through" : ""}` }}>
+          <h3
+            style={{
+              color: `${row.discount ? 'red' : '#4F55C5'}`,
+              textDecoration: `${row.discount ? 'line-through' : ''}`,
+            }}>
             {price ? helpers.formatProductPrice(price) : 'Liên hệ'}
           </h3>
           <h3 style={{ color: '#4F55C5' }}>
-            {row.discount ? helpers.formatProductPrice(price * (100 - row.discount) / 100) : ''}
+            {row.discount
+              ? helpers.formatProductPrice((price * (100 - row.discount)) / 100)
+              : ''}
           </h3>
         </>
       ),
@@ -159,7 +178,7 @@ function SeeProduct() {
       dataIndex: 'category',
       filteredValue: filterOps[0].value,
       filters: generateFilterType(),
-      // onFilter: (value, record) => 
+      // onFilter: (value, record) =>
       render: (type) => helpers.convertProductType(type),
     },
     {
@@ -169,15 +188,18 @@ function SeeProduct() {
       // defaultSortOrder: 'ascend',
       sortOrder: filterOps[1].field === 'instock' ? filterOps[1].value : null,
       sorter: (a, b) => 0,
-
     },
     {
       title: 'Giảm giá',
       key: 'discount',
       dataIndex: 'discount',
       filteredValue: filterOps[2].value,
-      filters: [{value:0,text:"Đang diễn ra"},{value:1,text:"Đã kết thúc"},{value:2,text:"Sắp diễn ra"}],
-      render: (discount) => discount ? `${discount} %` : '--',
+      filters: [
+        { value: 0, text: 'Đang diễn ra' },
+        { value: 1, text: 'Đã kết thúc' },
+        { value: 2, text: 'Sắp diễn ra' },
+      ],
+      render: (discount) => (discount ? `${discount} %` : '--'),
     },
     {
       title: 'Hành động',
@@ -219,8 +241,8 @@ function SeeProduct() {
   // rendering ...
   return (
     <div className="pos-relative p-8 edit-modal">
-      {(
-        <div className='m-lr-10 m-t-10'>
+      {
+        <div className="m-lr-10 m-t-10">
           {' '}
           {/* modal confirm delete product */}
           <Modal
@@ -239,7 +261,10 @@ function SeeProduct() {
           </Modal>
           {/* table show product list */}
           <AdminSearch
-            options={[{ id: 0, text: "Tất cả" }, { id: 1, text: "Tên Sản phẩm" }]}
+            options={[
+              { id: 0, text: 'Tất cả' },
+              { id: 1, text: 'Tên Sản phẩm' },
+            ]}
             onSearch={onSearch}
             selectedOption={selectedOption}
           />
@@ -251,44 +276,49 @@ function SeeProduct() {
               total: totalProduct,
               position: ['bottomCenter'],
               showSizeChanger: false,
-              onChange: (p) => setPage(p)
+              onChange: (p) => setPage(p),
             }}
             loading={isLoading}
             className="admin-see-product"
             columns={columns}
             dataSource={list}
             onChange={(pagination, filters, sorter, extra) => {
-              let flag = false
-              
-              if (!(filters.category === null && filterOps[0].value.length === 0) && !(filters.discount === null && filterOps[2].value.length === 0)) {
-                filters.category?.forEach(item => {
-                  let index = filterOps[0].value?.findIndex(i => item === i);
-                  if (index === -1) flag = true
-                })
-                
+              let flag = false;
+
+              if (
+                !(
+                  filters.category === null && filterOps[0].value.length === 0
+                ) &&
+                !(filters.discount === null && filterOps[2].value.length === 0)
+              ) {
+                filters.category?.forEach((item) => {
+                  let index = filterOps[0].value?.findIndex((i) => item === i);
+                  if (index === -1) flag = true;
+                });
+
                 if (
-                  (!filters.category && filterOps[0].value.length != 0) ||
-                  (filters.category?.length !== filterOps[0].value.length) ||
+                  (!filters.category && filterOps[0].value.length !== 0) ||
+                  filters.category?.length !== filterOps[0].value.length ||
                   sorter.order !== filterOps[1].value ||
-                  sorter.column?.key !== filterOps[1].field
-                  || flag
+                  sorter.column?.key !== filterOps[1].field ||
+                  flag
                 ) {
-                  flag = true
-                  filterOps[0].field = 'category'
+                  flag = true;
+                  filterOps[0].field = 'category';
                   filterOps[0].value = filters.category ? filters.category : [];
 
                   if (sorter.order) {
-                    filterOps[1].field = sorter.column.key
-                    filterOps[1].value = sorter.order
+                    filterOps[1].field = sorter.column.key;
+                    filterOps[1].value = sorter.order;
                   } else {
-                    filterOps[1].field = undefined
-                    filterOps[1].value = undefined
+                    filterOps[1].field = undefined;
+                    filterOps[1].value = undefined;
                   }
                 }
                 if (page === 1 && flag) {
-                  return setForceRunUseEffect(prev => !prev)
+                  return setForceRunUseEffect((prev) => !prev);
                 }
-                if (flag) setPage(1)
+                if (flag) setPage(1);
               }
             }}
           />
@@ -299,7 +329,7 @@ function SeeProduct() {
             product={editModal.product}
           />
         </div>
-      )}
+      }
     </div>
   );
 }

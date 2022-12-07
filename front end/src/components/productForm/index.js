@@ -10,11 +10,11 @@ import {
     Tooltip,
     Upload,
 } from 'antd';
-import React from 'react'
+import React from 'react';
 import constants from '../../constants';
 const { Option } = Select;
 export default function ProductForm(props) {
-    const { form, message, setAvatar, avatar,avtFileList, setAvtFileList, onValBeforeSubmit, onCompressFile, onResetForm, isSubmitting } = props
+    const { form, message, setAvatar, avatar,avtFileList, setAvtFileList, onValBeforeSubmit, onCompressFile, onResetForm, isSubmitting } = props;
     return (
         <Form
             name="form"
@@ -43,7 +43,7 @@ export default function ProductForm(props) {
                                 
 
                                 if (avtFileList.length < 1) {
-                                    setAvtFileList(fileList)
+                                    setAvtFileList(fileList);
                                     setAvatar(URL.createObjectURL(file));
                                 }
                             }}
@@ -95,7 +95,7 @@ export default function ProductForm(props) {
                     >
                         <Select placeholder="Please choose one" size="large">
                             {constants.CATEGORIES.map((item, index) => {
-                                return (<Option value={item.value} key={index}>{item.title}</Option>)
+                                return (<Option value={item.value} key={index}>{item.title}</Option>);
                             })}
                         </Select>
                     </Form.Item>
@@ -273,5 +273,5 @@ export default function ProductForm(props) {
                 </Button>
             </Row>
         </Form>
-    )
+    );
 }

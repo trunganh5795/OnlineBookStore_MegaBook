@@ -12,7 +12,7 @@ const commentApi = {
   // api: Thêm 1 comment
   postComment: (data) => {
     const url = COMMENT_API_URL;
-    
+
     return axiosClient.post(url, data);
   },
 };

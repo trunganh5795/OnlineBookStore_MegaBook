@@ -50,7 +50,6 @@ function CartOverview(props) {
           </Button>
         </Popconfirm>
       </div>
-
     </>
   );
 }

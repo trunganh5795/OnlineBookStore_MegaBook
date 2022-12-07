@@ -1,16 +1,16 @@
-import { QuestionCircleOutlined } from '@ant-design/icons'
-import { Divider, Segmented, Table, Tooltip } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import statisticApi from '../../../../apis/statisticApi'
-import constants from '../../../../constants'
-import helpers from '../../../../helpers'
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Divider, Segmented, Table, Tooltip } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import statisticApi from '../../../../apis/statisticApi';
+import constants from '../../../../constants';
+import helpers from '../../../../helpers';
 const rankingTooltipText = {
     total: '5 sản phẩm có tổng doanh số cao nhất (tính trên các đơn hàng đã được xác nhận) trong khoảng thời gian đã chọn.',
     quantity: '5 sản phẩm bán chạy nhất của Shop theo tổng số lượng sản phẩm đã xác nhận trong khoảng thời gian được chọn.',
     views: 'Top 5 khu vực có doanh thu cao nhất',
     ratio: 'Top 5 khu vực có số đơn hàng cao nhất'
-}
+};
 const segmentedOptions = [
     {
         label: (
@@ -39,10 +39,10 @@ const segmentedOptions = [
             </p>),
         value: 4
     }
-]
+];
 
 export default function Ranking({ time }) {
-    const [rankingType, setRankingType] = useState(0)
+    const [rankingType, setRankingType] = useState(0);
     const [columns, setColumns] = useState([
         {
             title: 'Thứ hạng',
@@ -63,10 +63,10 @@ export default function Ranking({ time }) {
             key: 'total',
             width: 200
         },
-    ])
-    const [data, setData] = useState([])
+    ]);
+    const [data, setData] = useState([]);
     useEffect(() => {
-        let isSubscribe = true
+        let isSubscribe = true;
         let getTopSell = async (type) => {
             let [start_time, end_time] = time.split(',');
             
@@ -81,12 +81,12 @@ export default function Ranking({ time }) {
                             info: item.title,
                             total: helpers.formatProductPrice(item.total),
                             id: item.book_id
-                        })
-                    })
-                    setData(data)
+                        });
+                    });
+                    setData(data);
                 }
             } else if (type === 1) {
-                let result = await statisticApi.getTop5Sell(start_time, end_time)
+                let result = await statisticApi.getTop5Sell(start_time, end_time);
                 if (result.data && isSubscribe) {
                     let data = result.data.map((item, index) => {
                         return ({
@@ -94,9 +94,9 @@ export default function Ranking({ time }) {
                             info: item._source.title,
                             total: item.numberOfSell,
                             id: item._source.bookId
-                        })
-                    })
-                    setData(data)
+                        });
+                    });
+                    setData(data);
                 }
             } else if (type === 2) {
                 let result = await statisticApi.getTop5RevenueLocation(start_time, end_time);
@@ -108,9 +108,9 @@ export default function Ranking({ time }) {
                             info: constants.PROVINCE[item.key - 1],
                             total: helpers.formatProductPrice(item.total.value),
                             // id: item._source.bookId
-                        })
-                    })
-                    setData(data)
+                        });
+                    });
+                    setData(data);
                 }
             } else {
                 let result = await statisticApi.getTop5SellLocation(start_time, end_time); //top 5 khu vực nhiều đơn nhất
@@ -122,37 +122,37 @@ export default function Ranking({ time }) {
                             info: constants.PROVINCE[item.key - 1],
                             total: item.doc_count
                             // id: item._source.bookId
-                        })
-                    })
-                    setData(data)
+                        });
+                    });
+                    setData(data);
                 }
             }
-        }
+        };
 
         getTopSell(rankingType);
         return () => {
             isSubscribe = false;
-        }
-    }, [rankingType, time])
+        };
+    }, [rankingType, time]);
     const changeColumnsTitle = (key) => {
         let newColumns = [...columns];
-        let type = rankingType
+        let type = rankingType;
         if (key === 1) {
             type = 0; // theo doanh số
-            newColumns[2] = { ...newColumns[2], title: 'Doanh Số' }
+            newColumns[2] = { ...newColumns[2], title: 'Doanh Số' };
         } else if (key === 2) {
             type = 1; // theo số lượng
-            newColumns[2] = { ...newColumns[2], title: 'Số Lượng' }
+            newColumns[2] = { ...newColumns[2], title: 'Số Lượng' };
         } else if (key === 3) {
-            type = 2
-            newColumns[2] = { ...newColumns[2], title: 'Doanh thu' }
+            type = 2;
+            newColumns[2] = { ...newColumns[2], title: 'Doanh thu' };
         } else {
-            type = 3
-            newColumns[2] = { ...newColumns[2], title: 'Số Lượng' }
+            type = 3;
+            newColumns[2] = { ...newColumns[2], title: 'Số Lượng' };
         }
-        setRankingType(type)
-        setColumns([...newColumns])
-    }
+        setRankingType(type);
+        setColumns([...newColumns]);
+    };
     return (
         <>
             <h1>Thứ hạng sản phẩm và khu vực</h1>
@@ -169,5 +169,5 @@ export default function Ranking({ time }) {
                 rowKey="rank"
             />
         </>
-    )
+    );
 }

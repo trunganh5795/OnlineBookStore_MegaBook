@@ -14,14 +14,14 @@ const NotFound = React.lazy(() => import('../components/NotFound'));
 const Cart = React.lazy(() => import('../components/Cart'));
 const AdminPage = React.lazy(() => import('../containers/AdminPage'));
 const SearchResult = React.lazy(() =>
-  import('../containers/SearchFilterPage/Search'),
+  import('../containers/SearchFilterPage/Search')
 );
 const FilterResult = React.lazy(() =>
-  import('../containers/SearchFilterPage/Filter'),
+  import('../containers/SearchFilterPage/Filter')
 );
 const AccountPage = React.lazy(() => import('../containers/AccountPage'));
 const PaymentPage = React.lazy(() => import('../containers/PaymentPage'));
-const QRcodeDetails = React.lazy(()=> import('../containers/QRCodeDetails'))
+const QRcodeDetails = React.lazy(() => import('../containers/QRCodeDetails'));
 const routes = [
   {
     path: constants.ROUTES.HOME,
@@ -90,7 +90,7 @@ const adminRoutes = [
     exact: false,
     main: () => <AdminPage />,
   },
-]
+];
 // render routes
 const renderRoutes = (routes) => {
   return routes.map((route, index) => {
@@ -99,6 +99,7 @@ const renderRoutes = (routes) => {
   });
 };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   routes,
   adminRoutes,

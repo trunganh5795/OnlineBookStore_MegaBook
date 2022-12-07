@@ -27,7 +27,7 @@ function countItemInCart(productCode, carts) {
 function ProductOverview(props) {
   const { products } = props;
   const { search } = useLocation();
-  const searchParams = useMemo(() => new URLSearchParams(search), [search])
+  const searchParams = useMemo(() => new URLSearchParams(search), [search]);
   const {
     bookId,
     img,
@@ -40,11 +40,11 @@ function ProductOverview(props) {
     publisher,
     publicOfYear,
     instock,
-    stars
+    stars,
   } = products;
   const user = useSelector((state) => state.user);
   const { category } = products;
-  const [numOfSell, setNumOfSell] = useState()
+  const [numOfSell, setNumOfSell] = useState();
   const [numOfProduct, setNumberOfProduct] = useState(1);
   const carts = useSelector((state) => state.carts);
   const currentStock = instock - countItemInCart(code, carts);
@@ -54,23 +54,21 @@ function ProductOverview(props) {
   useEffect(() => {
     let isSubscribe = true;
     const getNumOfSell = async (id) => {
-      let data = await productApi.getNumOfSell(id)
-      if(isSubscribe) setNumOfSell(data.data.value)
-    }
-    getNumOfSell(bookId)
+      let data = await productApi.getNumOfSell(id);
+      if (isSubscribe) setNumOfSell(data.data.value);
+    };
+    getNumOfSell(bookId);
     return () => {
       isSubscribe = false;
-    }
-  }, [])
-
+    };
+  }, []);
 
   // rendering ...
   return (
     <Row className="Product-Overview bg-white p-16">
       {/* Hình ảnh và thông số cơ bản sản phẩm */}
       <Col span={24} md={8}>
-        <div
-          className="d-flex align-i-center justify-content-center ">
+        <div className="d-flex align-i-center justify-content-center ">
           <Image
             style={{ maxHeight: '100%' }}
             fallback={ImgLoadFailed}
@@ -87,32 +85,46 @@ function ProductOverview(props) {
         </h2>
         <h3>Tác giả: {author}</h3>
         <h3>NXB: {publisher}</h3>
-        <h3>Năm xuất bản: {publicOfYear ? publicOfYear : "Đang cập nhật"}</h3>
+        <h3>Năm xuất bản: {publicOfYear ? publicOfYear : 'Đang cập nhật'}</h3>
         {/* Đánh giá sản phẩm */}
         <div className="p-tb-8 details d-flex">
           <div>
-            <Rate disabled defaultValue={total_rate ? stars / total_rate : 0} allowHalf className='seprate p-r-8' />
+            <Rate
+              disabled
+              defaultValue={total_rate ? stars / total_rate : 0}
+              allowHalf
+              className="seprate p-r-8"
+            />
           </div>
-          <div className='seprate d-flex align-i-center'>
+          <div className="seprate d-flex align-i-center">
             <a href="#evaluation" className="m-l-8 p-r-8">
               {`${total_rate} Đánh giá`}
             </a>
           </div>
-          <div className='d-flex align-i-center'>
-            <a className='p-l-8' href='#'>Đã bán {numOfSell}</a>
+          <div className="d-flex align-i-center">
+            <p className="p-l-8">Đã bán {numOfSell}</p>
           </div>
         </div>
 
         {/* Giá */}
-        <div className='price'>
+        <div className="price">
           <h1 className="product-price font-weight-700 p-tb-8 m-r-10">
             {/* {price === 0 ? 'Liên hệ' : helpers.formatProductPrice(priceBefore)} */}
-            {price === 0 ? 'Liên hệ' : helpers.formatProductPrice(price * (100 - discount) / 100)}
+            {price === 0
+              ? 'Liên hệ'
+              : helpers.formatProductPrice((price * (100 - discount)) / 100)}
           </h1>
-          {discount > 0 ? <> <span className='Product-View-price--cancel m-r-5'>
-            {helpers.formatProductPrice(price)}
-
-          </span><span className="m-l-8 price-discount">-{discount}%</span> </> : ""}
+          {discount > 0 ? (
+            <>
+              {' '}
+              <span className="Product-View-price--cancel m-r-5">
+                {helpers.formatProductPrice(price)}
+              </span>
+              <span className="m-l-8 price-discount">-{discount}%</span>{' '}
+            </>
+          ) : (
+            ''
+          )}
         </div>
         {/* Chọn số lượng */}
         <div className="p-t-12 option d-flex">
@@ -131,7 +143,7 @@ function ProductOverview(props) {
                 max={currentStock}
                 onChange={(value) => setNumberOfProduct(value)}
               />
-              <h3 className='m-l-10'>Còn : {instock}</h3>
+              <h3 className="m-l-10">Còn : {instock}</h3>
             </>
           )}
         </div>
@@ -139,23 +151,32 @@ function ProductOverview(props) {
         <div className="btn-group p-tb-16 d-flex justify-content-around">
           <Button
             onClick={() => {
-              trackingApi.sendAddToCartToElastic(searchParams.get("rcm"), searchParams.get("index"), searchParams.get("type"), bookId)
-              dispatch(orderApi.addtoCart(
-                {
-                  category,
-                  title,
-                  price,
-                  amount: numOfProduct,
-                  img,
-                  discount,
-                  instock,
-                  bookId,
-                  author,
-                  rcm: searchParams.get("rcm"),
-                  index: searchParams.get("index"),
-                  rcmtype: searchParams.get("type")
-                }, message, user.id
-              ))
+              trackingApi.sendAddToCartToElastic(
+                searchParams.get('rcm'),
+                searchParams.get('index'),
+                searchParams.get('type'),
+                bookId
+              );
+              dispatch(
+                orderApi.addtoCart(
+                  {
+                    category,
+                    title,
+                    price,
+                    amount: numOfProduct,
+                    img,
+                    discount,
+                    instock,
+                    bookId,
+                    author,
+                    rcm: searchParams.get('rcm'),
+                    index: searchParams.get('index'),
+                    rcmtype: searchParams.get('type'),
+                  },
+                  message,
+                  user.id
+                )
+              );
             }}
             size="large"
             disabled={instock ? false : true}
@@ -170,33 +191,38 @@ function ProductOverview(props) {
             className="w-100 btn-group-item"
             style={{ backgroundColor: '#39B3D7' }}
             onClick={() => {
-              trackingApi.sendAddToCartToElastic(searchParams.get("rcm"), searchParams.get("index"), searchParams.get("type"), bookId)
-              dispatch(orderApi.addtoCart(
-                {
-                  category,
-                  title,
-                  price,
-                  amount: numOfProduct,
-                  img,
-                  discount,
-                  instock,
-                  bookId,
-                  author,
-                  rcm: searchParams.get("rcm"),
-                  index: searchParams.get("index"),
-                  rcmtype: searchParams.get("type")
-                }, message, user.id
-              ))
-            }}
-          >
-            <Link to={constants.ROUTES.PAYMENT}>
-              MUA NGAY
-            </Link>
+              trackingApi.sendAddToCartToElastic(
+                searchParams.get('rcm'),
+                searchParams.get('index'),
+                searchParams.get('type'),
+                bookId
+              );
+              dispatch(
+                orderApi.addtoCart(
+                  {
+                    category,
+                    title,
+                    price,
+                    amount: numOfProduct,
+                    img,
+                    discount,
+                    instock,
+                    bookId,
+                    author,
+                    rcm: searchParams.get('rcm'),
+                    index: searchParams.get('index'),
+                    rcmtype: searchParams.get('type'),
+                  },
+                  message,
+                  user.id
+                )
+              );
+            }}>
+            <Link to={constants.ROUTES.PAYMENT}>MUA NGAY</Link>
           </Button>
         </div>
-
       </Col>
-    </Row >
+    </Row>
   );
 }
 

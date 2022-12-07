@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd';
 import React from 'react';
-import './index.scss'
+import './index.scss';
 import RateRatio from './RateRatio';
 import LineChart from '../../../components/LineChart/LineChart';
 import BarChart from '../../../components/BarChart/BarChart';

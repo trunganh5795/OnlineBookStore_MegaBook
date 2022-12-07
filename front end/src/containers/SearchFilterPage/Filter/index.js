@@ -1,4 +1,4 @@
-import { message, Pagination, Spin} from 'antd';
+import { message, Pagination, Spin } from 'antd';
 import productApi from '../../../apis/productApi';
 import ResultSearch from '../../../components/ResultSearch';
 // import constants from '../../../constants/index';
@@ -13,7 +13,7 @@ import { useParams } from 'react-router-dom';
 let prevType = '';
 let isSubscribe = true;
 function FilterResult() {
-  const { type } = useParams()
+  const { type } = useParams();
   const [list, setList] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
@@ -25,8 +25,8 @@ function FilterResult() {
     if (type) {
       if (type === sortBtnActive) {
         setSortBtnActive(0);
-        getFilterProducts(1, isSubscribe, 0)
-        
+        getFilterProducts(1, isSubscribe, 0);
+
         return;
       } else {
         // loading
@@ -37,18 +37,18 @@ function FilterResult() {
         // theo giá giảm dần
         case 1:
           getFilterProducts(1, isSubscribe, 1);
-          
+
           break;
         // theo giá tăng dần
         case 2:
-          getFilterProducts(1, isSubscribe, 2)
+          getFilterProducts(1, isSubscribe, 2);
           break;
         // Năm xuất bản gần nhất
         case 3:
-          getFilterProducts(1, isSubscribe, 3)
+          getFilterProducts(1, isSubscribe, 3);
           break;
         case 4:
-          getFilterProducts(1, isSubscribe, 4)
+          getFilterProducts(1, isSubscribe, 4);
           break;
         default:
           break;
@@ -75,24 +75,23 @@ function FilterResult() {
         setIsLoading(false);
       }
     } catch (error) {
-      message.error(error.response?.data)
+      message.error(error.response?.data);
       setTotal(0);
       setList([]);
     }
   }
-
 
   useEffect(() => {
     isSubscribe = true;
     if (prevType !== type) {
       prevType = type;
       if (page !== 1) {
-        setPage(1)
+        setPage(1);
       } else {
-        getFilterProducts(1, isSubscribe)
+        getFilterProducts(1, isSubscribe);
       }
     } else {
-      getFilterProducts(page, isSubscribe)
+      getFilterProducts(page, isSubscribe);
     }
     return () => {
       isSubscribe = false;
@@ -103,14 +102,17 @@ function FilterResult() {
   return (
     <div className="container" style={{ minHeight: '100vh' }}>
       {isLoading ? (
-        <Spin
-          className="trans-center"
-          tip="Đang tải ..."
-          size="large"
-        />
+        <Spin className="trans-center" tip="Đang tải ..." size="large" />
       ) : (
         <>
-          <ResultSearch initList={list} price={price} setPrice={setPrice} sortBtnActive={sortBtnActive} onSort={onSort} isLoading={isLoading} />
+          <ResultSearch
+            initList={list}
+            price={price}
+            setPrice={setPrice}
+            sortBtnActive={sortBtnActive}
+            onSort={onSort}
+            isLoading={isLoading}
+          />
           {total > 0 && (
             <Pagination
               className="m-tb-16 t-center"

@@ -1,19 +1,19 @@
-import React from 'react'
+import React from 'react';
 import moment from 'moment';
 import { Button, Segmented, Table, DatePicker, Row, Col } from 'antd';
-import { CarOutlined, CheckOutlined, CloseCircleOutlined, CodeSandboxOutlined, DollarCircleOutlined, GiftOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
+import { CarOutlined, CheckOutlined, CloseCircleOutlined, CodeSandboxOutlined, DollarCircleOutlined, GiftOutlined, WalletOutlined } from '@ant-design/icons';
 import helpers from '../../../helpers';
 import { useState } from 'react';
 import AdminSearch from '../../../components/AdminSearch';
 import { useEffect } from 'react';
 import staffApis from '../../../apis/staffApi';
-import message from '../../../configs/message.config'
+import message from '../../../configs/message.config';
 import adminApi from '../../../apis/adminApi';
 import { useCallback } from 'react';
 import OrderDetail from '../../AccountPage/OrderList/OrderDetail';
-import './index.scss'
+import './index.scss';
 const { RangePicker } = DatePicker;
-let rangeTimeTemp = [moment().subtract(30, 'days'), moment()] // tạo biến phụ để khi nào đổ cả start time và end time mới call lại API  
+let rangeTimeTemp = [moment().subtract(30, 'days'), moment()]; // tạo biến phụ để khi nào đổ cả start time và end time mới call lại API  
 let isSubscribe = true;
 let selectedOption = 0;
 let query = '';
@@ -22,7 +22,7 @@ export default function OrderManagement() {
     const [selectedItem, setSelectedItem] = useState([]);
     const [orderStatus, setOrderStatus] = useState(1);
     const [CountAndGroupOrder, setCountAndGroupOrder] = useState([]);
-    const [rangeTime, setRangeTime] = useState([moment().subtract(30, 'days'), moment()])
+    const [rangeTime, setRangeTime] = useState([moment().subtract(30, 'days'), moment()]);
     const [page, setPage] = useState(1);
     const [data, setData] = useState([]);
     const [total, setTotal] = useState(0);
@@ -46,7 +46,7 @@ export default function OrderManagement() {
                     setOrderDetails({
                         isOpen: true,
                         orderId: v
-                    })
+                    });
                 }}
             >{v}</p>,
         },
@@ -117,7 +117,7 @@ export default function OrderManagement() {
     };
 
     const modifiedColumns = (orderStatus, columns, paymentFilter) => {
-        let orderStatusArray = [0, 1, 4, 5, 6] // những trường hợp bỏ cột hành động
+        let orderStatusArray = [0, 1, 4, 5, 6]; // những trường hợp bỏ cột hành động
         if (orderStatusArray.includes(orderStatus)) {
             columns.splice(columns.length - 1, 1);
             if (orderStatus === 1) {
@@ -145,7 +145,7 @@ export default function OrderManagement() {
                         </Button>
                     </div>
                 </>
-            )
+            );
             if (paymentFilter.length === 1 && paymentFilter.includes(1)) {
                 columns.splice(6, 0, {
                     title: 'Khả năng hủy',
@@ -163,10 +163,10 @@ export default function OrderManagement() {
                             >Liên hệ ({value?.contact_time})</Button>
                         </div>
                     )
-                })
+                });
             }
         }
-    }
+    };
     const updateNumOfContact = async (orderId) => {
         try {
             if (orderId) {
@@ -175,15 +175,15 @@ export default function OrderManagement() {
                     message.success("Cập nhật thành công");
                     setData(data => data.map((item) =>
                         item.id === orderId ? { ...item, ratio: { ...item.ratio, contact_time: item.ratio.contact_time + 1 } } : { ...item },
-                    ))
+                    ));
                 }
             } else {
-                message.error("Không thể cập nhật, vui lòng kiểm tra lại")
+                message.error("Không thể cập nhật, vui lòng kiểm tra lại");
             }
         } catch (error) {
-            message.error("Xảy ra lỗi")
+            message.error("Xảy ra lỗi");
         }
-    }
+    };
     const updateOrderStatus = async (orderId, status, currentStatus) => {
         try {
             await adminApi.postUpdateOrderStatus(orderId, status);
@@ -194,95 +194,95 @@ export default function OrderManagement() {
                 let newCountGroupOder = [...CountAndGroupOrder];
                 newCountGroupOder[+status - 1] = newCountGroupOder[+status - 1] + 1;
                 newCountGroupOder[+currentStatus - 1] = newCountGroupOder[+currentStatus - 1] - 1;
-                setCountAndGroupOrder(newCountGroupOder)
-                message.success("Cập nhật thành công")
+                setCountAndGroupOrder(newCountGroupOder);
+                message.success("Cập nhật thành công");
             }
         } catch (error) {
             if (error.response) {
-                message.error(error.response.data)
+                message.error(error.response.data);
             } else {
-                message.error("Có lỗi xảy ra")
+                message.error("Có lỗi xảy ra");
             }
         }
 
-    }
+    };
 
     const comfirmOrderBulk = async (ids) => {
         try {
-            await staffApis.confirmOrderBulk(ids)
+            await staffApis.confirmOrderBulk(ids);
             for (let id of ids) {
                 let index = data.findIndex(item => item.id === id);
                 if (index !== -1) {
-                    data.splice(index, 1)
+                    data.splice(index, 1);
                 };
             }
 
             CountAndGroupOrder[1] = CountAndGroupOrder[1] - ids.length;
             CountAndGroupOrder[2] = CountAndGroupOrder[2] + ids.length;
-            message.success("Cập nhật thành công")
-            setCountAndGroupOrder([...CountAndGroupOrder])
-            setData([...data])
+            message.success("Cập nhật thành công");
+            setCountAndGroupOrder([...CountAndGroupOrder]);
+            setData([...data]);
         } catch (error) {
             if (error.response) {
-                message.error(error.response.data)
+                message.error(error.response.data);
             } else {
-                message.error("Có lỗi xảy ra")
+                message.error("Có lỗi xảy ra");
             }
         }
 
-    }
+    };
 
     const onSearch = useCallback((value = '', option) => {
         selectedOption = option;
         query = value;
         if (page === 1) {
-            setForceRunUseEffect(prev => !prev)
+            setForceRunUseEffect(prev => !prev);
         } else {
-            setPage(1)
+            setPage(1);
         }
-    }, [page])
+    }, [page]);
 
     useEffect(() => {
-        isSubscribe = true
+        isSubscribe = true;
         const countOrderByStatus = async () => {
-            let data = await staffApis.countOrderByStatus(rangeTime[0].format('YYYY-MM-DD'), rangeTime[1].add(1, 'days').format('YYYY-MM-DD'))
+            let data = await staffApis.countOrderByStatus(rangeTime[0].format('YYYY-MM-DD'), rangeTime[1].add(1, 'days').format('YYYY-MM-DD'));
                 //rangeTime[1].add(1, 'days').format('YYYY-MM-DD') Thêm 1 ngày để, trở thành cuối của ngày hôm trước
             let groupOrder = [0, 0, 0, 0, 0, 0];
             data.data.forEach((item, index) => {
                 groupOrder[+item.status - 1] = item.total;
-            })
-            if (isSubscribe) setCountAndGroupOrder(groupOrder)
-        }
+            });
+            if (isSubscribe) setCountAndGroupOrder(groupOrder);
+        };
         countOrderByStatus();
         return () => {
             isSubscribe = false;
-            rangeTimeTemp = [moment().subtract(30, 'days'), moment()]
-        }
-    }, [rangeTime])
+            rangeTimeTemp = [moment().subtract(30, 'days'), moment()];
+        };
+    }, [rangeTime]);
 
     useEffect(() => {
         isSubscribe = true;
         const getOrderByStatus = async () => {
             try {
-                let data = await staffApis.getOrderByStatus(rangeTime[0].format('YYYY-MM-DD'), rangeTime[1].add(1, 'days').format('YYYY-MM-DD'), null, orderStatus, page, 8, paymentFilter, query, selectedOption)
+                let data = await staffApis.getOrderByStatus(rangeTime[0].format('YYYY-MM-DD'), rangeTime[1].add(1, 'days').format('YYYY-MM-DD'), null, orderStatus, page, 8, paymentFilter, query, selectedOption);
                 //rangeTime[1].add(1, 'days').format('YYYY-MM-DD') Thêm 1 ngày để, trở thành cuối của ngày hôm trước
                 if (isSubscribe) {
-                    setData(data.data.rows)
-                    setTotal(data.data.count)
+                    setData(data.data.rows);
+                    setTotal(data.data.count);
                 }
             } catch (error) {
                 if (error.response) {
-                    message.error(error.response.data.message)
+                    message.error(error.response.data.message);
                 } else {
-                    message.error("Có lỗi xảy ra")
+                    message.error("Có lỗi xảy ra");
                 }
             }
-        }
+        };
         getOrderByStatus();
         return () => {
             isSubscribe = false;
-        }
-    }, [orderStatus, page, rangeTime, paymentFilter, forceRunUseEffect])
+        };
+    }, [orderStatus, page, rangeTime, paymentFilter, forceRunUseEffect]);
 
     useEffect(() => {
         isSubscribe = true;
@@ -293,15 +293,15 @@ export default function OrderManagement() {
         }
         return () => {
             isSubscribe = false;
-        }
-    }, [isOpenRangeTime])
+        };
+    }, [isOpenRangeTime]);
 
     return (
         <div className='staff-order-management p-5'>
             <Segmented className=' m-auto d-block'
                 defaultValue={1}
                 onChange={(value) => {
-                    setOrderStatus(value)
+                    setOrderStatus(value);
                     setData([]);
                     setPage(1);
                     setSelectedItem([]);
@@ -437,7 +437,7 @@ export default function OrderManagement() {
                 dataSource={data}
                 onChange={(pagination, filters, sorter, extra) => {
                     let forceRerender = false;
-                    if (!filters.payment && paymentFilter.length != 0) {
+                    if (!filters.payment && paymentFilter.length !== 0) {
                         forceRerender = true;
                     } else if (paymentFilter.length !== filters.payment.length) {
                         forceRerender = true;
@@ -451,9 +451,9 @@ export default function OrderManagement() {
                     }
                     if (forceRerender) {
                         if (!filters.payment) {
-                            setPaymentFilter([])
+                            setPaymentFilter([]);
                         } else {
-                            setPaymentFilter(filters.payment)
+                            setPaymentFilter(filters.payment);
                         }
                     }
                 }}
@@ -464,5 +464,5 @@ export default function OrderManagement() {
                     onClose={() => setOrderDetails({ isOpen: false })}
                 />}
         </div>
-    )
+    );
 }

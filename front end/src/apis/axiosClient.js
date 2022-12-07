@@ -10,7 +10,7 @@ const baseURL =
 
 //Set up default config for http request
 // Tao ra 1 object dung chung cho moi noi can import no
-// 
+//
 const axiosClient = axios.create({
   baseURL: baseURL + '/apis',
   // headers: {
@@ -28,7 +28,7 @@ axiosClient.interceptors.request.use(
   },
   (error) => {
     throw error;
-  },
+  }
 );
 
 //handle response
@@ -38,7 +38,7 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     throw error;
-  },
+  }
 );
 
 export default axiosClient;

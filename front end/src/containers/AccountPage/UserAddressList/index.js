@@ -5,12 +5,12 @@ import addressApi from '../../../apis/addressApi';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import AddressAddForm from './AddressAddForm';
-let isSubscribe = true
+let isSubscribe = true;
 function AddressUserList(props) {
   const { isCheckout, onChecked, showAll } = props;
   //onChecked là hàm để chọn địa chỉ, isCheckout = true => đây là bước thanh toán
   const [isVisibleForm, setIsVisibleForm] = useState(false);
-  const [isVisibelAddressList, setIsVisibelAddressList] = useState(false)
+  const [isVisibelAddressList, setIsVisibelAddressList] = useState(false);
   const [list, setList] = useState([]);
   const [activeItem, setActiveItem] = useState(-1);
   const user = useSelector((state) => state.user);
@@ -25,8 +25,8 @@ function AddressUserList(props) {
         message.success('Xoá địa chỉ thành công');
         let index = list.findIndex(item => item.id === addressId);
         if (index !== -1 && isSubscribe) {
-          list.splice(index,1)
-          setList([...list])
+          list.splice(index,1);
+          setList([...list]);
         }
         // setUpdateList(!updateList);
       }
@@ -44,14 +44,14 @@ function AddressUserList(props) {
         let defaultAddIndex = 0;
         list.forEach((item, index) => {
           if (item.id === addressId) {
-            item.defaultAddress = true
-            defaultAddIndex = index
+            item.defaultAddress = true;
+            defaultAddIndex = index;
           } else {
-            item.defaultAddress = false
+            item.defaultAddress = false;
           }
-        })
-        list.sort((a, b) => -(Number(a.defaultAddress) - Number(b.defaultAddress)))
-        if (isSubscribe) setList([...list])
+        });
+        list.sort((a, b) => -(Number(a.defaultAddress) - Number(b.defaultAddress)));
+        if (isSubscribe) setList([...list]);
       }
     } catch (error) {
       message.error('Cập nhật thất bại.');
@@ -60,11 +60,11 @@ function AddressUserList(props) {
 
   // fn: hiển thị danh sách
   function showAddressList(list = [], showAll = false) {
-    let newList = []
+    let newList = [];
     if (showAll) {
-      newList = list
+      newList = list;
     } else {
-      newList.push(list[0])
+      newList.push(list[0]);
     }
     return (
       newList &&
@@ -110,7 +110,7 @@ function AddressUserList(props) {
                   {!showAll && (
                     <Button
                       type="link"
-                      onClick={() => { setIsVisibelAddressList(prev => !prev) }}
+                      onClick={() => { setIsVisibelAddressList(prev => !prev); }}
                     >
                       Thay đổi
                     </Button>
@@ -215,8 +215,8 @@ function AddressUserList(props) {
             okText={'Chọn'}
             onOk={() => {
               [list[0], list[activeItem]] = [list[activeItem], list[0]];
-              setList([...list])
-              setIsVisibelAddressList(false)
+              setList([...list]);
+              setIsVisibelAddressList(false);
             }}
             centered
             width={768}>

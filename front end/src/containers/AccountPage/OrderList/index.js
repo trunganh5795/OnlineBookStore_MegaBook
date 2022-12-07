@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import OrderDetail from './OrderDetail';
-import './index.scss'
+import './index.scss';
 import PostCommentModal from './PostCommentModal/PostCommentModal';
 import commentApi from '../../../apis/commentApi';
 // fn: tạo danh sách lọc cho trạng thái đơn hàng
@@ -28,7 +28,7 @@ function OrderList() {
   const [ratingOrder, setRatingOrder] = useState({
     isOpen: false,
     products: []
-  })
+  });
   const user = useSelector((state) => state.user);
 
   // các cột cho bảng danh sách đơn hàng
@@ -69,7 +69,7 @@ function OrderList() {
       key: 'order_detail',
       width: 250,
       render: (orderProd, records) => {
-        let findIdx = orderListShowMore.findIndex((id) => id === records.id)
+        let findIdx = orderListShowMore.findIndex((id) => id === records.id);
         //orderListShowMore các đơn hàng bấm showMore
         return (
           <>
@@ -91,16 +91,16 @@ function OrderList() {
             <h3 className="t-center see-more"
               onClick={() => {
                 if (findIdx !== -1) {
-                  orderListShowMore.splice(findIdx, 1)
-                  setShowMore([...orderListShowMore])
+                  orderListShowMore.splice(findIdx, 1);
+                  setShowMore([...orderListShowMore]);
                 } else {
-                  setShowMore((prev) => [...prev, records.id])
+                  setShowMore((prev) => [...prev, records.id]);
                 }
               }}
             >
               {findIdx !== -1 ? <CaretUpOutlined /> : <CaretDownOutlined />}
             </h3>
-          </>)
+          </>);
       },
     },
     {
@@ -123,7 +123,7 @@ function OrderList() {
         {(orderStatus == 5 && !record.isRate) ? <Button
           type="primary"
           onClick={() => {
-            setRatingOrder({ isOpen: true, products: record })
+            setRatingOrder({ isOpen: true, products: record });
           }}
         >
           Đánh giá
@@ -181,23 +181,23 @@ function OrderList() {
   const postComment = async (orderId, dataComments, setLoading, onClose) => {
     try {
       for (let i = 0; i < dataComments.length; i++) {
-        if (!(dataComments[i].rate)) return message.error("Vui lòng chọn đánh giá")
+        if (!(dataComments[i].rate)) return message.error("Vui lòng chọn đánh giá");
       }
-      setLoading(true)
-      await commentApi.postComment({ orderId, data: dataComments })
+      setLoading(true);
+      await commentApi.postComment({ orderId, data: dataComments });
       let dataIndex = orderList.findIndex((item, index) => item.id === orderId);
       setTimeout(() => {
-        setLoading(false)
-        onClose()
+        setLoading(false);
+        onClose();
         if (dataIndex !== -1) {
           orderList[dataIndex].isRate = true;
-          setOrderList([...orderList])
+          setOrderList([...orderList]);
         }
-      }, 2000)
+      }, 2000);
     } catch (error) {
-      message.error("Xãy ra lỗi")
+      message.error("Xãy ra lỗi");
     }
-  }
+  };
   const userCancelOrder = async (orderId) => {
     try {
       await orderApi.customerCancelOrder(orderId);
@@ -205,13 +205,13 @@ function OrderList() {
       if (dataIndex !== -1) {
         if (dataIndex !== -1) {
           orderList[dataIndex].status = "6";
-          setOrderList([...orderList])
+          setOrderList([...orderList]);
         }
       }
     } catch (error) {
-      message.error("Xãy ra lỗi")
+      message.error("Xãy ra lỗi");
     }
-  }
+  };
   // event: Lấy danh sách
   useEffect(() => {
     let isSubscribe = true;
@@ -238,7 +238,7 @@ function OrderList() {
     if (user.id) getOrderList();
     return () => {
 
-      isSubscribe = false
+      isSubscribe = false;
     };
   }, [user]);
 

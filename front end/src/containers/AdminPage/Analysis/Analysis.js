@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react';
 import { Col, Row, Button, DatePicker, Select } from 'antd';
-import './index.scss'
+import './index.scss';
 import Ranking from './Ranking/Ranking';
 import CategoryRanking from './CategoryRanking/CategoryRanking';
 import Statictis from './Statictis';
@@ -17,14 +17,14 @@ import NewUserStatictis from './NewUserStatistic';
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 let today = `${moment().format('DD/MM/YYYY')}`;
-let last7days = `${moment().subtract(7, 'd').format('DD/MM/YYYY')} - ${moment().format('DD/MM/YYYY')}`
-let last30days = `${moment().subtract(30, 'd').format('DD/MM/YYYY')} - ${moment().format('DD/MM/YYYY')}`
+let last7days = `${moment().subtract(7, 'd').format('DD/MM/YYYY')} - ${moment().format('DD/MM/YYYY')}`;
+let last30days = `${moment().subtract(30, 'd').format('DD/MM/YYYY')} - ${moment().format('DD/MM/YYYY')}`;
 export default function Analysis() {
 
   let [range, setRange] = useState('now/d,now/d');
   let [customRange, setCustomRange] = useState('');
   let [isOpen, setIsOpen] = useState(false);
-  const [showCustomRange, setShowCustomRange] = useState(false)
+  const [showCustomRange, setShowCustomRange] = useState(false);
   let datePickerRef = useRef(null);
 
   return (
@@ -40,14 +40,14 @@ export default function Analysis() {
               }}
               onChange={(e) => {
                 if (e !== 'custom') {
-                  setRange(e)
-                  setShowCustomRange(false)
+                  setRange(e);
+                  setShowCustomRange(false);
                 }
               }}
               onSelect={e => {
                 if (e === 'custom') {
-                  setIsOpen(true)
-                  datePickerRef.current.style.display = 'inline'
+                  setIsOpen(true);
+                  datePickerRef.current.style.display = 'inline';
                 }
               }}
             >
@@ -61,19 +61,19 @@ export default function Analysis() {
               <RangePicker
                 open={isOpen}
                 onChange={(e) => {
-                  setRange(`${moment(e[0]._d).format('YYYY-MM-DD')},${moment(e[1]._d).format('YYYY-MM-DD')}`)
-                  setCustomRange(`(${moment(e[0]._d).format('DD-MM-YYYY')} - ${moment(e[1]._d).format('DD-MM-YYYY')})`)
-                  setShowCustomRange(true)
+                  setRange(`${moment(e[0]._d).format('YYYY-MM-DD')},${moment(e[1]._d).format('YYYY-MM-DD')}`);
+                  setCustomRange(`(${moment(e[0]._d).format('DD-MM-YYYY')} - ${moment(e[1]._d).format('DD-MM-YYYY')})`);
+                  setShowCustomRange(true);
                 }}
                 renderExtraFooter={(e) =>
                   <div>
                     <Button className="text-right m-r-5" type="danger" onClick={() => {
-                      datePickerRef.current.style.display = 'none'
-                      setIsOpen(false)
+                      datePickerRef.current.style.display = 'none';
+                      setIsOpen(false);
                     }}>Thoát</Button>
                     <Button className="text-right" type="primary" onClick={() => {
-                      datePickerRef.current.style.display = 'none'
-                      setIsOpen(false)
+                      datePickerRef.current.style.display = 'none';
+                      setIsOpen(false);
                     }}>Chọn</Button>
                   </div>
                 }
@@ -109,5 +109,5 @@ export default function Analysis() {
         </div>
       </Col>
     </Row >
-  )
+  );
 }

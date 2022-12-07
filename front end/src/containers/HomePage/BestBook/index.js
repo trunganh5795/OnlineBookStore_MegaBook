@@ -1,28 +1,28 @@
-import { Button, Col, Image, message, Row } from 'antd'
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-import productApi from '../../../apis/productApi'
-import helpers from '../../../helpers'
+import { Button, Col, Image, message, Row } from 'antd';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import productApi from '../../../apis/productApi';
+import helpers from '../../../helpers';
 import moment from 'moment';
-import orderApi from '../../../apis/orderApi'
-import { useDispatch, useSelector } from 'react-redux'
+import orderApi from '../../../apis/orderApi';
+import { useDispatch, useSelector } from 'react-redux';
 export default function BestBook() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
-    let [bestBook, setBestBook] = useState({})
+    let [bestBook, setBestBook] = useState({});
     useEffect(() => {
         let isSubsribe = true;
         async function getBestBook() {
             let data = await productApi.getBestBook();
             if (data.data && isSubsribe) {
-                setBestBook(data.data)
+                setBestBook(data.data);
             }
         }
         getBestBook();
         return () => {
-            isSubsribe = false
-        }
-    }, [])
+            isSubsribe = false;
+        };
+    }, []);
 
     return (
         <Col span={24}>
@@ -76,7 +76,7 @@ export default function BestBook() {
                                   bookId : bestBook.bookId,
                                   author : bestBook.author
                                 }, message, user.id
-                              ))
+                              ));
                         }}
                         >Thêm vào giỏ</Button>
                         {/* </Col> */}
@@ -84,5 +84,5 @@ export default function BestBook() {
                 </Col>
             </Row>
         </Col>
-    )
+    );
 }

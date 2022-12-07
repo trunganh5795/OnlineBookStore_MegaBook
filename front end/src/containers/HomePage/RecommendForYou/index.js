@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import productApi from '../../../apis/productApi';
 import RelatedProductList from '../../../components/ProductDetail/RelatedProductList';
 import PropTypes from 'prop-types';
@@ -17,7 +17,7 @@ function RecommendForYou(props) {
                 if ((isAuth === true && id) || (isAuth === false && !id)) {
                     const respone = await productApi.getHomepageProduct(id);
                     if (isSubscribe && isAuth != null) {
-                        setProductList(respone.recomms)
+                        setProductList(respone.recomms);
                     }
                 }
             } catch (error) {

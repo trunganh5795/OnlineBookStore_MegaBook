@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient';
 import cartActions from '../reducers/carts';
 import productApi from './productApi';
-import recombee from 'recombee-js-api-client'
+import recombee from 'recombee-js-api-client';
 const ORDER_API_ENDPOINT = '/orders';
 
 const orderApi = {
@@ -28,21 +28,27 @@ const orderApi = {
 
   addtoCart: (product, message, userId) => {
     if (userId) {
-      productApi.client.send(new recombee.AddCartAddition(userId, product.bookId, {
-        'cascadeCreate': false,
-        'recommId': product.rcm ? (product.rcm === 'undefined' ? null : product.rcm) : null
-      }))
+      productApi.client.send(
+        new recombee.AddCartAddition(userId, product.bookId, {
+          cascadeCreate: false,
+          recommId: product.rcm
+            ? product.rcm === 'undefined'
+              ? null
+              : product.rcm
+            : null,
+        })
+      );
     }
-    return dispatch => {
+    return (dispatch) => {
       dispatch(cartActions.addToCart(product));
       message.success('Đã thêm vào giỏ');
-    }
+    };
   },
 
   customerCancelOrder: (orderId) => {
     const url = ORDER_API_ENDPOINT + '/cancel';
     return axiosClient.put(url, { orderId });
-  }
+  },
 };
 
 export default orderApi;

@@ -1,5 +1,5 @@
-import { Button, Col, Image, message, Row, Tabs } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Button, Col, Image, message, Row, Tabs } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -7,20 +7,20 @@ import orderApi from '../../../apis/orderApi';
 import productApi from '../../../apis/productApi';
 
 import helpers from '../../../helpers';
-import './index.scss'
+import './index.scss';
 const { TabPane } = Tabs;
 export default function Trending() {
-    const carts = useSelector(state => state.carts)
+    const carts = useSelector(state => state.carts);
     const isAuth = useSelector((state) => state.authenticate.isAuth);
     const userId = useSelector((state) => state.user.id);
-    const [trendingList, setTrendingList] = useState({})
+    const [trendingList, setTrendingList] = useState({});
     const dispatch = useDispatch();
     useEffect(() => {
         let flag = true;
         async function getTrendingProduct() {
             const result = await productApi.getTrendingProduct();
             if (flag) {
-                setTrendingList(result)
+                setTrendingList(result);
             }
         }
         if (isAuth != null) {
@@ -34,9 +34,9 @@ export default function Trending() {
 
         }
         return () => {
-            flag = false
-        }
-    }, [dispatch, isAuth, userId])
+            flag = false;
+        };
+    }, [dispatch, isAuth, userId]);
 
     return (
         <>
@@ -51,9 +51,9 @@ export default function Trending() {
                             <Tabs tabPosition="left"
                             >
                                 {trendingList.recomms && trendingList.recomms.map(item => {
-                                    let Itemindex = carts.findIndex(element => element.bookId === item.id)
+                                    let Itemindex = carts.findIndex(element => element.bookId === item.id);
                                     if (Itemindex !== -1) {
-                                        item.values.instock -= carts[Itemindex].amount
+                                        item.values.instock -= carts[Itemindex].amount;
                                     }
 
                                     return (
@@ -112,7 +112,7 @@ export default function Trending() {
                                                                     bookId: item.id,
                                                                     author: item.values.author
                                                                 }, message
-                                                            ))
+                                                            ));
                                                             item.values.instock--;
                                                         }}
                                                         disabled={item.values.instock <= 0 ? true : false}
@@ -120,7 +120,7 @@ export default function Trending() {
                                                 </Col>
                                             </Row>
                                         </TabPane>
-                                    )
+                                    );
                                 })}
                             </Tabs>
                         </Col>
@@ -129,5 +129,5 @@ export default function Trending() {
             }
         </>
 
-    )
+    );
 }

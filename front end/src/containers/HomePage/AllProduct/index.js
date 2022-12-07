@@ -3,8 +3,8 @@ import productApi from '../../../apis/productApi';
 import ProductView from '../../../components/ProductView';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './index.scss'
-const windowWidth = window.innerWidth
+import './index.scss';
+const windowWidth = window.innerWidth;
 function AllProduct({ title, category }) {
   const [list, setList] = useState([]);
   const [page, setPage] = useState(1);
@@ -64,7 +64,7 @@ function AllProduct({ title, category }) {
           );
         })
       )
-    )
+    );
 
   };
 

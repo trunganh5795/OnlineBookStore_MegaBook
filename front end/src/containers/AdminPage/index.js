@@ -27,7 +27,7 @@ import { Link } from 'react-router-dom';
 // import Analysis from './Analysis/Analysis';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 // import DiscountDetails from './DiscountDetails';
-import logo from '../../assets/imgs/logo.png'
+import logo from '../../assets/imgs/logo.png';
 import { useDispatch } from 'react-redux';
 import recombeetoken from '../../reducers/recombeetoken';
 import adminApi from '../../apis/adminApi';
@@ -56,7 +56,12 @@ const menuList = [
     // link:'product',
     items: [
       { key: 'p0', title: 'Xem', icon: <EyeOutlined />, link: 'product/see' },
-      { key: 'p1', title: 'Thêm mới', icon: <PlusCircleOutlined />, link: 'product/add' },
+      {
+        key: 'p1',
+        title: 'Thêm mới',
+        icon: <PlusCircleOutlined />,
+        link: 'product/add',
+      },
     ],
   },
   {
@@ -78,7 +83,7 @@ const menuList = [
     title: 'Khuyến mãi',
     icon: <NotificationOutlined />,
     link: 'marketing/voucher',
-    items: []
+    items: [],
     // items: [
     //   { key: 'i0', title: 'Voucher', icon: <PercentageOutlined />, link: 'marketing/voucher' },
     //   { key: 'i1', title: 'Khuyến mãi', icon: <FireOutlined />, link: 'marketing/event' },
@@ -96,7 +101,7 @@ const menuList = [
 function AdminPage() {
   let { path, url } = useRouteMatch();
   const { pathname } = useLocation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [keyMenu, setKeyMenu] = useState(() => pathname.replace(path, '')[1]);
   const [isLogin, setIsLogin] = useState(() => {
     const isLogin = localStorage.getItem('admin');
@@ -114,17 +119,32 @@ function AdminPage() {
 
   // fn: Show Title Selected
   const showTitleSelected = (key) => {
-    let result = <div className='path-badge'><DashboardOutlined />Dashboard</div>;
+    let result = (
+      <div className="path-badge">
+        <DashboardOutlined />
+        Dashboard
+      </div>
+    );
     menuList.forEach((item) => {
-      if (item.key === key) result = (<div className='path-badge'>{item.icon} {item.title}</div>);
-      item.items.forEach((child) => {
-        if (child.key === key) result = (
-          <>
-            <div className='path-badge'>{item.icon} {item.title}</div>
-            <span> &gt; </span>
-            <div className='path-badge'>{child.icon} {child.title}</div>
-          </>
+      if (item.key === key)
+        result = (
+          <div className="path-badge">
+            {item.icon} {item.title}
+          </div>
         );
+      item.items.forEach((child) => {
+        if (child.key === key)
+          result = (
+            <>
+              <div className="path-badge">
+                {item.icon} {item.title}
+              </div>
+              <span> &gt; </span>
+              <div className="path-badge">
+                {child.icon} {child.title}
+              </div>
+            </>
+          );
       });
     });
     return result;
@@ -135,27 +155,32 @@ function AdminPage() {
     return menuList.map((item, index) => {
       const { key, title, icon, items, link } = item;
       if (items.length === 0)
-        return ({
-          label: (<Link to={`/admin/${link}`} className="menu-item-title">{title}</Link>
+        return {
+          label: (
+            <Link to={`/admin/${link}`} className="menu-item-title">
+              {title}
+            </Link>
           ),
           key,
-          icon
-        }
-          // <Menu.Item className="menu-item" key={key} icon={icon}>
-        );
+          icon,
+        };
+        // <Menu.Item className="menu-item" key={key} icon={icon}>
       // else render SubMenu
-      return ({
+      return {
         label: title,
         key: index,
         icon,
         children: items.map((child, index) => ({
-          label: (< Link to={`/admin/${child.link}`} className="menu-item-title" > {child.title}</Link >),
+          label: (
+            <Link to={`/admin/${child.link}`} className="menu-item-title">
+              {' '}
+              {child.title}
+            </Link>
+          ),
           key: child.key,
-          icon: child.icon
-        })
-        )
-      }
-      );
+          icon: child.icon,
+        })),
+      };
     });
   };
   // event: Login với quyền admin (props > Login)
@@ -175,29 +200,28 @@ function AdminPage() {
   useEffect(() => {
     let getRecombeeToken = async () => {
       try {
-        let data = await adminApi.getRecombeeToken()
+        let data = await adminApi.getRecombeeToken();
         if (data.data) {
-          dispatch(recombeetoken.saveTokenToStore(data.data.token))
-
+          dispatch(recombeetoken.saveTokenToStore(data.data.token));
         }
       } catch (error) {
         // console.log(error.response.data);
-        message.error(error.response.data.message)
+        message.error(error.response.data.message);
       }
-    }
+    };
     if (adminName) getRecombeeToken();
-    return () => {
-
-    }
-  }, [dispatch, adminName])
+    return () => {};
+  }, [dispatch, adminName]);
 
   return (
     <div className="Admin-Page" style={{ backgroundColor: '#e5e5e5' }}>
       {!isLogin ? (
         // Nếu chưa Login => isLogin = false
-        <div className="trans-center bg-white p-32 bor-rad-8 box-sha-home" style={{ top: '38%' }}>
+        <div
+          className="trans-center bg-white p-32 bor-rad-8 box-sha-home"
+          style={{ top: '38%' }}>
           {/* <div className='d-flex justify-content-center'> */}
-          <div className='t-center'>
+          <div className="t-center">
             <img src={logo} alt="" width="100" />
           </div>
           <h2 className="m-b-16 t-center">Mega Book's Dashboard</h2>
@@ -212,7 +236,7 @@ function AdminPage() {
             className="d-flex align-i-center"
             style={{ height: '72px', backgroundColor: mainColor }}>
             <div className="logo t-center" style={{ flexBasis: '200px' }}>
-              <img width={100} height={48} src={logoUrl} />
+              <img width={100} height={48} src={logoUrl} alt="logo" />
             </div>
             <div className="flex-grow-1 d-flex align-i-center">
               <h2 className="t-color-primary flex-grow-1 p-l-44 main-title">
@@ -246,14 +270,12 @@ function AdminPage() {
               onClick={handleSelected}
               style={{
                 minHeight: '100vh',
-                flexBasis: `${window.innerWidth < 400 ? 'unset' : "200px"}`,
+                flexBasis: `${window.innerWidth < 400 ? 'unset' : '200px'}`,
               }}
               defaultSelectedKeys={keyMenu}
               inlineCollapsed={window.innerWidth < 400 ? true : false}
               mode="inline"
-              items={renderMenuItem()}
-            >
-            </Menu>
+              items={renderMenuItem()}></Menu>
             {/* main contents */}
             <div className="flex-grow-1">
               <Suspense fallback={<GlobalLoading />}>
@@ -279,7 +301,7 @@ function AdminPage() {
                   </Route> */}
                   <Route path={`${path}/orders`}>
                     {/* <OrderList /> */}
-                    <OrderManagement/>
+                    <OrderManagement />
                   </Route>
                   <Route path={`${path}/marketing`}>
                     <Switch>

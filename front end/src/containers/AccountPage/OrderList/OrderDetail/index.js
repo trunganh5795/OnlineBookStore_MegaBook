@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import './index.scss'
+import './index.scss';
 function OrderDetail(props) {
   const { orderId, onClose } = props;
   const [visible, setVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [order, setOrder] = useState(null);
-  const [orderProgress, setOrderProgress] = useState([])
-  const [isLoadingProgess, setIsLoadingProgress] = useState(true)
+  const [orderProgress, setOrderProgress] = useState([]);
+  const [isLoadingProgess, setIsLoadingProgress] = useState(true);
   // event: lấy chi tiết đơn hàng
   useEffect(() => {
     let isSubscribe = true;
@@ -65,7 +65,7 @@ function OrderDetail(props) {
               {helpers.reduceProductName(product.title, 40)}
             </Tooltip>
           </Link>
-        )
+        );
       },
     },
     {

@@ -1,10 +1,4 @@
-import {
-  Col,
-  Pagination,
-  Progress,
-  Rate,
-  Row,
-} from 'antd';
+import { Col, Pagination, Progress, Rate, Row } from 'antd';
 import constants from '../../../constants/index';
 import helpers from '../../../helpers';
 import PropTypes from 'prop-types';
@@ -14,20 +8,22 @@ import UserComment from './UserComment';
 function EvaluationView(props) {
   const { rates, cmtList } = props;
   const [cmtListState, setCmtListState] = useState(cmtList);
-  const starAvg = cmtList ? cmtList.reduce((a, b) => a + b.value, 0) / cmtList.length : 0;
+  const starAvg = cmtList
+    ? cmtList.reduce((a, b) => a + b.value, 0) / cmtList.length
+    : 0;
 
-  // phân trang
+  // paging
   const [page, setPage] = useState(1);
   const pageTotal = Math.ceil(cmtListState.length / constants.COMMENT_PER_PAGE);
   let start = (page - 1) * constants.COMMENT_PER_PAGE;
   const cmtListSliced = cmtListState.slice(
     start,
-    start + constants.COMMENT_PER_PAGE,
+    start + constants.COMMENT_PER_PAGE
   );
 
   useEffect(() => {
     setCmtListState(cmtList);
-    return () => { };
+    return () => {};
   }, [cmtList]);
   // rendering ...
   return (
@@ -43,13 +39,17 @@ function EvaluationView(props) {
         <div className="overview d-flex p-tb-16">
           {/* tổng kết */}
           <div className="d-flex flex-direction-column align-i-center overview--total">
-            <h2 className="font-size-32px">{starAvg ? starAvg.toLocaleString("en", { useGrouping: false, minimumFractionDigits: 1 }).slice(0, 3) : 0}</h2>
-            <Rate
-              disabled
-              value={starAvg}
-              allowHalf
-              style={{ fontSize: 12 }}
-            />
+            <h2 className="font-size-32px">
+              {starAvg
+                ? starAvg
+                    .toLocaleString('en', {
+                      useGrouping: false,
+                      minimumFractionDigits: 1,
+                    })
+                    .slice(0, 3)
+                : 0}
+            </h2>
+            <Rate disabled value={starAvg} allowHalf style={{ fontSize: 12 }} />
             <p className="t-color-gray font-weight-500">
               {cmtList.length} comments
             </p>
@@ -64,12 +64,17 @@ function EvaluationView(props) {
                   style={{ fontSize: 14, flexBasis: 100 }}
                 />
                 <Progress
-                  percent={(helpers.countRate(index + 1, cmtList) / cmtList.length) * 100}
+                  percent={
+                    (helpers.countRate(index + 1, cmtList) / cmtList.length) *
+                    100
+                  }
                   type="line"
                   showInfo={false}
                   style={{ width: 172 }}
                 />
-                <span className="p-l-8 t-color-gray">{helpers.countRate(index + 1, cmtList)}</span>
+                <span className="p-l-8 t-color-gray">
+                  {helpers.countRate(index + 1, cmtList)}
+                </span>
               </div>
             ))}
           </div>

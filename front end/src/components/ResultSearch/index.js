@@ -1,9 +1,8 @@
-import { Button, Col, InputNumber, Pagination, Row, Spin } from 'antd';
+import { Button, Col, InputNumber, Row, Spin } from 'antd';
 import productNotFoundUrl from '../../assets/imgs/no-products-found.png';
 import ProductView from '../../components/ProductView';
-import { Navigation, Scrollbar, A11y } from 'swiper';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import 'swiper/css';
 import './index.scss';
@@ -27,7 +26,18 @@ function ResultSearch(props) {
   const showProducts = (list) => {
     list = list ? list : [];
     return list.map((product, index) => {
-      const { img, title, price, discount, instock, bookid, bookId, enable_discount, stars, total_rate } = product;
+      const {
+        img,
+        title,
+        price,
+        discount,
+        instock,
+        bookid,
+        bookId,
+        enable_discount,
+        stars,
+        total_rate,
+      } = product;
       return (
         <Col key={index} span={12} md={8} sm={12} lg={8} xl={6}>
           <Link to={`/product/${bookid ? bookid : bookId}`}>
@@ -37,7 +47,9 @@ function ResultSearch(props) {
               stock={instock}
               avtUrl={img}
               discount={discount}
-              height={windowWidth <= 768 ? (windowWidth <= 390 ? 260 : 380) : 400}
+              height={
+                windowWidth <= 768 ? (windowWidth <= 390 ? 260 : 380) : 400
+              }
               enable_discount={enable_discount}
               stars={stars}
               total_rate={total_rate}
@@ -52,47 +64,49 @@ function ResultSearch(props) {
   // rendering ...
   return (
     <>
-      <Row className="Result-Search bor-rad-8 box-sha-home bg-white m-tb-32" >
+      <Row className="Result-Search bor-rad-8 box-sha-home bg-white m-tb-32">
         {/* header sort, search button */}
-        <Col span={24} className="sort-wrapper p-10" style={{ overFlow: 'scroll' }}>
+        <Col
+          span={24}
+          className="sort-wrapper p-10"
+          style={{ overFlow: 'scroll' }}>
           <h3 className="m-r-8 font-weight-700 p-b-10">Danh mục sản phẩm</h3>
           <Swiper
             spaceBetween={10}
             // slidesPerView={1}
             // modules={[Navigation, Scrollbar, A11y]}
-            // onSlideChange={() => 
-            // onSwiper={(swiper) => 
+            // onSlideChange={() =>
+            // onSwiper={(swiper) =>
             // pagination={{ clickable: true }}
             breakpoints={{
               0: {
                 // width: 0,
                 slidesPerView: 3,
               },
-              768:{
+              768: {
                 slidesPerView: 4,
               },
-              992: { //>= 992px
+              992: {
+                //>= 992px
                 // width: 768,
                 slidesPerView: 5,
               },
-              1200: { // >=1200px
+              1200: {
+                // >=1200px
                 // width: 1200,
                 slidesPerView: 7,
               },
-            }}
-          >
-
+            }}>
             {constants.CATEGORIES_IMAGE.map((item, index) => (
               <SwiperSlide key={index}>
-                <div className='t-center category_img' >
+                <div className="t-center category_img">
                   <Link to={item.to}>
                     <img src={item.url} alt="" width={100} height={160} />
-                    <p className='font-size-16px p-t-5'>{item.title}</p>
+                    <p className="font-size-16px p-t-5">{item.title}</p>
                   </Link>
                 </div>
               </SwiperSlide>
             ))}
-
           </Swiper>
         </Col>
         <Col span={24} className="sort-wrapper p-lr-16">
@@ -100,8 +114,9 @@ function ResultSearch(props) {
             <h3 className="m-r-8 font-weight-700">Bộ Lọc</h3>
             {sortButtons.map((item) => (
               <Button
-                className={`${item.key === sortBtnActive ? 'sort-btn-active' : ''
-                  } m-4 bor-rad-4`}
+                className={`${
+                  item.key === sortBtnActive ? 'sort-btn-active' : ''
+                } m-4 bor-rad-4`}
                 key={item.key}
                 size="large"
                 onClick={() => onSort(item.key)}>
@@ -119,7 +134,7 @@ function ResultSearch(props) {
                 placeholder="giá thấp nhất"
                 step={10000}
                 onChange={(value) => {
-                  setPrice(prev => ({ ...prev, from: value }))
+                  setPrice((prev) => ({ ...prev, from: value }));
                 }}
               />
               {` - `}
@@ -131,7 +146,9 @@ function ResultSearch(props) {
                 style={{ width: 140 }}
                 placeholder="giá cao nhất"
                 step={10000}
-                onChange={(value) => setPrice(prev => ({ ...prev, to: value }))}
+                onChange={(value) =>
+                  setPrice((prev) => ({ ...prev, to: value }))
+                }
               />
 
               {price.to > 0 && (
@@ -155,24 +172,20 @@ function ResultSearch(props) {
               <img
                 className="not-found-product m-0-auto"
                 src={productNotFoundUrl}
+                alt="product-not-found"
               />
               <span className="font-size-16px m-t-8 t-center">
                 Không tìm thấy sản phẩm phù hợp
               </span>
             </div>
           ) : isLoading ? (
-            <Spin
-              className="trans-center"
-              tip="Đang tải ..."
-              size="large"
-            />
+            <Spin className="trans-center" tip="Đang tải ..." size="large" />
           ) : (
             <Row gutter={[16, 16]}>{showProducts(initList)}</Row>
           )}
         </Col>
       </Row>
       {/* pagination */}
-
     </>
   );
 }

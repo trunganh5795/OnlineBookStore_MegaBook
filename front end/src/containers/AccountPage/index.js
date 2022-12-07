@@ -21,8 +21,8 @@ function AccountPage() {
   const { pathname } = useLocation();
   const user = useSelector((state) => state.user);
   const isAuth = useSelector((state) => state.authenticate.isAuth);
-  const [activeKey, setActiveKey] = useState(() =>
-    pathname.replace(`${constants.ROUTES.ACCOUNT}/`, ''), //lấy mục cuối vị dụ order hay addressess ,...
+  const [activeKey, setActiveKey] = useState(
+    () => pathname.replace(`${constants.ROUTES.ACCOUNT}/`, '') //lấy mục cuối vị dụ order hay addressess ,...
   );
   // menu list
   const menu = [
@@ -89,7 +89,7 @@ function AccountPage() {
             <h2 className="m-b-16">Thông tin cá nhân</h2>
             <UpdateAccountForm />
           </>
-        )
+        );
     }
   }
 
@@ -122,7 +122,13 @@ function AccountPage() {
           <Col className="p-r-16" span={24} md={6}>
             {/* giới thiệu */}
             <div className="d-flex p-b-4 m-b-12 intro">
-              <img src={userLogo} width={32} height={32} className="m-r-12" />
+              <img
+                src={userLogo}
+                width={32}
+                height={32}
+                className="m-r-12"
+                alt="usr"
+              />
               <div>
                 <span className="m-b-0 font-size-16px">Tài khoản</span>
                 <h3>
@@ -130,7 +136,7 @@ function AccountPage() {
                   <b className="name">{user.name}</b>
                   <br />
                   {/* {console.log(user.balance)} */}
-                  <b>Số dư :  {helpers.formatProductPrice(user.balance)}</b>
+                  <b>Số dư : {helpers.formatProductPrice(user.balance)}</b>
                 </h3>
               </div>
             </div>
@@ -142,8 +148,9 @@ function AccountPage() {
                   key={index}
                   to={constants.ROUTES.ACCOUNT + '/' + item.key}>
                   <li
-                    className={`account-page-menu-item p-b-20 ${item.key === activeKey ? 'active' : ''
-                      }`}
+                    className={`account-page-menu-item p-b-20 ${
+                      item.key === activeKey ? 'active' : ''
+                    }`}
                     onClick={() => setActiveKey(item.key)}>
                     {item.Icon}
                     <span className="font-size-16px">{item.title}</span>

@@ -1,4 +1,4 @@
-import helpers from "../helpers";
+import helpers from '../helpers';
 
 // phí vận chuyển tính theo vùng
 let SHIPPING_BASE_PRICE = [
@@ -65,27 +65,50 @@ let SHIPPING_BASE_PRICE = [
   25000,
   25000,
   25000,
-]
+];
 // gender options
 const GENDER_OPTIONS = [
-  { value: "male", label: 'Nam' },
-  { value: "female", label: 'Nữ' },
+  { value: 'male', label: 'Nam' },
+  { value: 'female', label: 'Nữ' },
 ];
-// hình thức giao hàng
-// const TRANSPORT_METHOD_OPTIONS = [
-//   { value: 0, label: 'Giao hàng tiêu chuẩn', price: 0 },
-//   { value: 1, label: 'Giao hàng tiết kiệm', price: 0 },
-//   { value: 2, label: 'Giao hàng nhanh', price: 0 },
-// ];
-const CATEGORIES_IMAGE =[
-  {title:'Kinh Tế', url:'https://res.cloudinary.com/dsa-company/image/upload/v1660226326/category_image/bussiness_ax0ezk.jpg',to:'/filter/1'},
-  {title:'Văn Học',url:'https://res.cloudinary.com/dsa-company/image/upload/v1660226359/category_image/literary_baqkzg.jpg',to:'/filter/2'},
-  {title:'Địa Danh - Du Lịch',url:'https://res.cloudinary.com/dsa-company/image/upload/v1660226403/category_image/travel_ks0qoj.jpg',to:'/filter/3'},
-  {title:'Giáo Dục',url:'https://res.cloudinary.com/dsa-company/image/upload/v1660226326/category_image/math_oqrysi.jpg',to:'/filter/4'},
-  {title:'Thể Thao - Sức Khỏe',url:'https://res.cloudinary.com/dsa-company/image/upload/v1660226325/category_image/fitness_sqlqvv.jpg',to:'/filter/5'},
-  {title:"Truyện", url:"https://res.cloudinary.com/dsa-company/image/upload/v1660226326/category_image/ecomic_b2nzp7.jpg",to:'/filter/6'},
-  {title:"Tâm Lý - Giới Tính", url:"https://res.cloudinary.com/dsa-company/image/upload/v1660226326/category_image/gender_x3zkss.png",to:'/filter/7'}
-]
+
+const CATEGORIES_IMAGE = [
+  {
+    title: 'Kinh Tế',
+    url: 'https://res.cloudinary.com/dsa-company/image/upload/v1660226326/category_image/bussiness_ax0ezk.jpg',
+    to: '/filter/1',
+  },
+  {
+    title: 'Văn Học',
+    url: 'https://res.cloudinary.com/dsa-company/image/upload/v1660226359/category_image/literary_baqkzg.jpg',
+    to: '/filter/2',
+  },
+  {
+    title: 'Địa Danh - Du Lịch',
+    url: 'https://res.cloudinary.com/dsa-company/image/upload/v1660226403/category_image/travel_ks0qoj.jpg',
+    to: '/filter/3',
+  },
+  {
+    title: 'Giáo Dục',
+    url: 'https://res.cloudinary.com/dsa-company/image/upload/v1660226326/category_image/math_oqrysi.jpg',
+    to: '/filter/4',
+  },
+  {
+    title: 'Thể Thao - Sức Khỏe',
+    url: 'https://res.cloudinary.com/dsa-company/image/upload/v1660226325/category_image/fitness_sqlqvv.jpg',
+    to: '/filter/5',
+  },
+  {
+    title: 'Truyện',
+    url: 'https://res.cloudinary.com/dsa-company/image/upload/v1660226326/category_image/ecomic_b2nzp7.jpg',
+    to: '/filter/6',
+  },
+  {
+    title: 'Tâm Lý - Giới Tính',
+    url: 'https://res.cloudinary.com/dsa-company/image/upload/v1660226326/category_image/gender_x3zkss.png',
+    to: '/filter/7',
+  },
+];
 const ROUTES = {
   HOME: '/',
   SIGNUP: '/signup',
@@ -101,7 +124,7 @@ const ROUTES = {
   FILTER: '/filter/:type',
   // ACCOUNT: '/account',
   PAYMENT: '/payment',
-  QRcodeDetails: '/admin/qrcodedetails/:id'
+  QRcodeDetails: '/admin/qrcodedetails/:id',
 };
 
 const PROVINCE = [
@@ -168,39 +191,38 @@ const PROVINCE = [
   'Hà Giang',
   'Bắc Kạn',
   'Cao Bằng',
-
-]
+];
 
 const CATEGORIES = [
   {
-    title: "Sách Kinh Tế",
-    value: 1
+    title: 'Sách Kinh Tế',
+    value: 1,
   },
   {
-    title: "Sách Văn Học",
-    value: 2
+    title: 'Sách Văn Học',
+    value: 2,
   },
   {
-    title: "Đại Danh - Du Lịch",
-    value: 3
+    title: 'Đại Danh - Du Lịch',
+    value: 3,
   },
   {
-    title: "Giáo Dục",
-    value: 4
+    title: 'Giáo Dục',
+    value: 4,
   },
   {
-    title: "Thể Thao - Sức Khỏe",
-    value: 5
+    title: 'Thể Thao - Sức Khỏe',
+    value: 5,
   },
   {
-    title: "Truyện",
-    value: 6
+    title: 'Truyện',
+    value: 6,
   },
   {
-    title: "Tâm Lý - Giới Tính",
-    value: 7
+    title: 'Tâm Lý - Giới Tính',
+    value: 7,
   },
-]
+];
 const BAR_CHART_OPTION = {
   responsive: true,
   interaction: {
@@ -211,14 +233,14 @@ const BAR_CHART_OPTION = {
   plugins: {
     legend: {
       position: 'top',
-      display: true
+      display: true,
     },
     title: {
       display: true,
       text: 'Biểu đồ Histogram phân bổ đơn hàng theo giá trị',
       font: {
-        size: '20px'
-      }
+        size: '20px',
+      },
     },
     datalabels: {
       display: false, //default: true
@@ -227,31 +249,32 @@ const BAR_CHART_OPTION = {
       formatter: Math.round,
       font: {
         weight: 'bold',
-        size: '18px'
+        size: '18px',
       },
     },
     tooltip: {
       callbacks: {
         label: (ctx) => {
-          return "Số đơn :" + ctx.raw.y
+          return 'Số đơn :' + ctx.raw.y;
         },
         title: (tooltipItem) => {
-          let text = "";
+          let text = '';
           if (tooltipItem[0]) {
             if (tooltipItem[0].parsed.x >= 1000) {
-              text = "> 1000K VND"
+              text = '> 1000K VND';
             } else {
-              text = `Giá trị: ${+tooltipItem[0].label - 50}K - ${+tooltipItem[0].label + 50}K VND`
+              text = `Giá trị: ${+tooltipItem[0].label - 50}K - ${
+                +tooltipItem[0].label + 50
+              }K VND`;
             }
           } else {
-            text = "undefined"
+            text = 'undefined';
           }
-          
-          return text;
-        }
-      }
 
-    }
+          return text;
+        },
+      },
+    },
   },
   scales: {
     y: {
@@ -265,14 +288,14 @@ const BAR_CHART_OPTION = {
           // weight: 'bold',
           lineHeight: 1.2,
         },
-        padding: { top: 20, left: 0, right: 0, bottom: 0 }
+        padding: { top: 20, left: 0, right: 0, bottom: 0 },
       },
       min: 0,
       // max: 2200,
       ticks: {
         // forces step size to be 50 units
-        stepSize: 50
-      }
+        stepSize: 50,
+      },
       // position: 'right',
     },
     // y1: {
@@ -307,7 +330,7 @@ const BAR_CHART_OPTION = {
           // weight: 'bold',
           lineHeight: 1.2,
         },
-        padding: { top: 20, left: 0, right: 0, bottom: 0 }
+        padding: { top: 20, left: 0, right: 0, bottom: 0 },
       },
       // type: 'time',
       // time: {
@@ -324,16 +347,16 @@ const BAR_CHART_OPTION = {
       ticks: {
         stepSize: 100,
         callback: function (value, index, values) {
-          let text = value > 1000 ? '> 1000' : value
+          let text = value > 1000 ? '> 1000' : value;
           return text;
-        }
+        },
       },
       offset: false,
       grid: {
-        offset: false
+        offset: false,
       },
     },
-  }
+  },
 };
 const LINE_CHART_OPTION = {
   responsive: true,
@@ -345,14 +368,14 @@ const LINE_CHART_OPTION = {
   plugins: {
     legend: {
       position: 'top',
-      display: true
+      display: true,
     },
     title: {
       display: true,
       text: 'Thống kê đơn hàng',
       font: {
-        size: '20px'
-      }
+        size: '20px',
+      },
     },
     datalabels: {
       display: false, //default: true
@@ -361,19 +384,21 @@ const LINE_CHART_OPTION = {
       formatter: Math.round,
       font: {
         weight: 'bold',
-        size: '18px'
-      }
+        size: '18px',
+      },
     },
     tooltip: {
       callbacks: {
-        filter: ctx => ctx.datasetIndex == 0,
+        filter: (ctx) => ctx.datasetIndex == 0,
         label: (tooltipItems) => {
-          
-          var text = tooltipItems.datasetIndex === 1 ? 'Doanh thu : ' + helpers.formatProductPrice(tooltipItems.raw) : 'Số đơn : ' + tooltipItems.raw
+          var text =
+            tooltipItems.datasetIndex === 1
+              ? 'Doanh thu : ' + helpers.formatProductPrice(tooltipItems.raw)
+              : 'Số đơn : ' + tooltipItems.raw;
           return text;
         },
-      }
-    }
+      },
+    },
   },
   scales: {
     y: {
@@ -388,7 +413,6 @@ const LINE_CHART_OPTION = {
           lineHeight: 1.2,
         },
         padding: { top: 20, left: 0, right: 0, bottom: 0 },
-
       },
       min: 0,
       // max: 200,
@@ -412,14 +436,14 @@ const LINE_CHART_OPTION = {
           // weight: 'bold',
           lineHeight: 1.2,
         },
-        padding: { top: 20, left: 0, right: 0, bottom: 0 }
+        padding: { top: 20, left: 0, right: 0, bottom: 0 },
       },
       min: 0,
       // max: 300,
       position: 'right',
       grid: {
-        display: false
-      }
+        display: false,
+      },
     },
     x: {
       title: {
@@ -432,24 +456,22 @@ const LINE_CHART_OPTION = {
           // weight: 'bold',
           lineHeight: 1.2,
         },
-        padding: { top: 20, left: 0, right: 0, bottom: 0 }
+        padding: { top: 20, left: 0, right: 0, bottom: 0 },
       },
       type: 'time',
       time: {
         parser: 'YYYY/MM/DD',
         unit: 'day',
         displayFormats: {
-          month: 'MM / YY'
+          month: 'MM / YY',
         },
-        tooltipFormat: 'DD-MM-YYYY'
+        tooltipFormat: 'DD-MM-YYYY',
       },
       // scaleLabel: {
       //     labelString: 'Timestamp'
       // }
     },
   },
-
-
 };
 const LINE_CHART_OPTION_QRCODE_PAGE = {
   responsive: true,
@@ -461,14 +483,14 @@ const LINE_CHART_OPTION_QRCODE_PAGE = {
   plugins: {
     legend: {
       position: 'top',
-      display: true
+      display: true,
     },
     title: {
       display: true,
       text: 'Thống kê lượng bán',
       font: {
-        size: '20px'
-      }
+        size: '20px',
+      },
     },
     datalabels: {
       display: false, //default: true
@@ -477,14 +499,14 @@ const LINE_CHART_OPTION_QRCODE_PAGE = {
       formatter: Math.round,
       font: {
         weight: 'bold',
-        size: '18px'
-      }
+        size: '18px',
+      },
     },
     // tooltip: {
     //   callbacks: {
     //     filter: ctx => ctx.datasetIndex == 0,
     //     label: (tooltipItems) => {
-    //       
+    //
     //       var text = tooltipItems.datasetIndex === 1 ? 'Doanh thu : ' + helpers.formatProductPrice(tooltipItems.raw) : 'Số đơn : ' + tooltipItems.raw
     //       return text;
     //     },
@@ -504,7 +526,6 @@ const LINE_CHART_OPTION_QRCODE_PAGE = {
           lineHeight: 1.2,
         },
         padding: { top: 20, left: 0, right: 0, bottom: 0 },
-
       },
       min: 0,
       // max: 200,
@@ -524,16 +545,16 @@ const LINE_CHART_OPTION_QRCODE_PAGE = {
           size: 20,
           lineHeight: 1.2,
         },
-        padding: { top: 20, left: 0, right: 0, bottom: 0 }
+        padding: { top: 20, left: 0, right: 0, bottom: 0 },
       },
       type: 'time',
       time: {
         parser: 'YYYY/MM/DD',
         unit: 'day',
         displayFormats: {
-          month: 'MM / YY'
+          month: 'MM / YY',
         },
-        tooltipFormat: 'DD-MM-YYYY'
+        tooltipFormat: 'DD-MM-YYYY',
       },
       // scaleLabel: {
       //     labelString: 'Timestamp'
@@ -573,18 +594,12 @@ const FILTER_OPTION_LIST = [
   {
     key: 8,
     root: `/filter/8`,
-  }
+  },
 ];
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   REFRESH_TOKEN_KEY: 'refresh_token',
-  ACCESS_TOKEN_KEY: 'ttb_atk',
-  MAX_VERIFY_CODE: 6,
   GENDER_OPTIONS,
-  // tuổi nhỏ nhất sử dụng app
-  MIN_AGE: 8,
-  // thời gian delay khi chuyển trang
-  // DELAY_TIME: 750,
-  // số lần đăng nhập sai tối đa
   MAX_FAILED_LOGIN_TIMES: 5,
   ROUTES,
   REFRESH_TOKEN: 'refresh_token',
@@ -599,9 +614,7 @@ export default {
     'https://res.cloudinary.com/dsa-company/image/upload/v1660443786/user_x8nhqm.png',
   // Số comment sản phẩm trên trang
   COMMENT_PER_PAGE: 5,
-  // độ dài tối đa của cmt
   MAX_LEN_COMMENT: 1000,
-  // key danh sách giỏ hàng
   CARTS: 'carts',
   CATEGORIES,
   SHIPPING_BASE_PRICE,
@@ -610,5 +623,5 @@ export default {
   LINE_CHART_OPTION,
   LINE_CHART_OPTION_QRCODE_PAGE,
   FILTER_OPTION_LIST,
-  CATEGORIES_IMAGE
+  CATEGORIES_IMAGE,
 };

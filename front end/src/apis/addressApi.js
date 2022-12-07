@@ -44,13 +44,13 @@ const addressApi = {
   // api: sửa mặc định địa chỉ giao
   putSetDefaultDeliveryAddress: (addressId) => {
     const url = ADDRESS_API_ENDPOINT + '/delivery';
-    // 
+    //
     return axiosClient.put(url, { addressId });
   },
   getShippingCost: (numOfProduct, provinceId) => {
     const url = ADDRESS_API_ENDPOINT + '/shippingcost';
     return axiosClient.get(url, { params: { numOfProduct, provinceId } });
-  }
+  },
 };
 
 export default addressApi;

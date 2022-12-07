@@ -10,6 +10,7 @@ function UserComment(props) {
   const { comment, value, user, createdAt } = commentDetail;
   const isReduceCmt = comment?.length >= 200 ? true : false;
   const [isMore, setIsMore] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [loginRedirect, setLoginRedirect] = useState(false);
   // rendering ...
   return (
@@ -46,9 +47,7 @@ function UserComment(props) {
               )}
             </p>
             <div>
-              <div className="feedback">
-                {helpers.convertRateToText(value)}
-              </div>
+              <div className="feedback">{helpers.convertRateToText(value)}</div>
             </div>
           </>
         }

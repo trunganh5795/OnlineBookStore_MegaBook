@@ -1,4 +1,4 @@
-import {HomeOutlined } from '@ant-design/icons';
+import { HomeOutlined } from '@ant-design/icons';
 import { Col, Row } from 'antd';
 import Evaluation from '../../containers/ProductDetailPage/Evaluation';
 import RelatedProduct from '../../containers/ProductDetailPage/RelatedProduct';
@@ -7,12 +7,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Description from './Description';
-import './index.scss';
 import ProductOverview from './Overview';
-
+import './index.scss';
 function ProductDetail(props) {
-  const { products} = props;
-  const {description, title, brand, type, bookId, rate } = products;
+  const { products } = props;
+  const { description, title, brand, type, bookId, rate } = products;
   // rendering...
 
   return (
@@ -24,7 +23,12 @@ function ProductDetail(props) {
             <HomeOutlined className="p-12 icon-home font-size-16px bg-white" />
           </Link>
           <span className="r-arrow p-lr-8 font-weight-500">{`>`}</span>
-          <span className="pro-name p-8 font-weight-500 bg-white">{helpers.reduceProductName(title, window.innerWidth <= 576 ? 30 : 50)}</span>
+          <span className="pro-name p-8 font-weight-500 bg-white">
+            {helpers.reduceProductName(
+              title,
+              window.innerWidth <= 576 ? 30 : 50
+            )}
+          </span>
         </Col>
 
         {/* Thông tin cơ bản của sản phẩm */}

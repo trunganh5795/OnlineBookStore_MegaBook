@@ -26,10 +26,17 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 const suffixColor = '#aaa';
 const { Option } = Select;
-function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }) {
+function AddProduct({
+  defaultImg,
+  title,
+  edit,
+  children,
+  initialValues,
+  BookId,
+}) {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formDisabled, setFormDisabled] = useState(edit)
+  const [formDisabled, setFormDisabled] = useState(edit);
   const [desc, setDesc] = useState('');
   // const productDecs = useRef(null);
   // avt file chưa nén
@@ -119,7 +126,7 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
       //     },
       //   });
       else {
-        data.desc = desc
+        data.desc = desc;
         onSubmit(data);
       }
     } catch (error) {
@@ -144,6 +151,7 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
         publisher,
         publicOfYear,
         desc,
+        // eslint-disable-next-line no-unused-vars
         ...rest
       } = data;
       // các thuộc tính chung của sản phẩm
@@ -160,16 +168,9 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
         author,
         publisher,
         publicOfYear,
-        desc
+        desc,
       };
-      // 
-      // thuộc tính chi tiết của từng loại sp
-      const catalogs = fileCompressedList.current.map((item) => item.data);
-      const details = {
-        ...rest,
-        catalogs,
-      };
-      // data được gửi đi
+      //
       // const dataSend = { product, details, desc: productDecs.current };\
       let response = {};
       if (edit) {
@@ -185,10 +186,9 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
         message.success('Thêm thành công');
         if (!edit) {
           //Nếu đang ở trang QRcode thì ko reset form , vì đang ở chế độ edit
-          onResetForm()
-          setDesc("")
+          onResetForm();
+          setDesc('');
         }
-
       }
     } catch (error) {
       setIsSubmitting(false);
@@ -214,29 +214,38 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
             onFinish={onValBeforeSubmit}
             onFinishFailed={() => message.error('Xảy ra lỗi!')}
             labelCol={{
-              span: 5, md: 6, xl: 3
+              span: 5,
+              md: 6,
+              xl: 3,
             }}
             wrapperCol={{
-              span: 19, md: 18, xl: 21
+              span: 19,
+              md: 18,
+              xl: 21,
             }}
-            initialValues={initialValues}
-          >
+            initialValues={initialValues}>
             {/* { */}
             <Row>
               <Col span={24} md={8} xl={6} xxl={4}>
-                <Row className='flex-direction-column h-100 thumbnail-upload'>
+                <Row className="flex-direction-column h-100 thumbnail-upload">
                   {defaultImg || avatar ? (
-                    <img src={avatar || defaultImg} alt="product thumbnail" width="100%" />
-                  ) : ""}
+                    <img
+                      src={avatar || defaultImg}
+                      alt="product thumbnail"
+                      width="100%"
+                    />
+                  ) : (
+                    ''
+                  )}
                   <Upload
                     listType="picture"
                     fileList={avtFileList}
                     accept="image/png, image/jpeg"
                     // showUploadList={true}
                     onChange={({ fileList, file }) => {
-                      // 
+                      //
                       if (avtFileList.length < 1) {
-                        setAvtFileList(fileList)
+                        setAvtFileList(fileList);
                         setAvatar(URL.createObjectURL(file));
                       }
                     }}
@@ -247,8 +256,7 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                     beforeUpload={(file) => {
                       onCompressFile(file, 0);
                       return false;
-                    }}
-                  >
+                    }}>
                     <Button
                       disabled={avatar || formDisabled ? true : false}
                       className="w-100 h-100"
@@ -263,11 +271,14 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                 <Form.Item
                   name="title"
                   rules={[
-                    { required: true, message: 'Vui lòng không bỏ trống', whitespace: true },
+                    {
+                      required: true,
+                      message: 'Vui lòng không bỏ trống',
+                      whitespace: true,
+                    },
                   ]}
                   label="Tiêu đề"
-                  className='m-b-10'
-                >
+                  className="m-b-10">
                   <Input
                     size="large"
                     placeholder="Tên sản phẩm *"
@@ -286,24 +297,27 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                     { required: true, message: 'Vui lòng chọn thể loại sách' },
                   ]}
                   label="Thể loại"
-                  className='m-b-10'
-                >
+                  className="m-b-10">
                   <Select
                     placeholder="Chọn một mục"
                     size="large"
-                    disabled={formDisabled ? true : false}
-                  >
+                    disabled={formDisabled ? true : false}>
                     {constants.CATEGORIES.map((item, index) => {
-                      return (<Option value={item.value} key={index}>{item.title}</Option>)
+                      return (
+                        <Option value={item.value} key={index}>
+                          {item.title}
+                        </Option>
+                      );
                     })}
                   </Select>
                 </Form.Item>
                 <Form.Item
                   name="price"
-                  rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
+                  rules={[
+                    { required: true, message: 'Vui lòng không bỏ trống' },
+                  ]}
                   label="Giá"
-                  className='m-b-10'
-                >
+                  className="m-b-10">
                   <InputNumber
                     style={{ width: '100%' }}
                     step={10000}
@@ -311,17 +325,18 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                     placeholder="Giá *"
                     min={0}
                     max={1000000000}
-                    formatter={value => `${value}`}
+                    formatter={(value) => `${value}`}
                     addonAfter="VND"
                     disabled={formDisabled ? true : false}
                   />
                 </Form.Item>
                 <Form.Item
                   name="instock"
-                  rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
+                  rules={[
+                    { required: true, message: 'Vui lòng không bỏ trống' },
+                  ]}
                   label="Kho"
-                  className='m-b-10'
-                >
+                  className="m-b-10">
                   <InputNumber
                     style={{ width: '100%' }}
                     step={5}
@@ -335,11 +350,14 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                 <Form.Item
                   name="author"
                   rules={[
-                    { required: true, message: 'Vui lòng không bỏ trống', whitespace: true },
+                    {
+                      required: true,
+                      message: 'Vui lòng không bỏ trống',
+                      whitespace: true,
+                    },
                   ]}
                   label="Tác giả"
-                  className='m-b-10'
-                >
+                  className="m-b-10">
                   <Input
                     size="large"
                     placeholder="Tác giả *"
@@ -357,9 +375,8 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                   //   { required: true, message: 'Vui lòng không bỏ trống', whitespace: true },
                   // ]}
                   label="NXB"
-                  className='m-b-10'
-                  disabled={formDisabled ? true : false}
-                >
+                  className="m-b-10"
+                  disabled={formDisabled ? true : false}>
                   <Input
                     size="large"
                     placeholder="Nhà xuất bản"
@@ -375,11 +392,14 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                   name="publicOfYear"
                   rules={[
                     { required: true, message: 'Vui lòng không bỏ trống' },
-                    { type: 'number', min: 1950, max: new Date().getFullYear() }
+                    {
+                      type: 'number',
+                      min: 1950,
+                      max: new Date().getFullYear(),
+                    },
                   ]}
                   label="Năm Xuất Bản"
-                  className='m-b-10'
-                >
+                  className="m-b-10">
                   <InputNumber
                     style={{ width: '100%' }}
                     step={5}
@@ -397,8 +417,8 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                     // { type: 'number', min: 0, max: 99 , message:'Test Message' }
                   ]}
                   label="sku"
-                  className='m-b-10'
-                // initialValue={edit ? null : 0}
+                  className="m-b-10"
+                  // initialValue={edit ? null : 0}
                 >
                   <InputNumber
                     style={{ width: '100%' }}
@@ -416,10 +436,12 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                       <Form.Item
                         name="width"
                         rules={[
-                          { required: true, message: 'Vui lòng không bỏ trống' },
+                          {
+                            required: true,
+                            message: 'Vui lòng không bỏ trống',
+                          },
                         ]}
-                        className='m-b-10'
-                      >
+                        className="m-b-10">
                         <InputNumber
                           style={{ width: '100%' }}
                           step={10}
@@ -435,12 +457,14 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                       <Form.Item
                         name="height"
                         rules={[
-                          { required: true, message: 'Vui lòng không bỏ trống' },
+                          {
+                            required: true,
+                            message: 'Vui lòng không bỏ trống',
+                          },
                         ]}
-                        className='m-b-10'
-                      >
+                        className="m-b-10">
                         <InputNumber
-                          style={{ width: "100%" }}
+                          style={{ width: '100%' }}
                           step={10}
                           size="large"
                           min={0}
@@ -452,28 +476,29 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                     </Col>
                   </Row>
                 </Form.Item>
-                <Form.Item
-                  label="Mô tả"
-                  className='m-b-10'
-                >
+                <Form.Item label="Mô tả" className="m-b-10">
                   <ReactQuill
                     bounds={'#root'}
                     theme="snow"
                     value={desc}
-                    onChange={setDesc} />
+                    onChange={setDesc}
+                  />
                 </Form.Item>
               </Col>
             </Row>
-            <Row className='justify-content-center'>
-              {formDisabled ? <Button className="m-r-20"
-                size="large"
-                icon={<EditOutlined />}
-                type="primary"
-                onClick={() => {
-                  setFormDisabled(false)
-                }}>
-                Chỉnh sửa
-              </Button> : (
+            <Row className="justify-content-center">
+              {formDisabled ? (
+                <Button
+                  className="m-r-20"
+                  size="large"
+                  icon={<EditOutlined />}
+                  type="primary"
+                  onClick={() => {
+                    setFormDisabled(false);
+                  }}>
+                  Chỉnh sửa
+                </Button>
+              ) : (
                 <>
                   <Button
                     loading={isSubmitting}
@@ -483,7 +508,7 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                     type="primary"
                     onClick={onResetForm}
                     key={12}
-                  //Thêm key đại 1 số nào để tránh trùng button phía trên
+                    //Thêm key đại 1 số nào để tránh trùng button phía trên
                   >
                     Nhập lại
                   </Button>
@@ -492,9 +517,8 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                     size="large"
                     type="primary"
                     htmlType="submit"
-                    className="m-r-20"
-                  >
-                    {edit ? "Cập nhật" : "Thêm mới"}
+                    className="m-r-20">
+                    {edit ? 'Cập nhật' : 'Thêm mới'}
                   </Button>
                   {edit ? (
                     <Button
@@ -503,12 +527,13 @@ function AddProduct({ defaultImg, title, edit, children, initialValues, BookId }
                       type="ghost"
                       htmlType="submit"
                       onClick={() => {
-                        setFormDisabled(true)
-                      }}
-                    >
+                        setFormDisabled(true);
+                      }}>
                       Hủy
                     </Button>
-                  ) : ""}
+                  ) : (
+                    ''
+                  )}
                 </>
               )}
             </Row>
