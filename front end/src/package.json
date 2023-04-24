@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "ant-design-pro": "^2.3.2",
     "antd": "^4.21.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.2",
     "chart.js": "^3.7.1",
     "chartjs-adapter-moment": "^1.0.0",
     "chartjs-plugin-datalabels": "^2.0.0",
