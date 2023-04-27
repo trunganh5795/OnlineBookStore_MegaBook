@@ -18,11 +18,10 @@ import userActions from '../../reducers/user';
 import notifyActions from '../../reducers/notifications';
 import QRcodeDetails from '../QRCodeDetails';
 import uniqid from 'uniqid';
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 import { message } from 'antd';
 // import FeedBack from '../../components/FeedBack';
 import ChatBox from '../../components/ChatBot';
-
 const NotFound = React.lazy(() => import('../../components/NotFound'));
 if (!localStorage.getItem('tkre_id')) {
   localStorage.setItem('tkre_id', `${uniqid()}${new Date().getTime()}`);
@@ -31,7 +30,7 @@ if (!sessionStorage.getItem('session_id')) {
   sessionStorage.setItem('session_id', `${uniqid()}${new Date().getTime()}`);
 }
 window.addEventListener('offline', () => {
-  message.error("Kết nối internet bị ngắt");
+  message.error('Kết nối internet bị ngắt');
 });
 function App() {
   const dispatch = useDispatch();
@@ -40,9 +39,9 @@ function App() {
 
   useEffect(() => {
     //authentication
-    console.log("herererere");
+    console.log('herererere');
     dispatch(authActions.getIsAuth());
-    return () => { };
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -52,16 +51,23 @@ function App() {
     if (isAuth) {
       dispatch(userActions.getUserRequest());
       const env = process.env.NODE_ENV;
-      socket = io(!env || env === 'development' ? process.env.REACT_APP_API_URL_LOCAL : process.env.REACT_APP_API_URL, {
-        withCredentials: true,
-      });
-      socket.on("connect", () => {
+      socket = io(
+        !env || env === 'development'
+          ? process.env.REACT_APP_API_URL_LOCAL
+          : process.env.REACT_APP_API_URL,
+        {
+          withCredentials: true,
+        },
+      );
+      socket.on('connect', () => {
         socket.on('test', (msg) => {
           dispatch(notifyActions.pushNotificationsAction(msg));
         });
       });
     }
-    return () => { if (socket) socket.disconnect(); };
+    return () => {
+      if (socket) socket.disconnect();
+    };
   }, [isAuth]);
 
   //rendering...
@@ -70,19 +76,18 @@ function App() {
       <Suspense fallback={<GlobalLoading />}>
         <div className="App" id="app">
           <HeaderView />
-          <div style={{ position: 'fixed', right: 10, bottom: 10, zIndex: 999 }}>
+          <div
+            style={{ position: 'fixed', right: 10, bottom: 10, zIndex: 999 }}>
             <ScrollTo />
             {/* <FeedBack /> */}
-            <Suspense fallback={""}>
-              {window.innerWidth < 768 ? "" : <ChatBox />}
+            <Suspense fallback={''}>
+              {window.innerWidth < 768 ? '' : <ChatBox />}
             </Suspense>
           </div>
 
           <Switch>
             {/* Admin Page */}
-            <Route path={'/admin'}>
-              {renderRoutes(adminRoutes)}
-            </Route>
+            <Route path={'/admin'}>{renderRoutes(adminRoutes)}</Route>
             {/* Qr code */}
             <Route path={'/qrcode/:id'} exact>
               <QRcodeDetails />

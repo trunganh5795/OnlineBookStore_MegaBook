@@ -14,10 +14,10 @@ const NotFound = React.lazy(() => import('../components/NotFound'));
 const Cart = React.lazy(() => import('../components/Cart'));
 const AdminPage = React.lazy(() => import('../containers/AdminPage'));
 const SearchResult = React.lazy(() =>
-  import('../containers/SearchFilterPage/Search')
+  import('../containers/SearchFilterPage/Search'),
 );
 const FilterResult = React.lazy(() =>
-  import('../containers/SearchFilterPage/Filter')
+  import('../containers/SearchFilterPage/Filter'),
 );
 const AccountPage = React.lazy(() => import('../containers/AccountPage'));
 const PaymentPage = React.lazy(() => import('../containers/PaymentPage'));

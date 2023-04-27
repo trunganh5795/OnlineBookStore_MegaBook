@@ -45,7 +45,7 @@ function RelatedProductList(props) {
       let min = Math.min(...spanValues);
       perPage.current = 24 / min;
     }
-    list.forEach((item, index) => item.index = index);
+    list.forEach((item, index) => (item.index = index));
     return list.slice(perPage.current * (page - 1), perPage.current * page);
   };
 
@@ -57,7 +57,9 @@ function RelatedProductList(props) {
       const { title, img, price, discount, instock } = product.values;
       return (
         <Col key={index} {...span}>
-          <Link to={`/product/${product.id}?rcm=${recommId}&index=${product.index}&type=${suggestionType}`} className="item">
+          <Link
+            to={`/product/${product.id}?rcm=${recommId}&index=${product.index}&type=${suggestionType}`}
+            className="item">
             <ProductView
               className={isMdDevice ? 'm-auto' : ''}
               name={title}
@@ -65,8 +67,10 @@ function RelatedProductList(props) {
               discount={discount}
               stock={instock}
               price={price}
-              height={windowWidth <= 768 ? (windowWidth <= 390 ? 260 : 380) : 400}
-            // heightImg={210}
+              height={
+                windowWidth <= 768 ? (windowWidth <= 390 ? 260 : 380) : 400
+              }
+              // heightImg={210}
             />
           </Link>
         </Col>
@@ -87,9 +91,7 @@ function RelatedProductList(props) {
       )}
       <Col span={24}>
         <Row gutter={[16, 16]} className="m-t-16">
-          {isAuth == null ? <GlobalLoading />
-            : showProductList(list, span)
-          }
+          {isAuth == null ? <GlobalLoading /> : showProductList(list, span)}
         </Row>
       </Col>
 
@@ -100,8 +102,9 @@ function RelatedProductList(props) {
       />
 
       <RightCircleOutlined
-        className={`arrow arrow-right ${page >= Math.ceil(list.length / perPage.current) ? 'disabled' : ''
-          }`}
+        className={`arrow arrow-right ${
+          page >= Math.ceil(list.length / perPage.current) ? 'disabled' : ''
+        }`}
         onClick={() => setPage(page + 1)}
       />
     </Row>

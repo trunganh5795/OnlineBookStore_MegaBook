@@ -43,7 +43,9 @@ const statisticApi = {
   },
   getTotalbyid: (start_date, end_date, productId) => {
     const url = STATISTIC_URL_ENDPOINT + '/totalbyid';
-    return axiosClient.get(url, { params: { start_date, end_date, productId } });
+    return axiosClient.get(url, {
+      params: { start_date, end_date, productId },
+    });
   },
   classifyOrder: (start_date, end_date) => {
     const url = STATISTIC_URL_ENDPOINT + '/classifyorder';
@@ -52,7 +54,7 @@ const statisticApi = {
   numOfNewUser: (start_date, end_date) => {
     const url = STATISTIC_URL_ENDPOINT + '/numofnewuser';
     return axiosClient.get(url, { params: { start_date, end_date } });
-  }
+  },
 };
 
 export default statisticApi;

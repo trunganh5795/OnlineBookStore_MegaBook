@@ -42,7 +42,7 @@ ChartJS.register(
   Tooltip,
   Legend,
   PointElement,
-  LineElement
+  LineElement,
 );
 const desc = ['1 sao', '2 sao', '3 sao', '4 sao', '5 sao'];
 
@@ -54,7 +54,7 @@ export default function QRcodeDetails() {
   const avgRate = useMemo(
     () =>
       bookDetail.total_rate ? bookDetail.stars / bookDetail.total_rate : 0,
-    [bookDetail]
+    [bookDetail],
   );
   useEffect(() => {
     let isSubscribe = true;

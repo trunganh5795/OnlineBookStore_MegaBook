@@ -153,7 +153,7 @@ export default function Voucher() {
         ),
       },
     ],
-    []
+    [],
   );
   const onCloaseVoucherModal = useCallback(() => {
     setVoucherDetail((prev) => ({ ...prev, visible: false }));
@@ -224,7 +224,7 @@ export default function Voucher() {
         setPage(1);
       }
     },
-    [page]
+    [page],
   );
 
   const getAllVoucher = async (
@@ -232,13 +232,13 @@ export default function Voucher() {
     page,
     perPage,
     option,
-    filterOps
+    filterOps,
   ) => {
     if (option === 0) {
       const response = await adminApi.getAllVoucher(
         page,
         perPage,
-        filterOps[0].value
+        filterOps[0].value,
       );
       if (response.data && isSubscribe) {
         const { count, rows } = response.data;
@@ -252,7 +252,7 @@ export default function Voucher() {
         option,
         page,
         perPage,
-        filterOps[0].value
+        filterOps[0].value,
       );
       if (response.data && isSubscribe) {
         const { count, rows } = response.data;

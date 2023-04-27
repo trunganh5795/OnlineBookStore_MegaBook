@@ -204,7 +204,7 @@ function HeaderView() {
                 onKeyDown={(key) => {
                   if (key.code === 'Enter') {
                     history.push(
-                      linkSearch === '' ? locations : initLink + linkSearch
+                      linkSearch === '' ? locations : initLink + linkSearch,
                     );
                   }
                 }}

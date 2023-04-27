@@ -164,7 +164,7 @@ function AdminPage() {
           key,
           icon,
         };
-        // <Menu.Item className="menu-item" key={key} icon={icon}>
+      // <Menu.Item className="menu-item" key={key} icon={icon}>
       // else render SubMenu
       return {
         label: title,

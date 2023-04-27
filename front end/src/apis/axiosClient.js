@@ -23,12 +23,13 @@ const axiosClient = axios.create({
 
 //handle request
 axiosClient.interceptors.request.use(
+  //Implement request new access token function here if needed
   (config) => {
     return config;
   },
   (error) => {
     throw error;
-  }
+  },
 );
 
 //handle response
@@ -38,7 +39,7 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     throw error;
-  }
+  },
 );
 
 export default axiosClient;

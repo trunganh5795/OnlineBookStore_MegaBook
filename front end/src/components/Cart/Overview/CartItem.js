@@ -63,7 +63,7 @@ function CartItem(props) {
         md={21}>
         <b className="font-size-18px" style={{ color: '#3555C5' }}>
           {helpers.formatProductPrice(
-            price - (price * discount ? discount : 0) / 100
+            price - (price * discount ? discount : 0) / 100,
           )}
         </b>
         {discount ? (

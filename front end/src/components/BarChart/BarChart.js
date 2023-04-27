@@ -21,7 +21,7 @@ export default function BarChart() {
       let rangeTime = range.split(',');
       let result = await statisticApi.getHistogramData(
         rangeTime[0],
-        rangeTime[1]
+        rangeTime[1],
       );
       let dataChart = result.data.buckets.map((item) => {
         return {
@@ -73,7 +73,7 @@ export default function BarChart() {
         // },
       ],
     }),
-    [dataChart]
+    [dataChart],
   );
   return (
     <div>
@@ -117,13 +117,13 @@ export default function BarChart() {
             onChange={(e) => {
               setRange(
                 `${moment(e[0]._d).format('YYYY-MM-DD')},${moment(
-                  e[1]._d
-                ).format('YYYY-MM-DD')}`
+                  e[1]._d,
+                ).format('YYYY-MM-DD')}`,
               );
               setCustomRange(
                 `(${moment(e[0]._d).format('DD-MM-YYYY')} - ${moment(
-                  e[1]._d
-                ).format('DD-MM-YYYY')})`
+                  e[1]._d,
+                ).format('DD-MM-YYYY')})`,
               );
               setShowCustomRange(true);
             }}

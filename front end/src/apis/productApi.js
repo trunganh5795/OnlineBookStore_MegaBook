@@ -5,7 +5,7 @@ import constants from '../constants';
 let client = new recombee.ApiClient(
   'bookstore-dev',
   process.env.REACT_APP_RECOMBEE_PUBLIC_KEY,
-  { region: 'ap-se' }
+  { region: 'ap-se' },
 );
 /////////////////////
 const PRODUCT_API_URL = '/products';
@@ -51,7 +51,7 @@ const productApi = {
     page = 1,
     perPage = 8,
     sortType = 0,
-    price
+    price,
   ) => {
     const url = PRODUCT_API_URL + '/search';
     return axiosClient.get(url, {
@@ -73,7 +73,7 @@ const productApi = {
     category,
     sortType,
     price_from = 0,
-    price_to = 0
+    price_to = 0,
   ) => {
     const url = PRODUCT_API_URL + '/filter';
 
@@ -102,7 +102,7 @@ const productApi = {
           ],
           filter:
             "'title' != null AND 'status' == \"active\" AND 'instock' > 0 ",
-        })
+        }),
       );
     } catch (error) {}
   },
@@ -123,7 +123,7 @@ const productApi = {
           ],
           filter:
             "'title' != null AND 'status' == \"active\" AND 'instock' > 0 ",
-        })
+        }),
       );
     } catch (error) {}
   },
@@ -138,14 +138,14 @@ const productApi = {
           includedProperties: ['title', 'img', 'price', 'discount', 'instock'],
           filter:
             "'title' != null AND 'status' == \"active\" AND 'instock' > 0 ",
-        })
+        }),
       );
     } catch (error) {}
   },
   getAlsoBuy: async (
     itemId,
     userId,
-    itemCount = constants.MAX_RELATED_PRODUCTS
+    itemCount = constants.MAX_RELATED_PRODUCTS,
   ) => {
     try {
       if (!userId) userId = localStorage.getItem('tkre_id');
@@ -157,7 +157,7 @@ const productApi = {
           includedProperties: ['title', 'img', 'price', 'discount', 'instock'],
           filter:
             "'title' != null AND 'status' == \"active\" AND 'instock' > 0 ",
-        })
+        }),
       );
     } catch (error) {}
   },
@@ -169,7 +169,7 @@ const productApi = {
       return client.send(
         new recombee.AddDetailView(userId, itemId, {
           cascadeCreate: true,
-        })
+        }),
       );
     } catch (error) {}
   },
@@ -182,7 +182,7 @@ const productApi = {
         new recombee.AddCartAddition(userId, itemId, {
           cascadeCreate: false,
           recommId: recomId,
-        })
+        }),
       );
     } catch (error) {
       // console.log(error)
@@ -194,7 +194,7 @@ const productApi = {
       new recombee.SearchItems(userId, query, count, {
         // optional parameters:
         scenario: 'search',
-      })
+      }),
     );
   },
   ////

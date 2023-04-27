@@ -11,8 +11,7 @@ function ScrollTo() {
     if (_y >= 350) {
       setIsTop(false);
     }
-    return () => {
-    };
+    return () => {};
   }, []);
 
   const onScroll = () => {

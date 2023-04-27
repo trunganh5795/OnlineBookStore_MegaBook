@@ -57,7 +57,9 @@ function CartView(props) {
               size="large">
               Thanh toán
             </Button>
-          ) : ""}
+          ) : (
+            ''
+          )}
         </Link>
       </div>
     </div>

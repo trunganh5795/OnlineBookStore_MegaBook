@@ -114,7 +114,6 @@ const ROUTES = {
   SIGNUP: '/signup',
   LOGIN: '/login',
   FORGOT_PASSWORD: '/login/forgot-pw',
-  // PRODUCT: '/product/:productId/:rcm?/:index?/:type?',
   PRODUCT: '/product/:productId',
   NOT_FOUND: '/not-found',
   ADMIN: '/admin',
@@ -122,7 +121,6 @@ const ROUTES = {
   CART: '/cart',
   SEARCH: '/search',
   FILTER: '/filter/:type',
-  // ACCOUNT: '/account',
   PAYMENT: '/payment',
   QRcodeDetails: '/admin/qrcodedetails/:id',
 };

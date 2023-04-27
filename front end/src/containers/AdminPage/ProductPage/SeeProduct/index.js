@@ -57,7 +57,7 @@ function SeeProduct() {
     if (newProduct) {
       // Khi chỉnh có cập nhật
       const newList = list.map((item) =>
-        item.bookId !== newProduct.bookId ? item : { ...item, ...newProduct }
+        item.bookId !== newProduct.bookId ? item : { ...item, ...newProduct },
       );
       setList(newList);
     }
@@ -71,7 +71,7 @@ function SeeProduct() {
           const response = await productApi.getAllProducts(
             page,
             perPage,
-            filterOps
+            filterOps,
           );
           if (response.data && isSubscribe) {
             const { count, rows } = response.data;
@@ -85,7 +85,7 @@ function SeeProduct() {
             page,
             perPage,
             option,
-            filterOps
+            filterOps,
           );
           if (response.data && isSubscribe) {
             let { count, rows } = response.data;
@@ -97,7 +97,7 @@ function SeeProduct() {
         }
       } catch (error) {}
     },
-    []
+    [],
   );
   let onSearch = useCallback(
     (value = '', option) => {
@@ -114,7 +114,7 @@ function SeeProduct() {
         setPage(1);
       }
     },
-    [page]
+    [page],
   );
 
   useEffect(() => {

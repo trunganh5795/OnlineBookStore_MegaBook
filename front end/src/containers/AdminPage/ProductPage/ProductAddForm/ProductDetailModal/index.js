@@ -114,7 +114,7 @@ function ProductDetail(props) {
                   size="large"
                   placeholder="Tiêu đề, tên sp *"
                   suffix={
-                    <Tooltip title="Laptop Apple MacBook 13.3 MPXR2ZP/A">
+                    <Tooltip title="Tiêu đề sản phẩm">
                       <InfoCircleOutlined style={{ color: '#ccc' }} />
                     </Tooltip>
                   }

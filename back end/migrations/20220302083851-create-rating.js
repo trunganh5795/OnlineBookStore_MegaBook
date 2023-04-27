@@ -1,52 +1,52 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ratings', {
+    await queryInterface.createTable("ratings", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       value: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       comment: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
       },
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: {
-            tableName: 'users'
+            tableName: "users",
           },
-          key: 'id'
-        }
+          key: "id",
+        },
       },
       book_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: {
-            tableName: 'books'
+            tableName: "books",
           },
-          key: 'bookId'
-        }
+          key: "bookId",
+        },
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ratings');
-  }
+    await queryInterface.dropTable("ratings");
+  },
 };

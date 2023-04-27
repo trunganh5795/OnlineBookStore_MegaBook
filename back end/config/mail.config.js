@@ -34,7 +34,7 @@ const sendEmail = async ({ to, subject, text, html, ...rest }) => {
         //others
         ...rest,
       };
-      //Tiến hành gửi email
+      //send email
       const info = await transporter.sendMail(mail);
       if (info) {
         return true;
@@ -77,9 +77,9 @@ const htmlResetPassword = (token) => {
   return `<div>
     ${headerHtmlMail}
     <h2 style="padding: 10px 0; margin-bottom: 10px;">
-        Xin chào anh (chị),<br />
-        Cửa hàng TTB Store đã nhận được yêu cầu lấy lại mật khẩu từ quý khách.<br />
-        Đừng lo lắng, hãy nhập mã này để khôi phục:
+        Hi customer,<br />
+        Magabook Store has received your request for password recovery,<br />
+         Don't worry, use this code to recover your password :
     </h2>
     <h1 style="background: #eee;padding: 10px;">
       <i><b>${token}</b></i>
@@ -93,11 +93,13 @@ const htmlWarningLogin = () => {
   return `<div>
    ${headerHtmlMail}
     <h2 style="padding: 10px 0; margin-bottom: 10px;">
-        Xin Chào anh (chị),<br />
-        Cửa hàng nghi ngờ có ai đó đã cố gắng đăng nhập vào tài khoản của quý khách.<br />
-        Nếu quý khác không nhớ mật khẩu hãy nhấn vào "Quên mật khẩu" để lấy lại mật khẩu<br/>
+        Hi customer,<br />
+        We are writing to inform you that an unauthorized login attempt has been made on your account. Our security systems detected this activity and we want to take immediate action to protect your account.
+        <br/>>
+        Please change your password right away and enable two-factor authentication to enhance your account security. If you notice any suspicious activity or have any concerns, please reach out to our customer support team as soon as possible.<br />
+        Thank you for your prompt attention to this matter.<br/>
     </h2>
-    <h1>Cảm ơn.</h1>
+    <h1>Best regards,</h1>
   </div>`;
 };
 

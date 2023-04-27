@@ -1,10 +1,11 @@
-'use strict'
+"use strict";
 
 module.exports = {
-    up: async (queryInterface, Sequelize) => {
-        await queryInterface.bulkInsert('districts', 
-        
-           `
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkInsert(
+      "districts",
+
+      `
     INSERT INTO wards (name,  prefix,  district_id) VALUES 
       ('An Phú Tây', 'Xã', 1),
       ('Bình Chánh', 'Xã', 1),
@@ -11290,11 +11291,11 @@ module.exports = {
       ('Trùng Khánh', 'Thị trấn', 709),
       ('Trung Phúc', 'Xã', 709);
     `,
-            { logging: console.log }
-        )
-    },
+      { logging: console.log }
+    );
+  },
 
-    down: async (queryInterface, Sequelize) => { 
-        await queryInterface.dropTable('wards');
-    }
-}
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable("wards");
+  },
+};

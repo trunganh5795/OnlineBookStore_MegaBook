@@ -16,7 +16,7 @@ function Evaluation(props) {
         if (response && isSubscribe) {
           setCmtList(response.data);
         }
-      } catch (error) { }
+      } catch (error) {}
     }
     getCommentList();
 
@@ -25,7 +25,7 @@ function Evaluation(props) {
 
   // rendering...
   return (
-      <EvaluationView productId={productId} rates={rates} cmtList={cmtList} />
+    <EvaluationView productId={productId} rates={rates} cmtList={cmtList} />
   );
 }
 

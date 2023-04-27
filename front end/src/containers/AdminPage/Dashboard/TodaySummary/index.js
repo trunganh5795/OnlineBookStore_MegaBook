@@ -62,12 +62,12 @@ export default function TodaySummary() {
   }, []);
   const growthByViews = useMemo(
     () => caculatePercentGrowth(views.yesterday, views.today),
-    [views]
+    [views],
   );
   const growthByOrder = useMemo(
     () =>
       caculatePercentGrowth(orderTotal.orderYesterday, orderTotal.orderToday),
-    [orderTotal]
+    [orderTotal],
   );
   useEffect(() => {
     let isSubscribe = true;
@@ -89,7 +89,7 @@ export default function TodaySummary() {
               token,
               sinceTommorow,
               untilTommorow,
-              'DAYS'
+              'DAYS',
             ),
           ]);
           if (isSubscribe) {

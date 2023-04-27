@@ -26,7 +26,7 @@ function ProductDetail(props) {
           <span className="pro-name p-8 font-weight-500 bg-white">
             {helpers.reduceProductName(
               title,
-              window.innerWidth <= 576 ? 30 : 50
+              window.innerWidth <= 576 ? 30 : 50,
             )}
           </span>
         </Col>

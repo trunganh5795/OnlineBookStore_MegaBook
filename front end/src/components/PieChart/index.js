@@ -64,7 +64,7 @@ export default function PieChart({ label, data, title }) {
             let { dataset, parsed, label } = tooltipItem;
             let total = dataset.data.reduce(
               (total, item) => (total += item),
-              0
+              0,
             );
             return `${label}: ${((parsed / total) * 100)
               .toLocaleString('en', {

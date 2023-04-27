@@ -35,10 +35,25 @@ function AllProduct({ title, category }) {
 
   // fn: Hiển thị sản phẩm
   const showProducts = (list) => {
-    return list && (list.length === 0 ? <Empty className='ant-col-24' /> :
-      (
+    return (
+      list &&
+      (list.length === 0 ? (
+        <Empty className="ant-col-24" />
+      ) : (
         list.map((product, index) => {
-          const { img, title, price, discount, instock, bookid, enable_discount, start_time, end_time,total_rate , stars } = product;
+          const {
+            img,
+            title,
+            price,
+            discount,
+            instock,
+            bookid,
+            enable_discount,
+            start_time,
+            end_time,
+            total_rate,
+            stars,
+          } = product;
           return (
             <Col key={index} span={12} md={8} sm={12} lg={8} xl={6}>
               {/* span = 24 độ rộng mặc định nếu ko macth mấy cái kia */}
@@ -52,20 +67,21 @@ function AllProduct({ title, category }) {
                   discount={discount}
                   enable_discount={enable_discount}
                   start_time={start_time}
-                  end_time ={end_time }
+                  end_time={end_time}
                   total_rate={total_rate}
                   stars={stars}
-                  height={windowWidth <= 768 ? (windowWidth <= 390 ? 260 : 380) : 400}
+                  height={
+                    windowWidth <= 768 ? (windowWidth <= 390 ? 260 : 380) : 400
+                  }
                   heightImg={250}
-                //height of iamge
+                  //height of iamge
                 />
               </Link>
             </Col>
           );
         })
-      )
+      ))
     );
-
   };
 
   return (
@@ -75,15 +91,13 @@ function AllProduct({ title, category }) {
         <div className="underline-title"></div>
       </Col>
       {isLoading ? (
-        <Spin
-          className="trans-center"
-          tip="Loading ..."
-          size="large"
-        />
+        <Spin className="trans-center" tip="Loading ..." size="large" />
       ) : (
         <>
           {showProducts(list)}
-          {list.length === 0 ? "" : (
+          {list.length === 0 ? (
+            ''
+          ) : (
             <Col span={24}>
               <Pagination
                 className="t-center"
@@ -96,7 +110,6 @@ function AllProduct({ title, category }) {
               />
             </Col>
           )}
-
         </>
       )}
     </Row>

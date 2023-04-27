@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   user: userReducer.userReducer,
   carts: cartsReducer.cartReducer,
   notifications: notificationsReducer.notificationsReducer,
-  recombeetoken: recombeetoken.recombeetokenReducer
+  recombeetoken: recombeetoken.recombeetokenReducer,
 });
 
 export default rootReducer;

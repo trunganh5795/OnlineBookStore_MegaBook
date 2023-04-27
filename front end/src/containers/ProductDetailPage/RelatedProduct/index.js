@@ -9,8 +9,8 @@ import { useSelector } from 'react-redux';
 function RelatedProduct(props) {
   const { id, type, brand, title, span, suggestionType } = props;
   const [productList, setProductList] = useState([]);
-  const [recommId,setRecomId] = useState('');
-  const isAuth = useSelector(state => state.authenticate.isAuth);
+  const [recommId, setRecomId] = useState('');
+  const isAuth = useSelector((state) => state.authenticate.isAuth);
   const userId = useSelector((state) => state.user.id);
   let { productId } = useParams();
   // Lấy ds sản phẩm
@@ -20,7 +20,10 @@ function RelatedProduct(props) {
       try {
         let recommentList = {};
         if (suggestionType === 0) {
-          recommentList = await productApi.getSimilarProducts(productId, userId); //sua 123 thanh userId
+          recommentList = await productApi.getSimilarProducts(
+            productId,
+            userId,
+          ); //sua 123 thanh userId
         } else {
           recommentList = await productApi.getAlsoBuy(productId, userId); //sua 123 thanh userId
         }
@@ -32,13 +35,13 @@ function RelatedProduct(props) {
     }
     if (isAuth != null) {
       if (isAuth) {
-        if(userId){
+        if (userId) {
           getRelatedProducts(userId);
-        }       
+        }
       } else {
         getRelatedProducts();
       }
-  }
+    }
     return () => {
       isSubscribe = false;
     };
@@ -48,7 +51,14 @@ function RelatedProduct(props) {
   return (
     <>
       {productList && productList.length > 0 && (
-        <RelatedProductList isAuth span={span} list={productList} title={title} recommId={recommId} suggestionType={suggestionType} />
+        <RelatedProductList
+          isAuth
+          span={span}
+          list={productList}
+          title={title}
+          recommId={recommId}
+          suggestionType={suggestionType}
+        />
       )}
     </>
   );

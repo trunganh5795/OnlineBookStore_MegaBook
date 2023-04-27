@@ -83,7 +83,7 @@ function OrderDetail(props) {
       title: 'Giảm giá',
       dataIndex: 'discount',
       key: 'prod',
-      render: (discount, record) => discount ? `${discount} %` : "--",
+      render: (discount, record) => (discount ? `${discount} %` : '--'),
     },
     {
       title: 'Tổng',
@@ -92,7 +92,7 @@ function OrderDetail(props) {
       render: (product, record) => {
         const { price } = product;
         return helpers.formatProductPrice(
-          price * ((100 - record.discount) / 100) * record.quantity
+          price * ((100 - record.discount) / 100) * record.quantity,
         );
       },
     },
@@ -122,23 +122,16 @@ function OrderDetail(props) {
         </p>
       }>
       <>
-        {(isLoading || !order) ? (
+        {isLoading || !order ? (
           <div className="pos-relative" style={{ minHeight: 180 }}>
-            <Spin
-              className="trans-center"
-              tip="Đang tải ..."
-              size="large"
-            />
+            <Spin className="trans-center" tip="Đang tải ..." size="large" />
           </div>
         ) : (
           <Row gutter={[16, 16]}>
             {/* thời gian đặt hàng */}
             <Col span={24} className="t-right">
               <b className="font-size-14px">
-                {`Ngày đặt:  ${helpers.formatOrderDate(
-                  order.createdAt,
-                  1,
-                )}`}
+                {`Ngày đặt:  ${helpers.formatOrderDate(order.createdAt, 1)}`}
               </b>
             </Col>
 
@@ -154,9 +147,7 @@ function OrderDetail(props) {
                       <b>{order.ShippingAddress.reciver.toUpperCase()}</b>
                     </h3>
                     <p className="m-b-8">{`Địa chỉ: ${order.ShippingAddress.details}, ${order.ShippingAddress.ward.prefix} ${order.ShippingAddress.ward.name}, ${order.ShippingAddress.ward.district.prefix} ${order.ShippingAddress.ward.district.name}, ${order.ShippingAddress.ward.district.province.name}.`}</p>
-                    <p className="m-b-8">
-                      SĐT: {order.ShippingAddress.phone}
-                    </p>
+                    <p className="m-b-8">SĐT: {order.ShippingAddress.phone}</p>
                   </div>
                 </>
               )}
@@ -184,7 +175,7 @@ function OrderDetail(props) {
                 <Col span={24}>
                   <Table
                     scroll={{
-                      x: 700
+                      x: 700,
                     }}
                     pagination={false}
                     columns={columns}
@@ -226,24 +217,30 @@ function OrderDetail(props) {
                       className="m-l-32 font-size-18px"
                       style={{ color: '#ff2000', minWidth: 180 }}>
                       {/* {helpers.formatProductPrice(helpers.calTotalOrderFee(order))} */}
-                      {helpers.formatProductPrice(order.total + order.shipping - order.voucher_discount)}
+                      {helpers.formatProductPrice(
+                        order.total + order.shipping - order.voucher_discount,
+                      )}
                     </span>
                   </div>
                 </Col>
                 <Col span={24} md={12}>
-                  {isLoadingProgess ?
+                  {isLoadingProgess ? (
                     <Spin
                       className="progress_loading"
                       tip="Đang tải ..."
                       size="large"
                     />
-                    :
+                  ) : (
                     <Timeline mode="left">
                       {orderProgress.map((item, index) => (
-                        <Timeline.Item key={index} label={moment(item.createdAt).format('DD-MM-YYYY')}>{item.text}</Timeline.Item>
+                        <Timeline.Item
+                          key={index}
+                          label={moment(item.createdAt).format('DD-MM-YYYY')}>
+                          {item.text}
+                        </Timeline.Item>
                       ))}
                     </Timeline>
-                  }
+                  )}
                 </Col>
               </>
             )}

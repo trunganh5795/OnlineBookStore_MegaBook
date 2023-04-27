@@ -19,13 +19,13 @@ function Dashboard() {
       </Col>
       <Col span={24} xl={18}>
         <div className="bg-white p-12 bor-rad-8 box-sha-home">
-          <LineChart options={constants.LINE_CHART_OPTION}/>
+          <LineChart options={constants.LINE_CHART_OPTION} />
         </div>
       </Col>
       <Col span={24} xl={12}>
         <div className="bg-white p-12 bor-rad-8 box-sha-home">
           {/* Số đơn, doanh thu theo khung thời gian */}
-          <BarChart/>
+          <BarChart />
         </div>
       </Col>
       <Col span={24} xl={12}>

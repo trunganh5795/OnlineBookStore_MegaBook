@@ -58,7 +58,7 @@ export default function Discount() {
         ),
       },
     ],
-    []
+    [],
   );
   return (
     <div className="m-lr-10 m-t-10">

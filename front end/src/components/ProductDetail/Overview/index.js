@@ -155,7 +155,7 @@ function ProductOverview(props) {
                 searchParams.get('rcm'),
                 searchParams.get('index'),
                 searchParams.get('type'),
-                bookId
+                bookId,
               );
               dispatch(
                 orderApi.addtoCart(
@@ -174,8 +174,8 @@ function ProductOverview(props) {
                     rcmtype: searchParams.get('type'),
                   },
                   message,
-                  user.id
-                )
+                  user.id,
+                ),
               );
             }}
             size="large"
@@ -195,7 +195,7 @@ function ProductOverview(props) {
                 searchParams.get('rcm'),
                 searchParams.get('index'),
                 searchParams.get('type'),
-                bookId
+                bookId,
               );
               dispatch(
                 orderApi.addtoCart(
@@ -214,8 +214,8 @@ function ProductOverview(props) {
                     rcmtype: searchParams.get('type'),
                   },
                   message,
-                  user.id
-                )
+                  user.id,
+                ),
               );
             }}>
             <Link to={constants.ROUTES.PAYMENT}>MUA NGAY</Link>

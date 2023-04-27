@@ -15,7 +15,7 @@ import {
   Tooltip,
   Legend,
   BarElement,
-  ArcElement
+  ArcElement,
 } from 'chart.js';
 
 ChartJS.register(
@@ -101,17 +101,16 @@ function AnnualRevenue() {
             },
             scales: {
               y: {
-                  ticks: {
-                    callback: function (value, index, values) {
-                      return value >= 1000000000
-                        ? `${(value / 1000000000).toFixed(1)} tỷ`
-                        : value >= 1000000
-                          ? `${(value / 1000000).toFixed(1)} tr`
-                          : helpers.formatProductPrice(value);
-                    },
+                ticks: {
+                  callback: function (value, index, values) {
+                    return value >= 1000000000
+                      ? `${(value / 1000000000).toFixed(1)} tỷ`
+                      : value >= 1000000
+                      ? `${(value / 1000000).toFixed(1)} tr`
+                      : helpers.formatProductPrice(value);
                   },
                 },
-              
+              },
             },
           }}
         />

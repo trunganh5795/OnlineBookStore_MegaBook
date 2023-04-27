@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('books', {
+    await queryInterface.createTable("books", {
       bookId: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -10,48 +10,48 @@ module.exports = {
       },
       QRcodeImg: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       status: {
         type: Sequelize.ENUM({
-          values: ["hide", "active", "delete"]
+          values: ["hide", "active", "delete"],
         }),
         allowNull: false,
-        defaultValue: "active"
+        defaultValue: "active",
       },
       title: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       sku: {
         type: Sequelize.STRING(15),
-        allowNull: false
+        allowNull: false,
       },
       description: {
         type: Sequelize.TEXT,
-        allowNull: true
+        allowNull: true,
       },
       short_description: {
         type: Sequelize.STRING(500),
-        allowNull: true
+        allowNull: true,
       },
       category: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: {
-            tableName: 'categories'
+            tableName: "categories",
           },
-          key: 'id'
-        }
+          key: "id",
+        },
       },
       width: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       height: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       author: {
         type: Sequelize.STRING,
@@ -65,19 +65,19 @@ module.exports = {
       },
       instock: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       price: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       publisher: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
       },
       publicOfYear: {
-        type:Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       comment: {
         type: Sequelize.INTEGER,
@@ -91,24 +91,24 @@ module.exports = {
       },
       img: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
-      discount:{
-        type:Sequelize.INTEGER,
-        default:0,
-        allowNull:false,
+      discount: {
+        type: Sequelize.INTEGER,
+        default: 0,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('books');
-  }
+    await queryInterface.dropTable("books");
+  },
 };

@@ -4,15 +4,14 @@ import rootReducer from '../reducers/index';
 import thunk from 'redux-thunk';
 
 //if environment === 'dev' then use REDUX devTool
-const composeEnhancer = 
+const composeEnhancer =
   process.env.NODE_ENV !== 'production' &&
-    typeof window === 'object' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-      shouldHotReload: false,
-    })
+        shouldHotReload: false,
+      })
     : compose;
-
 
 //configuration store
 const configStore = () => {

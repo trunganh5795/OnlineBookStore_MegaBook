@@ -18,7 +18,7 @@ function EvaluationView(props) {
   let start = (page - 1) * constants.COMMENT_PER_PAGE;
   const cmtListSliced = cmtListState.slice(
     start,
-    start + constants.COMMENT_PER_PAGE
+    start + constants.COMMENT_PER_PAGE,
   );
 
   useEffect(() => {

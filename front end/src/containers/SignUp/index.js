@@ -110,7 +110,7 @@ function SignUp() {
       .matches(
         // eslint-disable-next-line no-useless-escape
         /[^~!@#%\^&\*()_\+-=\|\\,\.\/\[\]{}'"`]/,
-        '* Không được chứa ký tự đặc biệt'
+        '* Không được chứa ký tự đặc biệt',
       )
       .max(70, '* Tối đa 70 ký tự'),
     password: Yup.string()
@@ -121,7 +121,7 @@ function SignUp() {
       .matches(
         // eslint-disable-next-line no-useless-escape
         /^(?=.*[A-Z])(?=.*[~!@#%\^&\*()_\+-=\|\\,\.\/\[\]{}'"`])(?=.*[0-9])(?=.*[a-z]).{6,}$/,
-        'Mật khẩu phải bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt'
+        'Mật khẩu phải bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt',
       ),
     confirmPassword: Yup.string()
       .required('Vui lòng nhập lại mật khẩu')
@@ -131,7 +131,7 @@ function SignUp() {
       .min(new Date(1900, 1, 1), '* Năm sinh từ 1900')
       .max(
         new Date(new Date().getFullYear() - parseInt(constants.MIN_AGE), 1, 1),
-        `* Tuổi tối thiểu là ${constants.MIN_AGE}`
+        `* Tuổi tối thiểu là ${constants.MIN_AGE}`,
       ),
     gender: Yup.string()
       .required('Giới tính của bạn* ')

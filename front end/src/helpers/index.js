@@ -247,8 +247,6 @@ const convertProductType = (type = 0) => {
   }
 };
 
-// fn: Chuyển series laptop sang chữ
-
 // fn: random màu
 const randomColor = () => {
   let r = Math.round(Math.random() * 254 + 1);
@@ -308,7 +306,7 @@ const convertPaymentMethod = (payMethod = 0) => {
 const calTotalOrderFee = (order) => {
   let total = order.reduce(
     (total, item, index) => (total += item.quantity * item.product.price),
-    0
+    0,
   );
   return total;
 };
@@ -317,7 +315,7 @@ const getDiscountVoucher = (
   voucher,
   voucherList,
   message,
-  selectedVoucher
+  selectedVoucher,
 ) => {
   let total = carts.reduce((total, item, index) => {
     total += item.price * item.amount;
@@ -421,6 +419,7 @@ const graphqlQuery = (since, until, frequency) => {
   return JSON.stringify(query);
 };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   formatQueryString,
   queryString,

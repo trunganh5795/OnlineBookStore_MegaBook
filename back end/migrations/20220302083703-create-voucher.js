@@ -1,34 +1,34 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('vouchers', {
+    await queryInterface.createTable("vouchers", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       code: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       start_time: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
       },
       end_time: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
       },
       apply: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
           model: {
-            tableName: 'categories'
+            tableName: "categories",
           },
-          key: 'id'
-        }
+          key: "id",
+        },
       },
       minSpend: {
         type: Sequelize.INTEGER,
@@ -36,15 +36,15 @@ module.exports = {
       },
       quantity: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       used: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        default: 0
+        default: 0,
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       delete: {
         type: Sequelize.BOOLEAN,
@@ -53,15 +53,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('vouchers');
-  }
+    await queryInterface.dropTable("vouchers");
+  },
 };

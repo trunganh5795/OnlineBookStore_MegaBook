@@ -51,7 +51,7 @@ export default function LineChart({ bookId, options }) {
       if (!bookId) {
         let result = await statisticApi.countOrderTotal(
           rangeTime[0],
-          rangeTime[1]
+          rangeTime[1],
         );
         let order = [];
         let total = [];
@@ -69,7 +69,7 @@ export default function LineChart({ bookId, options }) {
         let result = await statisticApi.getTotalbyid(
           rangeTime[0],
           rangeTime[1],
-          bookId
+          bookId,
         );
 
         // let order = [];
@@ -131,7 +131,7 @@ export default function LineChart({ bookId, options }) {
             },
           ],
     }),
-    [responeData, labels]
+    [responeData, labels],
   );
   return (
     <div className="bar_chart_option">
@@ -173,13 +173,13 @@ export default function LineChart({ bookId, options }) {
           onChange={(e) => {
             setRange(
               `${moment(e[0]._d).format('YYYY-MM-DD')},${moment(e[1]._d).format(
-                'YYYY-MM-DD'
-              )}`
+                'YYYY-MM-DD',
+              )}`,
             );
             setCustomRange(
               `(${moment(e[0]._d).format('DD-MM-YYYY')} - ${moment(
-                e[1]._d
-              ).format('DD-MM-YYYY')})`
+                e[1]._d,
+              ).format('DD-MM-YYYY')})`,
             );
             setShowCustomRange(true);
           }}

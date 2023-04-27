@@ -36,7 +36,7 @@ const orderApi = {
               ? null
               : product.rcm
             : null,
-        })
+        }),
       );
     }
     return (dispatch) => {

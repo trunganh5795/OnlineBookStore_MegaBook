@@ -27,7 +27,7 @@ function CartPayment(props) {
         message,
         selectedVoucher,
         voucher,
-        voucherList
+        voucherList,
       );
     } else {
       return 0;
@@ -36,14 +36,14 @@ function CartPayment(props) {
   // giá tạm tính
   const tempPrice = carts.reduce(
     (a, b) => a + (b.price + (b.price * b.discount) / 100) * b.amount,
-    0
+    0,
   );
   // tổng khuyến mãi
   const totalDiscount = carts.reduce(
     (totalDiscount, product) =>
       totalDiscount +
       ((product.price * product.discount) / 100) * product.amount,
-    0
+    0,
   );
   useEffect(() => {
     let isSubscribe = true;
@@ -163,7 +163,7 @@ function CartPayment(props) {
         </span>
         <b style={{ color: 'red', fontSize: 20 }}>
           {helpers.formatProductPrice(
-            tempPrice - totalDiscount - voucherDiscountValue + transportFee
+            tempPrice - totalDiscount - voucherDiscountValue + transportFee,
           )}
         </b>
       </div>

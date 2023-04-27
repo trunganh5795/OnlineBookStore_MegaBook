@@ -40,7 +40,7 @@ function UpdateAccountForm() {
     email,
     name,
     gender,
-    dateOfBirth: moment(dateOfBirth).format("YYYY-MM-DD"),
+    dateOfBirth: moment(dateOfBirth).format('YYYY-MM-DD'),
   };
 
   // validate form trước submit với yup
@@ -75,14 +75,12 @@ function UpdateAccountForm() {
     },
     maxCount: 1,
     showUploadList: false,
-    accept: "image/png, image/jpg, image/jpeg"
-
+    accept: 'image/png, image/jpg, image/jpeg',
   };
 
   // fn: update account
   const handleUpdate = async (value) => {
     try {
-
       setIsSubmitting(true);
       if (avatar) value.avatar = avatar;
       if (JSON.stringify(initialValue) === JSON.stringify(value)) {
@@ -113,17 +111,22 @@ function UpdateAccountForm() {
           {(formikProps) => {
             const suffixColor = 'rgba(0, 0, 0, 0.25)';
             return (
-              <div className='box-sha-home bg-white bor-rad-8 p-t-10'>
+              <div className="box-sha-home bg-white bor-rad-8 p-t-10">
                 <div className="t-center">
-                  <Avatar size={200} src={avatar ? avatar : (img ? img : constants.DEFAULT_USER_AVT)} />
-                  <div className='m-t-10'>
+                  <Avatar
+                    size={200}
+                    src={
+                      avatar ? avatar : img ? img : constants.DEFAULT_USER_AVT
+                    }
+                  />
+                  <div className="m-t-10">
                     <Upload {...propsUpload}>
                       <Button icon={<UploadOutlined />}>Tải lên ảnh</Button>
                     </Upload>
                   </div>
                 </div>
                 <Form className="p-t-20">
-                  <Row className=" p-16" gutter={[32, 32]} >
+                  <Row className=" p-16" gutter={[32, 32]}>
                     <Col className="p-b-0" span={24} md={12}>
                       {/* email field */}
                       <FastField
@@ -154,7 +157,9 @@ function UpdateAccountForm() {
                         size="large"
                         suffix={
                           <Tooltip title="Your name">
-                            <InfoCircleOutlined style={{ color: suffixColor }} />
+                            <InfoCircleOutlined
+                              style={{ color: suffixColor }}
+                            />
                           </Tooltip>
                         }
                       />
@@ -165,7 +170,7 @@ function UpdateAccountForm() {
                         className="input-form-common"
                         name="dateOfBirth"
                         component={DatePickerField}
-                        placeholder={moment(dateOfBirth).format("YYYY-MM-DD")}
+                        placeholder={moment(dateOfBirth).format('YYYY-MM-DD')}
                         size="large"
                       />
                     </Col>

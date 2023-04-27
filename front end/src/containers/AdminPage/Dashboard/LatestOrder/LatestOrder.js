@@ -44,7 +44,7 @@ export default function LatestOrder() {
           userid: item._source.userid,
           total: helpers.formatProductPrice(item._source.total),
           createdAt: moment(item._source.createdAt).format('DD-MM-YYYY HH:MM'),
-        }))
+        })),
       );
     };
     getLatestOrder();

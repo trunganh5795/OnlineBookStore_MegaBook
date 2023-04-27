@@ -8,7 +8,7 @@ let isSubscribe = true;
 let selectedOption = 0;
 let filterOps = [
   { field: 'role', value: [] },
-  { field: 'active', value: [] }
+  { field: 'active', value: [] },
 ];
 function CustomerList() {
   const [data, setData] = useState([]);
@@ -43,7 +43,13 @@ function CustomerList() {
   };
   const getCustomerBy = async (value, page, perPage, option, filterOps) => {
     try {
-      let result = await adminApi.getCustomerListBy(page, option, value, filterOps[1].value, filterOps[0].value);
+      let result = await adminApi.getCustomerListBy(
+        page,
+        option,
+        value,
+        filterOps[1].value,
+        filterOps[0].value,
+      );
       if (result.data && isSubscribe) {
         let newList = result.data.rows.map((item, index) => {
           return {
@@ -55,7 +61,7 @@ function CustomerList() {
             address: item.address,
             gender: item.gender,
             role: item.role,
-            active: item.active
+            active: item.active,
           };
         });
         setTotalPage(result.data.count);
@@ -66,19 +72,20 @@ function CustomerList() {
       message.error(error.response?.data.message);
     }
   };
-  const onSearch = useCallback((value = '', option) => {
-    selectedOption = option;
-    query = value;
-    filterOps = [
-      { field: 'role', value: [] },
-      { field: 'active', value: [] }
-    ];
-    if (page === 1) {
-      setForceRunUseEffect(prev => !prev);
-    } else {
-      setPage(1);
-    }
-  },
+  const onSearch = useCallback(
+    (value = '', option) => {
+      selectedOption = option;
+      query = value;
+      filterOps = [
+        { field: 'role', value: [] },
+        { field: 'active', value: [] },
+      ];
+      if (page === 1) {
+        setForceRunUseEffect((prev) => !prev);
+      } else {
+        setPage(1);
+      }
+    },
     [page],
   );
   const columns = [
@@ -103,20 +110,26 @@ function CustomerList() {
       key: 'role',
       dataIndex: 'role',
       filteredValue: filterOps[0].value,
-      filters: [{ text: 'Client', value: 'client' }, { text: "Admin", value: 'admin' }]
+      filters: [
+        { text: 'Client', value: 'client' },
+        { text: 'Admin', value: 'admin' },
+      ],
     },
     {
       title: 'Trạng thái',
       key: 'active',
       dataIndex: 'active',
       filteredValue: filterOps[1].value,
-      filters: [{ text: 'Hoạt động', value: 'active' }, { text: "Đã khóa", value: 'block' }]
+      filters: [
+        { text: 'Hoạt động', value: 'active' },
+        { text: 'Đã khóa', value: 'block' },
+      ],
     },
     {
       title: 'Ngày sinh',
       key: 'birthday',
       dataIndex: 'birthday',
-      render: (dateOfBirth) => moment(dateOfBirth).format('DD-MM-YYYY')
+      render: (dateOfBirth) => moment(dateOfBirth).format('DD-MM-YYYY'),
     },
     {
       title: 'Giới tính',
@@ -128,19 +141,24 @@ function CustomerList() {
       title: 'Hành động',
       render: (_v, records) => (
         <Popconfirm
-          title={records.active === "active" ? "Bạn có chắc muốn khoá ?" : "Bạn có chắc muốn mở khoá ?"}
+          title={
+            records.active === 'active'
+              ? 'Bạn có chắc muốn khoá ?'
+              : 'Bạn có chắc muốn mở khoá ?'
+          }
           placement="left"
           cancelText="Huỷ bỏ"
           okText="Xoá"
-          onConfirm={() => records.active === "active" ? onDelCustomer(records.id) : onReleaseCustomer(records.id)}>
-          {records.active === "active" ?
-            (
-              <Button danger>Khóa</Button>
-            ) :
-            (
-              <Button type="primary">Mở Khóa</Button>
-            )
-          }
+          onConfirm={() =>
+            records.active === 'active'
+              ? onDelCustomer(records.id)
+              : onReleaseCustomer(records.id)
+          }>
+          {records.active === 'active' ? (
+            <Button danger>Khóa</Button>
+          ) : (
+            <Button type="primary">Mở Khóa</Button>
+          )}
         </Popconfirm>
       ),
     },
@@ -155,9 +173,15 @@ function CustomerList() {
     };
   }, [page, forceRunUseEffect]);
   return (
-    <div className='m-lr-10 m-t-10'>
+    <div className="m-lr-10 m-t-10">
       <AdminSearch
-        options={[{ id: 0, text: "Tất Cả" }, { id: 1, text: "Tên" }, { id: 2, text: ' Số điện thoại' }, { id: 3, text: 'Mã KH' }, { id: 4, text: 'Email' }]}
+        options={[
+          { id: 0, text: 'Tất Cả' },
+          { id: 1, text: 'Tên' },
+          { id: 2, text: ' Số điện thoại' },
+          { id: 3, text: 'Mã KH' },
+          { id: 4, text: 'Email' },
+        ]}
         onSearch={onSearch}
         setPage={setPage}
         selectedOption={selectedOption}
@@ -177,21 +201,27 @@ function CustomerList() {
         loading={isLoading}
         onChange={(pagination, filters, sorter, extra) => {
           let flag = false;
-          filters.role?.forEach(item => {
-            let index = filterOps[0].value?.findIndex(i => item === i);
+          filters.role?.forEach((item) => {
+            let index = filterOps[0].value?.findIndex((i) => item === i);
             if (index === -1) flag = true;
           });
-          filters.active?.forEach(item => {
-            let index = filterOps[1].value?.findIndex(i => item === i);
+          filters.active?.forEach((item) => {
+            let index = filterOps[1].value?.findIndex((i) => item === i);
             if (index === -1) flag = true;
           });
-          if ((!filters.role && filterOps[0].value.length != 0) || (!filters.active && filterOps[1].value.length != 0) || (filters.role?.length !== filterOps[0].value.length) || (filters.active?.length !== filterOps[1].value.length)) flag = true;
+          if (
+            (!filters.role && filterOps[0].value.length != 0) ||
+            (!filters.active && filterOps[1].value.length != 0) ||
+            filters.role?.length !== filterOps[0].value.length ||
+            filters.active?.length !== filterOps[1].value.length
+          )
+            flag = true;
 
           if (flag) {
             filterOps[0].value = filters.role ? filters.role : [];
             filterOps[1].value = filters.active ? filters.active : [];
             if (page === 1) {
-              return setForceRunUseEffect(prev => !prev);
+              return setForceRunUseEffect((prev) => !prev);
             } else {
               setPage(1);
             }

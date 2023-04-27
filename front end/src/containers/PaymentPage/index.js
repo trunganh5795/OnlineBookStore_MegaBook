@@ -119,7 +119,7 @@ function PaymentPage() {
       if (addressIndex !== -1) {
         let shippingCost = await addressApi.getShippingCost(
           addressIndex.province,
-          carts.length
+          carts.length,
         );
         if (isSubscribe) setTransportFee(shippingCost.data.cost);
       }

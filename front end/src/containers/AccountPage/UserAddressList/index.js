@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Col, message, Modal, Row} from 'antd';
+import { Button, Col, message, Modal, Row } from 'antd';
 import addressApi from '../../../apis/addressApi';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -23,9 +23,9 @@ function AddressUserList(props) {
       const response = await addressApi.delDeliveryAddress(addressId);
       if (response) {
         message.success('Xoá địa chỉ thành công');
-        let index = list.findIndex(item => item.id === addressId);
+        let index = list.findIndex((item) => item.id === addressId);
         if (index !== -1 && isSubscribe) {
-          list.splice(index,1);
+          list.splice(index, 1);
           setList([...list]);
         }
         // setUpdateList(!updateList);
@@ -50,7 +50,9 @@ function AddressUserList(props) {
             item.defaultAddress = false;
           }
         });
-        list.sort((a, b) => -(Number(a.defaultAddress) - Number(b.defaultAddress)));
+        list.sort(
+          (a, b) => -(Number(a.defaultAddress) - Number(b.defaultAddress)),
+        );
         if (isSubscribe) setList([...list]);
       }
     } catch (error) {
@@ -70,12 +72,16 @@ function AddressUserList(props) {
       newList &&
       newList.map((item, index) => (
         <div
-          className={`bg-white bor-rad-8 box-sha-home p-tb-8 p-lr-16 m-b-16 ${activeItem === index && isCheckout ? 'item-active' : ''
-            }`}
+          className={`bg-white bor-rad-8 box-sha-home p-tb-8 p-lr-16 m-b-16 ${
+            activeItem === index && isCheckout ? 'item-active' : ''
+          }`}
           onClick={() => {
             if (isCheckout) {
               setActiveItem(index);
-              onChecked({ deliveryAdd: item.id, province: item.ward.district.province.id });
+              onChecked({
+                deliveryAdd: item.id,
+                province: item.ward.district.province.id,
+              });
             }
           }}
           key={index}>
@@ -85,7 +91,9 @@ function AddressUserList(props) {
                 <b>Người nhận: </b> {item.reciver}
               </p>
               <p className="m-b-6">
-                <b>Địa chỉ:</b> {item.ward.district.province.name} , {item.ward.district.prefix + " " + item.ward.district.name} , {item.ward.prefix + " " + item.ward.name}
+                <b>Địa chỉ:</b> {item.ward.district.province.name} ,{' '}
+                {item.ward.district.prefix + ' ' + item.ward.district.name} ,{' '}
+                {item.ward.prefix + ' ' + item.ward.name}
               </p>
               <p className="m-b-6">
                 <b>Số nhà:</b> {item.details}
@@ -110,12 +118,12 @@ function AddressUserList(props) {
                   {!showAll && (
                     <Button
                       type="link"
-                      onClick={() => { setIsVisibelAddressList(prev => !prev); }}
-                    >
+                      onClick={() => {
+                        setIsVisibelAddressList((prev) => !prev);
+                      }}>
                       Thay đổi
                     </Button>
                   )}
-
                 </div>
                 {!item.defaultAddress && (
                   <div>
@@ -172,67 +180,65 @@ function AddressUserList(props) {
     //       <Spin tip="Đang tải danh sách địa chỉ giao hàng ..." size="large" />
     //     </div>
     //   ) : (
-        <div className="User-Address-List">
-          {/* thêm địa chỉ, chỉ cho tối đa 5 địa chỉ */}
-          {list.length < 5 && (
-            <Button
-              type="dashed"
-              size="large"
-              className="w-100"
-              onClick={() => setIsVisibleForm(true)}
-              style={{ height: 54 }}>
-              <PlusOutlined />
-              Thêm địa chỉ
-            </Button>
-          )}
-          {/* hiện danh sách địa chỉ */}
-          {list.length > 0 ? (
-            <div className="m-t-16">{showAddressList(list, showAll)}</div>
-          ) : (
-            <h3 className="m-t-16 t-center" style={{ color: '#888' }}>
-              Hiện tại bạn chưa có địa chỉ giao, nhận hàng nào
-            </h3>
-          )}
-          {isVisibleForm && (
-            <AddressAddForm
-              onCloseForm={(addFlag) => {
-                // cở hiệu báo thêm mới địa chỉ thành công để cập nhật lại địa chỉ
-                if (addFlag) setUpdateList(!updateList);
-                setIsVisibleForm(false);
-              }}
-            />
-          )}
+    <div className="User-Address-List">
+      {/* thêm địa chỉ, chỉ cho tối đa 5 địa chỉ */}
+      {list.length < 5 && (
+        <Button
+          type="dashed"
+          size="large"
+          className="w-100"
+          onClick={() => setIsVisibleForm(true)}
+          style={{ height: 54 }}>
+          <PlusOutlined />
+          Thêm địa chỉ
+        </Button>
+      )}
+      {/* hiện danh sách địa chỉ */}
+      {list.length > 0 ? (
+        <div className="m-t-16">{showAddressList(list, showAll)}</div>
+      ) : (
+        <h3 className="m-t-16 t-center" style={{ color: '#888' }}>
+          Hiện tại bạn chưa có địa chỉ giao, nhận hàng nào
+        </h3>
+      )}
+      {isVisibleForm && (
+        <AddressAddForm
+          onCloseForm={(addFlag) => {
+            // cở hiệu báo thêm mới địa chỉ thành công để cập nhật lại địa chỉ
+            if (addFlag) setUpdateList(!updateList);
+            setIsVisibleForm(false);
+          }}
+        />
+      )}
 
-          <Modal
-            visible={isVisibelAddressList}
-            // closable={true}
-            // maskClosable={false}
-            onCancel={() => {
-              setIsVisibelAddressList(false);
-              // onCloseForm();
-            }}
-            cancelText={"Thoát"}
-            okText={'Chọn'}
-            onOk={() => {
-              [list[0], list[activeItem]] = [list[activeItem], list[0]];
-              setList([...list]);
-              setIsVisibelAddressList(false);
-            }}
-            centered
-            width={768}>
-            <div className='m-t-20'>
-              {showAddressList(list, true)}
-            </div>
-          </Modal>
-        </div>
-  //     )}
-  //   </>
+      <Modal
+        visible={isVisibelAddressList}
+        // closable={true}
+        // maskClosable={false}
+        onCancel={() => {
+          setIsVisibelAddressList(false);
+          // onCloseForm();
+        }}
+        cancelText={'Thoát'}
+        okText={'Chọn'}
+        onOk={() => {
+          [list[0], list[activeItem]] = [list[activeItem], list[0]];
+          setList([...list]);
+          setIsVisibelAddressList(false);
+        }}
+        centered
+        width={768}>
+        <div className="m-t-20">{showAddressList(list, true)}</div>
+      </Modal>
+    </div>
+    //     )}
+    //   </>
   );
 }
 
 AddressUserList.defaultProps = {
   isCheckout: false,
-  onChecked: function () { },
+  onChecked: function () {},
 };
 
 AddressUserList.propTypes = {

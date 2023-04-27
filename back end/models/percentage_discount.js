@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Percentage_discount extends Model {
     /**
@@ -11,35 +9,38 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Voucher }) {
       // define association here
-      this.belongsTo(Voucher, { foreignKey: 'id', targetKey: 'id' })
+      this.belongsTo(Voucher, { foreignKey: "id", targetKey: "id" });
     }
   }
-  Percentage_discount.init({
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: true,
-    },
-    percent: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        min: {
-          args: [[0]],
-          msg: "Value must be beteween 0 and 100"
+  Percentage_discount.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+      },
+      percent: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          min: {
+            args: [[0]],
+            msg: "Value must be beteween 0 and 100",
+          },
+          max: {
+            args: [[100]],
+            msg: "Value must be beteween 0 and 100",
+          },
         },
-        max: {
-          args: [[100]],
-          msg: "Value must be beteween 0 and 100"
-        }
-      }
+      },
+    },
+    {
+      sequelize,
+      modelName: "Percentage_discount",
+      tableName: "percentage_discounts",
+      timestamps: false,
     }
-  }, {
-    sequelize,
-    modelName: 'Percentage_discount',
-    tableName:'percentage_discounts',
-    timestamps: false,
-  });
+  );
   return Percentage_discount;
 };

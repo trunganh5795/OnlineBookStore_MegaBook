@@ -57,7 +57,7 @@ function ProductView(props) {
         <div className="m-b-10 Product-View-name">
           {helpers.reduceProductName(
             name,
-            windowWidth <= 992 ? (windowWidth < 576 ? 25 : 37) : 56
+            windowWidth <= 992 ? (windowWidth < 576 ? 25 : 37) : 56,
           )}
         </div>
         {/* Giá sản phẩm */}
@@ -67,13 +67,13 @@ function ProductView(props) {
             <>
               <span className="Product-View-price--main font-size-20px font-weight-b p-r-5">
                 {helpers.formatProductPrice(
-                  (price * (100 - (discount ? discount : 0))) / 100
+                  (price * (100 - (discount ? discount : 0))) / 100,
                 )}
               </span>
               {discount > 0 &&
                 enable_discount &&
                 moment(start_time).isSameOrAfter(
-                  moment().format('YYYY-MM-DD')
+                  moment().format('YYYY-MM-DD'),
                 ) &&
                 moment(end_time).isBefore(moment().format('YYYY-MM-DD')) && (
                   <>

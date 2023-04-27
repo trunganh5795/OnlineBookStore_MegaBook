@@ -1,9 +1,9 @@
-const passport = require('passport');
-const GooglePlusTokenStrategy = require('passport-google-token').Strategy;
-const { User } = require('../models');
+const passport = require("passport");
+const GooglePlusTokenStrategy = require("passport-google-token").Strategy;
+const { User } = require("../models");
 // const { User } = require('../models');
 // const UserModel = require('../models/account.models/user.model');
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 // const express = require('express');
 
 //authentication with JWT
@@ -12,7 +12,7 @@ const jwtAuthentication = async (req, res, next) => {
     res.locals.isAuth = false;
     let token = null;
     // if (express().get('env') === 'production') token = req.query.token;
-    // else 
+    // else
     token = req.cookies.access_token;
     //if not exist cookie[access_token] -> isAuth = false -> next
     if (!token) {
@@ -32,7 +32,7 @@ const jwtAuthentication = async (req, res, next) => {
     next();
   } catch (error) {
     return res.status(401).json({
-      message: 'Unauthorized.',
+      message: "Unauthorized.",
       error,
     });
   }
@@ -58,8 +58,8 @@ passport.use(
         const localUser = await User.findOne({
           where: {
             email,
-            authType: 'local'
-          }
+            authType: "local",
+          },
         });
 
         if (localUser) return done(null, localUser);
@@ -67,14 +67,14 @@ passport.use(
         const user = await User.findOne({
           where: {
             email,
-            authType: 'google',
-          }
+            authType: "google",
+          },
         });
         if (user) return done(null, user);
 
         // tạo account và user tương ứng
         const newAccount = await User.create({
-          authType: 'google',
+          authType: "google",
           name: familyName + " " + givenName,
           email,
           password: 123456, // Không quan tâm vì login bằng google, nhập vô cho có khỏi báo lỗi
@@ -84,15 +84,15 @@ passport.use(
           phone_no: "0978369565",
           active: "active",
           verifyCode: 123456,
-          authType: "google"
+          authType: "google",
         });
         done(null, newAccount);
       } catch (error) {
         console.log(error);
         done(error, false);
       }
-    },
-  ),
+    }
+  )
 );
 
 module.exports = {

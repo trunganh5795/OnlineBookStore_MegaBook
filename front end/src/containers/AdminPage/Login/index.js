@@ -26,9 +26,7 @@ function Login(props) {
           <Form.Item
             label="Username"
             name="userName"
-            rules={[
-              { required: true, message: 'Nhập tài khoản' },
-            ]}>
+            rules={[{ required: true, message: 'Nhập tài khoản' }]}>
             <Input />
           </Form.Item>
         </Col>
@@ -36,9 +34,7 @@ function Login(props) {
           <Form.Item
             label="Password"
             name="password"
-            rules={[
-              { required: true, message: 'Nhập mật khẩu' },
-            ]}>
+            rules={[{ required: true, message: 'Nhập mật khẩu' }]}>
             <Input.Password />
           </Form.Item>
         </Col>

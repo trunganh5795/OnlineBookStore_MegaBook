@@ -27,7 +27,7 @@ function OrderList() {
   });
   const [ratingOrder, setRatingOrder] = useState({
     isOpen: false,
-    products: []
+    products: [],
   });
   const user = useSelector((state) => state.user);
 
@@ -42,7 +42,7 @@ function OrderList() {
       align: 'center',
       render: (orderCode, records) => (
         <Button
-          className='t-center p-lr-0'
+          className="t-center p-lr-0"
           type="link"
           onClick={() =>
             setOrderDetails({ isOpen: true, orderId: records.id })
@@ -73,22 +73,27 @@ function OrderList() {
         //orderListShowMore các đơn hàng bấm showMore
         return (
           <>
-            {findIdx !== -1 ? orderProd.map((item, index) => (
-              <div key={index}>
-                <Link to={`/product/${item.book_id}`}>
-                  <Tooltip title={item.title}>
-                    {helpers.reduceProductName(item.product.title, 22)} x {item.quantity}
-                  </Tooltip>
-                </Link>
-              </div>
-            )) : (
+            {findIdx !== -1 ? (
+              orderProd.map((item, index) => (
+                <div key={index}>
+                  <Link to={`/product/${item.book_id}`}>
+                    <Tooltip title={item.title}>
+                      {helpers.reduceProductName(item.product.title, 22)} x{' '}
+                      {item.quantity}
+                    </Tooltip>
+                  </Link>
+                </div>
+              ))
+            ) : (
               <Link to={`/product/${orderProd[0]?.book_id}`}>
                 <Tooltip title={orderProd[0]?.name}>
-                  {helpers.reduceProductName(orderProd[0]?.product.title, 22)} x {orderProd[0]?.quantity}
+                  {helpers.reduceProductName(orderProd[0]?.product.title, 22)} x{' '}
+                  {orderProd[0]?.quantity}
                 </Tooltip>
               </Link>
             )}
-            <h3 className="t-center see-more"
+            <h3
+              className="t-center see-more"
               onClick={() => {
                 if (findIdx !== -1) {
                   orderListShowMore.splice(findIdx, 1);
@@ -96,19 +101,28 @@ function OrderList() {
                 } else {
                   setShowMore((prev) => [...prev, records.id]);
                 }
-              }}
-            >
+              }}>
               {findIdx !== -1 ? <CaretUpOutlined /> : <CaretDownOutlined />}
             </h3>
-          </>);
+          </>
+        );
       },
     },
     {
       title: 'Thành tiền',
       dataIndex: 'total',
       key: 'total',
-      render: (value, record) => helpers.formatProductPrice(record.total + record.shipping - record.voucher_discount),
-      sorter: (a, b) => (helpers.calTotalOrderFee(a.order_detail) + a.shipping - a.voucher_discount) - (helpers.calTotalOrderFee(b.order_detail) + b.shipping - b.voucher_discount),
+      render: (value, record) =>
+        helpers.formatProductPrice(
+          record.total + record.shipping - record.voucher_discount,
+        ),
+      sorter: (a, b) =>
+        helpers.calTotalOrderFee(a.order_detail) +
+        a.shipping -
+        a.voucher_discount -
+        (helpers.calTotalOrderFee(b.order_detail) +
+          b.shipping -
+          b.voucher_discount),
     },
     {
       title: 'Trạng thái',
@@ -118,41 +132,44 @@ function OrderList() {
       key: 'status',
       filters: generateOrderStaFilter(),
       onFilter: (value, record) => record.status == value,
-      render: (orderStatus, record) => (<>
-        <p className='m-b-0'>{helpers.convertOrderStatus(+orderStatus)}</p>
-        {(orderStatus == 5 && !record.isRate) ? <Button
-          type="primary"
-          onClick={() => {
-            setRatingOrder({ isOpen: true, products: record });
-          }}
-        >
-          Đánh giá
-        </Button> : ((orderStatus == 2 || orderStatus == 1) ? (
-          <div>
-            <Popconfirm
-              title="Bạn có chắc chắn muốn hủy đơn hàng này ?"
-              onConfirm={() => userCancelOrder(record.id)}
-              // onCancel={cancel}
-              okText="Đồng ý"
-              cancelText="Thoát">
-              <Button
-                type="danger"
-                className='w-100'>
-                Hủy
-              </Button>
-            </Popconfirm>
-            {orderStatus == 1 ?
-              <Link to={{ pathname: record.paylink }} target="_blank">
-                <Button
-                  className='w-100 m-t-5'
-                  type="primary"
-                >Thanh toán</Button>
-              </Link>
-              : ""}
-
-          </div>
-        ) : " ")}
-      </>),
+      render: (orderStatus, record) => (
+        <>
+          <p className="m-b-0">{helpers.convertOrderStatus(+orderStatus)}</p>
+          {orderStatus == 5 && !record.isRate ? (
+            <Button
+              type="primary"
+              onClick={() => {
+                setRatingOrder({ isOpen: true, products: record });
+              }}>
+              Đánh giá
+            </Button>
+          ) : orderStatus == 2 || orderStatus == 1 ? (
+            <div>
+              <Popconfirm
+                title="Bạn có chắc chắn muốn hủy đơn hàng này ?"
+                onConfirm={() => userCancelOrder(record.id)}
+                // onCancel={cancel}
+                okText="Đồng ý"
+                cancelText="Thoát">
+                <Button type="danger" className="w-100">
+                  Hủy
+                </Button>
+              </Popconfirm>
+              {orderStatus == 1 ? (
+                <Link to={{ pathname: record.paylink }} target="_blank">
+                  <Button className="w-100 m-t-5" type="primary">
+                    Thanh toán
+                  </Button>
+                </Link>
+              ) : (
+                ''
+              )}
+            </div>
+          ) : (
+            ' '
+          )}
+        </>
+      ),
     },
   ];
   // fn: hiển thị danh sách đơn hàng
@@ -166,7 +183,7 @@ function OrderList() {
         className="order-detail"
         columns={orderColumns}
         scroll={{
-          x: 700
+          x: 700,
         }}
         dataSource={list}
         rowKey="id"
@@ -181,7 +198,8 @@ function OrderList() {
   const postComment = async (orderId, dataComments, setLoading, onClose) => {
     try {
       for (let i = 0; i < dataComments.length; i++) {
-        if (!(dataComments[i].rate)) return message.error("Vui lòng chọn đánh giá");
+        if (!dataComments[i].rate)
+          return message.error('Vui lòng chọn đánh giá');
       }
       setLoading(true);
       await commentApi.postComment({ orderId, data: dataComments });
@@ -195,7 +213,7 @@ function OrderList() {
         }
       }, 2000);
     } catch (error) {
-      message.error("Xãy ra lỗi");
+      message.error('Xãy ra lỗi');
     }
   };
   const userCancelOrder = async (orderId) => {
@@ -204,12 +222,12 @@ function OrderList() {
       let dataIndex = orderList.findIndex((item, index) => item.id === orderId);
       if (dataIndex !== -1) {
         if (dataIndex !== -1) {
-          orderList[dataIndex].status = "6";
+          orderList[dataIndex].status = '6';
           setOrderList([...orderList]);
         }
       }
     } catch (error) {
-      message.error("Xãy ra lỗi");
+      message.error('Xãy ra lỗi');
     }
   };
   // event: Lấy danh sách
@@ -237,7 +255,6 @@ function OrderList() {
     }
     if (user.id) getOrderList();
     return () => {
-
       isSubscribe = false;
     };
   }, [user]);
@@ -258,16 +275,16 @@ function OrderList() {
           onClose={() => setOrderDetails({ isOpen: false })}
         />
       )}
-      {ratingOrder.products.order_detail?.length > 0 ?
+      {ratingOrder.products.order_detail?.length > 0 ? (
         <PostCommentModal
           visible={ratingOrder.isOpen}
           ratingOrder={ratingOrder.products}
           setRatingOrder={setRatingOrder}
           postComment={postComment}
         />
-        : <>
-        </>}
-
+      ) : (
+        <></>
+      )}
     </>
   );
 }

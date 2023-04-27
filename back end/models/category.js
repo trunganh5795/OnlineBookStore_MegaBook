@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Category extends Model {
     /**
@@ -13,28 +11,31 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Category.init({
-    id: {
-      type: DataTypes.NUMBER,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: "Role name couldnot be empty"
+  Category.init(
+    {
+      id: {
+        type: DataTypes.NUMBER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Role name couldnot be empty",
+          },
+          notNull: {
+            msg: "Role name couldnot be null",
+          },
         },
-        notNull: {
-          msg: "Role name couldnot be null"
-        }
-      }
+      },
+    },
+    {
+      sequelize,
+      modelName: "Category",
     }
-  }, {
-    sequelize,
-    modelName: 'Category',
-  });
+  );
   return Category;
 };

@@ -82,7 +82,7 @@ const adminApi = {
     filterStatusValue,
     filterPaymentValue,
     sorterField,
-    sorterValue
+    sorterValue,
   ) => {
     const url = ADMIN_API_ENDPOINT + '/order';
     return axiosClient.get(url, {
@@ -105,7 +105,7 @@ const adminApi = {
     filterStatusValue,
     filterPaymentValue,
     sorterField,
-    sorterValue
+    sorterValue,
   ) => {
     const url = ADMIN_API_ENDPOINT + '/order/by';
     return axiosClient.get(url, {

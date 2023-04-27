@@ -8,7 +8,7 @@ const voucherApi = {
     cart.forEach((item) => {
       //kiểm tra xem trong giỏ hàng có những loại sách nào
       let bookCategory = categories.find(
-        (category) => category === item.category
+        (category) => category === item.category,
       );
       if (!bookCategory) {
         categories.push(item.category);

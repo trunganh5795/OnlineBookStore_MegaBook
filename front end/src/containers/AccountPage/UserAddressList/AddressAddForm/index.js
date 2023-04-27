@@ -26,7 +26,7 @@ function AddressAddForm(props) {
         if (response) {
           if (isSubscribe) setProvinceList(response.data);
         }
-      } catch (error) { }
+      } catch (error) {}
     }
     getProvinceList();
     // cleanup
@@ -48,9 +48,7 @@ function AddressAddForm(props) {
   // fn: lấy danh sách huyện/xã khi đã chọn tỉnh/thành
   const getWardStreetList = async (districtId) => {
     try {
-      const response = await addressApi.getWardStreetList(
-        districtId
-      );
+      const response = await addressApi.getWardStreetList(districtId);
       if (response) {
         // setStreetList(response.data.streets);
         setWardList(response.data.wards);
@@ -189,9 +187,7 @@ function AddressAddForm(props) {
                   0
                 }
                 showSearch
-                onChange={(value) =>
-                  getWardStreetList(value)
-                }
+                onChange={(value) => getWardStreetList(value)}
                 placeholder="Huyện/Quận"
                 size="middle">
                 {districtList.map((item, index) => (

@@ -22,7 +22,7 @@ function AccountPage() {
   const user = useSelector((state) => state.user);
   const isAuth = useSelector((state) => state.authenticate.isAuth);
   const [activeKey, setActiveKey] = useState(
-    () => pathname.replace(`${constants.ROUTES.ACCOUNT}/`, '') //lấy mục cuối vị dụ order hay addressess ,...
+    () => pathname.replace(`${constants.ROUTES.ACCOUNT}/`, ''), //lấy mục cuối vị dụ order hay addressess ,...
   );
   // menu list
   const menu = [

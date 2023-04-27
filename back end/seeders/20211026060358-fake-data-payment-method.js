@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -10,19 +10,22 @@ module.exports = {
      *   name: 'John Doe',
      *   isBetaMember: false
      * }], {});
-    */
-    await queryInterface.bulkInsert('payment_methods', [
-      {
-        name:'cod'
-      },
-      {
-        name:'qrcode'
-      },
-      {
-        name: 'card'
-      },
-
-    ], {});
+     */
+    await queryInterface.bulkInsert(
+      "payment_methods",
+      [
+        {
+          name: "cod",
+        },
+        {
+          name: "qrcode",
+        },
+        {
+          name: "card",
+        },
+      ],
+      {}
+    );
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -32,7 +35,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('payment_methods', null, {})
-  }
+    await queryInterface.bulkDelete("payment_methods", null, {});
+  },
 };
 // npx sequelize-cli db:seed --seed my-seeder-file.js

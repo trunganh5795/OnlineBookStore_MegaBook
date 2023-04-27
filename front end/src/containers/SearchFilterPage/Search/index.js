@@ -28,7 +28,6 @@ function SearchResult() {
   const prevPage = useRef();
   // event: sắp xếp danh sách theo các tiêu chí, type = 0 -> break
   const onSort = (type = 0) => {
-    
     if (type) {
       if (type === sortBtnActive && type !== 4) {
         getSearchProducts(1, isSubscribe, 0);
@@ -54,7 +53,6 @@ function SearchResult() {
           getSearchProducts(1, isSubscribe, 3);
           break;
         case 4:
-          
           getSearchProducts(1, isSubscribe, 4);
           break;
         default:
@@ -74,7 +72,7 @@ function SearchResult() {
         perPage,
         //16 sản phẩm một trang
         sortType,
-        price
+        price,
       );
       if (result && isSubscribe) {
         setList(result.data.data);
@@ -111,11 +109,7 @@ function SearchResult() {
     <div className="container" style={{ minHeight: '100vh' }}>
       {/* loading */}
       {isLoading ? (
-        <Spin
-          className="trans-center"
-          tip="Đang tải"
-          size="large"
-        />
+        <Spin className="trans-center" tip="Đang tải" size="large" />
       ) : (
         <>
           {/* Kết quả lọc, tìm kiếm */}

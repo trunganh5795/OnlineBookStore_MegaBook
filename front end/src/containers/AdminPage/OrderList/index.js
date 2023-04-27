@@ -39,8 +39,8 @@ function OrderList() {
         message.success('Cập nhật thành công');
         setData((data) =>
           data.map((item) =>
-            item.id === id ? { ...item, status: orderStatus } : { ...item }
-          )
+            item.id === id ? { ...item, status: orderStatus } : { ...item },
+          ),
         );
       }
     } catch (error) {
@@ -63,8 +63,8 @@ function OrderList() {
                       contact_time: item.ratio.contact_time + 1,
                     },
                   }
-                : { ...item }
-            )
+                : { ...item },
+            ),
           );
         }
       } else {
@@ -172,7 +172,7 @@ function OrderList() {
                 UpdateOrderStatusModal(
                   +records.status,
                   // truyền order status vào dạng text luôn lưu ý format chữ in hoa in thường
-                  records.id
+                  records.id,
                 )
               }>
               Cập nhật
@@ -207,7 +207,7 @@ function OrderList() {
         setPage(1);
       }
     },
-    [page]
+    [page],
   );
   const getOrderList = useCallback(
     async (value = '', page, perPage, option, filterOps) => {
@@ -219,7 +219,7 @@ function OrderList() {
           filterOps[0].value,
           filterOps[2].value,
           filterOps[1].field,
-          filterOps[1].value
+          filterOps[1].value,
         );
         if (response.data && isSubscribe) {
           const { count, rows } = response.data;
@@ -236,7 +236,7 @@ function OrderList() {
           filterOps[0].value,
           filterOps[2].value,
           filterOps[1].field,
-          filterOps[1].value
+          filterOps[1].value,
         );
         if (response.data && isSubscribe) {
           const { count, rows } = response.data;
@@ -245,7 +245,7 @@ function OrderList() {
           setIsLoading(false);
         }
       }
-    }
+    },
   );
   let addColumn = (filterOps) => {
     if (

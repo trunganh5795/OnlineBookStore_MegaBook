@@ -57,46 +57,37 @@ const constrants = require('../constrants');
 //   }
 // };
 const verifyAccount = async (req, res) => {
-  let { email, code } = req.body.account
+  let { email, code } = req.body.account;
   const account = await User.findOne({
-    where: { email, verifyCode: code }
+    where: { email, verifyCode: code },
   });
-  account.active = "active";
-  await account.save()
-  res.status(200).send(account)
-}
+  account.active = 'active';
+  await account.save();
+  res.status(200).send(account);
+};
 //fn: Đăng ký tài khoản
 const postSignUp = async (req, res, next) => {
   try {
-    const {
-      email,
-      password,
-      name,
-      dateOfBirth,
-      gender,
-    } = req.body.account;
-    // Kiểm tra rỗng , vì một số trường đăng nhập bằng gmail cho phép rỗng 
-    if (!(email &&
-      password &&
-      name &&
-      dateOfBirth &&
-      gender)) return next({ code: 400, msg: "Bad Request" })
+    const { email, password, name, dateOfBirth, gender } = req.body.account;
+    // Kiểm tra rỗng , vì một số trường đăng nhập bằng gmail cho phép rỗng
+    if (!(email && password && name && dateOfBirth && gender))
+      return next({ code: 400, msg: 'Bad Request' });
     //Kiểm tra tài khoản đã tồn tại hay chưa
     const account = await User.findOne({
       where: {
-        email
-      }
+        email,
+      },
     });
 
     //nếu tồn tại, thông báo lỗi, return
     if (account) {
-      let error = `Email or Phone đã được dùng  !`;
-      return next({ code: 409, msg: error })
+      let error = `Email or Phone already exist !`;
+      return next({ code: 409, msg: error });
     }
     const salt = bcrypt.genSaltSync(10);
-    const hashPassword = bcrypt.hashSync(password, salt)
+    const hashPassword = bcrypt.hashSync(password, salt);
     // Tạo code xác minh tài khoản
-    // let verifyCode = helpers.generateVerifyCode(constrants.NUMBER_VERIFY_CODE);
+    let verifyCode = helpers.generateVerifyCode(constrants.NUMBER_VERIFY_CODE);
     // Tạo tạo tài khoản và user tương ứng
     await User.create({
       email,
@@ -104,14 +95,14 @@ const postSignUp = async (req, res, next) => {
       name,
       dateOfBirth,
       gender,
-      active: "active",
-      verifyCode: 123456,
-      authType: "local"
+      active: 'active',
+      verifyCode: verifyCode,
+      authType: 'local',
     });
 
     return res.status(200).json({ message: 'successful' });
   } catch (error) {
-    return next({ code: 500, msg: "Có lỗi xảy ra vui lòng thử lại" })
+    return next({ code: 500, msg: 'Something went wrong' });
   }
 };
 
@@ -124,13 +115,13 @@ const postSignUp = async (req, res, next) => {
 
 //     //nếu tồn tại, thông báo lỗi, return
 //     if (!account)
-//       return res.status(406).json({ message: 'Tài khoản không tồn tại' });
+//       return res.status(406).json({ message: 'The Account doesn't exist' });
 
 //     //cấu hình email sẽ gửi
 //     const verifyCode = helper.generateVerifyCode(constants.NUMBER_VERIFY_CODE);
 //     const mail = {
 //       to: email,
-//       subject: 'Thay đổi mật khẩu',
+//       subject: 'Change password',
 //       html: mailConfig.htmlResetPassword(verifyCode),
 //     };
 
@@ -151,7 +142,7 @@ const postSignUp = async (req, res, next) => {
 //     }
 //   } catch (error) {
 //     return res.status(409).json({
-//       message: 'Gửi mã thấy bại',
+//       message: 'Fail',
 //       error,
 //     });
 //   }
@@ -166,7 +157,7 @@ const postSignUp = async (req, res, next) => {
 //     const isVerify = await helper.isVerifyEmail(email, verifyCode);
 
 //     if (!isVerify) {
-//       return res.status(401).json({ message: 'Mã xác nhận không hợp lệ.' });
+//       return res.status(401).json({ message: 'Invalid code' });
 //     }
 //     //check userName -> hash new password -> change password
 //     const hashPassword = await bcrypt.hash(
@@ -183,12 +174,12 @@ const postSignUp = async (req, res, next) => {
 //     if (response.n) {
 //       //xoá mã xác nhận
 //       await VerifyModel.deleteOne({ email });
-//       return res.status(200).json({ message: 'Thay đổi mật khẩu thành công' });
+//       return res.status(200).json({ message: 'Success' });
 //     } else {
-//       return res.status(409).json({ message: 'Thay đổi mật khẩu thất bại' });
+//       return res.status(409).json({ message: 'Something want wrong' });
 //     }
 //   } catch (error) {
-//     return res.status(409).json({ message: 'Thay đổi mật khẩu thất bại' });
+//     return res.status(409).json({ message: 'Something want wrong' });
 //   }
 // };
 
@@ -197,5 +188,5 @@ module.exports = {
   postSignUp,
   // postSendCodeForgotPW,
   // postResetPassword,
-  verifyAccount
+  verifyAccount,
 };

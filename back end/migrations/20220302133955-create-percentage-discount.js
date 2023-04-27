@@ -1,25 +1,25 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('percentage_discounts', {
+    await queryInterface.createTable("percentage_discounts", {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: 'vouchers'
+            tableName: "vouchers",
           },
-          key: 'id'
-        }
+          key: "id",
+        },
       },
       percent: {
         type: Sequelize.INTEGER,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('percentage_discounts');
-  }
+    await queryInterface.dropTable("percentage_discounts");
+  },
 };

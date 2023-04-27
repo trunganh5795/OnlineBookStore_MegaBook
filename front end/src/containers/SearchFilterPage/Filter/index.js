@@ -65,7 +65,7 @@ function FilterResult() {
         type,
         sortType,
         price.from,
-        price.to
+        price.to,
       );
       if (productList && isSubscribe) {
         //isSubscribe dùng để stop render khi component unmounted
